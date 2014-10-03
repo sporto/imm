@@ -1,6 +1,6 @@
 {
-  "name": "perpetual",
-  "version": "1.0.0",
+  "name": "eversame",
+  "version": "0.0.1",
   "description": "Immutable collections built on top of immutable.js",
   "main": "index.js",
   "directories": {
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sporto/perpetual.git"
+    "url": "https://github.com/sporto/eversame.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sporto/perpetual/issues"
+    "url": "https://github.com/sporto/eversame/issues"
   },
-  "homepage": "https://github.com/sporto/perpetual",
+  "homepage": "https://github.com/sporto/eversame",
   "devDependencies": {
     "immutable": "^2.0.17",
     "mocha": "^1.21.4"
