@@ -7,19 +7,20 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/sporto/eversame.git"
   },
-  "author": "",
+  "author": "Sebastian Porto",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/sporto/eversame/issues"
   },
   "homepage": "https://github.com/sporto/eversame",
   "devDependencies": {
+    "expect.js": "^0.3.1",
     "immutable": "^2.0.17",
     "mocha": "^1.21.4"
   }
