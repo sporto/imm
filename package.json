@@ -1,5 +1,5 @@
 {
-  "name": "eversame",
+  "name": "imm",
   "version": "0.0.1",
   "description": "Immutable collections built on top of immutable.js",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sporto/eversame.git"
+    "url": "https://github.com/sporto/imm.git"
   },
   "author": "Sebastian Porto",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sporto/eversame/issues"
+    "url": "https://github.com/sporto/imm/issues"
   },
-  "homepage": "https://github.com/sporto/eversame",
+  "homepage": "https://github.com/sporto/imm",
   "devDependencies": {
     "expect.js": "^0.3.1",
     "immutable": "^2.0.17",

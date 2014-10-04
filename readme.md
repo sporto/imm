@@ -1,4 +1,4 @@
-Eversame
+IMM
 ========
 
 Immutable data collections build on top of immutable.js
@@ -20,7 +20,7 @@ Create a collection
 	  }
 	];
 
-	var collection = Eversame(record);
+	var collection = imm(record);
 
 Count
 -----
