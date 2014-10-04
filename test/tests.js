@@ -1,7 +1,7 @@
-var Eversame = require('../lib/main');
+var imm      = require('../lib/main');
 var expect   = require('expect.js');
 
-describe('Eversame', function(){
+describe('imm', function(){
 
 	var records;
 	var col;
@@ -17,12 +17,8 @@ describe('Eversame', function(){
 				label: 'Tess'
 		  }
 		];
-		col = Eversame(records);
+		col = imm(records);
 	})
-
-	it('returns a collection', function () {
-		// var col = Eversame(record);
-	});
 
 	describe('.count', function () {
 		it('returns the count', function (){
@@ -35,13 +31,6 @@ describe('Eversame', function(){
 		it('gets the record by id', function () {
 			var record = col.get('11');
 			expect(record).not.to.be(undefined);
-			expect(record).to.eql({id: 11, label: 'Tess'});
-		})
-	})
-
-	describe('.find', function () {
-		it('finds a record using a function', function () {
-			var record = col.find(function (v) { return v.label === 'Tess' });
 			expect(record).to.eql({id: 11, label: 'Tess'});
 		})
 	})
