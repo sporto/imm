@@ -21,7 +21,9 @@
   "homepage": "https://github.com/sporto/imm",
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "immutable": "^2.0.17",
     "mocha": "^1.21.4"
+  },
+  "dependencies": {
+    "immutable": "^2.0.17"
   }
 }
