@@ -7,6 +7,7 @@ var markdox = require("gulp-markdox");
 var jshint  = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var mocha   = require('gulp-mocha');
+var header  = require('gulp-header');
 
 var DEST = 'dist/';
 
