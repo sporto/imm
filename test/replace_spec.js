@@ -9,8 +9,8 @@ var col2;
 describe('.replace', function () {
 
 	beforeEach(function () {
-		col1 = imm(records);
-		col2 = imm(recordWithAltId, '_id');
+		col1 = imm(records());
+		col2 = imm(recordWithAltId(), '_id');
 	})
 
 	it('replaces an existing record', function () {

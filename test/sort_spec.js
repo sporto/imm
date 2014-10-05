@@ -9,8 +9,26 @@ var col2;
 describe('.sort', function () {
 
 	beforeEach(function () {
-		col1 = imm(records);
-		col2 = imm(recordWithAltId, '_id');
+		col1 = imm(records());
+		col2 = imm(recordWithAltId(), '_id');
+	})
+
+	it('sorts', function() {
+		col1 = col1.sort(function(record1, record2) {
+			return record1.id < record2.id;
+		});
+		var records = col1.toJS();
+		var expected = [
+			{
+				id: 11,
+				label: 'Tess'
+			},
+			{
+				id: 10,
+				label: 'Sam'
+			},
+		]
+		expect(records).to.eql(expected);
 	})
 
 

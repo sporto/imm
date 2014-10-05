@@ -1,10 +1,12 @@
-module.exports = [
-	{
-		_id: 'abc',
-		label: 'Sam'
-	},
-	{
-		_id: 'xyz',
-		label: 'Tess'
-  }
-];
+module.exports = function () {
+	return [
+		{
+			_id: 'abc',
+			label: 'Sam'
+		},
+		{
+			_id: 'xyz',
+			label: 'Tess'
+		}
+	];
+}

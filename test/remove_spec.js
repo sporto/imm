@@ -9,8 +9,8 @@ var col2;
 describe('.remove', function () {
 
 	beforeEach(function () {
-		col1 = imm(records);
-		col2 = imm(recordWithAltId, '_id');
+		col1 = imm(records());
+		col2 = imm(recordWithAltId(), '_id');
 	})
 
 	it('removes the record', function () {

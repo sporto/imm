@@ -9,8 +9,8 @@ var col2;
 describe('.add', function () {
 
 	beforeEach(function () {
-		col1 = imm(records);
-		col2 = imm(recordWithAltId, '_id');
+		col1 = imm(records());
+		col2 = imm(recordWithAltId(), '_id');
 	})
 
 	it('adds a new record when there is no id', function () {
