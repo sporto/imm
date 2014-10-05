@@ -14,7 +14,8 @@
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like enviroments that support module.exports,
 		// like Node.
-		module.exports = factory(require('Immutable'));
+		var Immutable = require('immutable');
+		module.exports = factory(Immutable);
 	} else {
 		// Browser globals
 		root.imm = factory(root.Immutable);

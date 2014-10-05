@@ -8,15 +8,27 @@ Immutable data collections build on top of [immutable.js](https://github.com/fac
 Immutable.js is great, but it doesn't have an API that feels right for CRUD applications. Eversame wraps immutable.js to provide a familiar API.
 All collections returned by Eversame are immutable as well.
 
-Usage
+Install
+-------
+
+### Using NPM
+
+	npm install imm
+
+### Browser global
+
+Download `dist/imm.js` or `dist/imm.min.js`
+
+API
 -----------------
 
-Please see [documentation here](./doc/imm.md)
+Please see API [documentation here](./doc/imm.md)
 
 Test
 ----
 
-	mocha or npm test
+	npm install
+	npm test
 
 Build
 -----
