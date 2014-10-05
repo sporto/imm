@@ -1,6 +1,6 @@
-var imm      = require('../lib/imm');
-var expect   = require('expect.js');
-var records  = require('./fixtures/records')();
+var imm              = require('../src/imm');
+var expect           = require('expect.js');
+var records          = require('./fixtures/records')();
 var col;
 
 describe('.find', function () {
