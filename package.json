@@ -1,6 +1,6 @@
 {
   "name": "imm",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Immutable collections built on top of immutable.js",
   "main": "index.js",
   "directories": {
