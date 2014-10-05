@@ -112,7 +112,7 @@ collection = collection.update({id: 11, label: 'Sam'})
 
 * **Imm** modified collection
 
-## remove(record)
+## remove(id)
 
 Remove a record.
 Removes an existing record based on the id.
@@ -124,7 +124,7 @@ collection = collection.remove(id);
 
 ### Params: 
 
-* **String** *record* id
+* **String** *id* 
 
 ### Return:
 
@@ -143,13 +143,13 @@ collection = collection.map(function (record) {
 
 ### Params: 
 
-* **Function** *mapper* function
+* **Function** *mapper* 
 
 ### Return:
 
 * **Imm** modified collection
 
-## filter(filtering)
+## filter(filterer)
 
 Filters the collection based on a filtering function.
 
@@ -161,13 +161,13 @@ collection = collection.filter(function (record) {
 
 ### Params: 
 
-* **Function** *filtering* function
+* **Function** *filterer* 
 
 ### Return:
 
 * **Imm** modified collection
 
-## sort(sorting)
+## sort(sorter)
 
 Sorts the collection based on a sorting function.
 
@@ -179,11 +179,29 @@ collection = collection.sort(function (record1, record2) {
 
 ### Params: 
 
-* **Function** *sorting* function
+* **Function** *sorter* 
 
 ### Return:
 
 * **Imm** modified collection
+
+## find(finder)
+
+Finds a returns a record.
+
+```js
+var record = collection.find(function (record) { 
+  return record.age === 18;
+});
+```
+
+### Params: 
+
+* **Function** *finder* 
+
+### Return:
+
+* **Object** record
 
 ## toImmutable()
 
@@ -196,6 +214,30 @@ collection = collection.toImmutable();
 ### Return:
 
 * **Immutable** Immutable JS collection
+
+## toJS()
+
+Returns the collection as a JS Array
+
+```js
+records = collection.toJS();
+```
+
+### Return:
+
+* **Array** JS Array
+
+## count()
+
+Returns the records count
+
+```js
+count = collection.count();
+```
+
+### Return:
+
+* **Number** count
 
 <!-- End src/imm.js -->
 

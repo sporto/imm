@@ -204,7 +204,7 @@
 		* collection = collection.remove(id);
 		* ```
 		*
-		* @param {String} record id
+		* @param {String} id
 		* @return {Imm} modified collection
 		* @api public
 		*/
@@ -226,12 +226,12 @@
 		* });
 		* ```
 		*
-		* @param {Function} mapper function
+		* @param {Function} mapper 
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function map(func) {
-			var newCol = col.map(func);
+		function map(mapper) {
+			var newCol = col.map(mapper);
 			return wrapWithArgs(newCol);
 		}
 
@@ -244,12 +244,12 @@
 		* });
 		* ```
 		*
-		* @param {Function} filtering function
+		* @param {Function} filterer
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function filter(func) {
-			var newCol = col.filter(func);
+		function filter(filterer) {
+			var newCol = col.filter(filterer);
 			return wrapWithArgs(newCol);
 		}
 
@@ -262,14 +262,29 @@
 		* });
 		* ```
 		*
-		* @param {Function} sorting function
+		* @param {Function} sorter
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function sort(func) {
-			var newCol = col.sort(func);
+		function sort(sorter) {
+			var newCol = col.sort(sorter);
 			return wrapWithArgs(newCol);
 		}
+
+		/**
+		* Finds a returns a record.
+		* 
+		* ```js
+		* var record = collection.find(function (record) { 
+		*   return record.age === 18;
+		* });
+		* ```
+		*
+		* @param {Function} finder
+		* @return {Object} record
+		* @api public
+		*/
+		function find() {}
 
 		/**
 		* Returns the underlaying Immutable.js collection
@@ -284,6 +299,30 @@
 		function toImmutable() {
 			return col;
 		}
+
+		/**
+		* Returns the collection as a JS Array
+		* 
+		* ```js
+		* records = collection.toJS();
+		* ```
+		*
+		* @return {Array} JS Array
+		* @api public
+		*/
+		function toJS(){}
+
+		/**
+		* Returns the records count
+		* 
+		* ```js
+		* count = collection.count();
+		* ```
+		*
+		* @return {Number} count
+		* @api public
+		*/
+		function count(){}
 
 		return {
 			isImm:       true,
