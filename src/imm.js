@@ -22,6 +22,8 @@
 	}
 }(this, function (Immutable) {
 
+	if (Immutable == null) throw new Error('Immutable is null');
+
 	/**
 	* Returns an Imm collection
 	* 
