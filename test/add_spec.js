@@ -5,7 +5,6 @@ var recordWithAltId  = require('./fixtures/records_with_alt_id');
 var col1;
 var col2;
 
-
 describe('.add', function () {
 
 	beforeEach(function () {
@@ -31,10 +30,26 @@ describe('.add', function () {
 		expect(col1.count()).to.be(3);
 	});
 
+	describe('multiple', function () {
+		it('adds new records', function () {
+			var records = [{label: 'Sam'}, {label: 'Sul'}];
+			var newCol = col1.add(records);
+			expect(newCol.count()).to.be(4);
+		});
+
+		it('doesnt modify the original collection', function () {
+			expect(col1.count()).to.be(2);
+			var records = [{label: 'Sam'}, {label: 'Sul'}];
+			col1.add(records);
+			expect(col1.count()).to.be(2);
+		});
+	});
+
 	it('adds a new record when it has an _id', function () {
 		expect(col2.count()).to.be(2);
-		col2 = col2.add({_id: 'ijk', label: 'Julia'});
-		expect(col2.count()).to.be(3);
+		var newCol = col2.add({_id: 'ijk', label: 'Julia'});
+		expect(col2.count()).to.be(2);
+		expect(newCol.count()).to.be(3);
 	});
 
 	it('throws if there is an existing record', function () {

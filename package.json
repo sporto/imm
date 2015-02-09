@@ -33,6 +33,7 @@
     "mocha": "^1.21.4"
   },
   "dependencies": {
-    "immutable": "^2.0.17"
+    "immutable": "^2.0.17",
+    "seamless-immutable": "^1.3.0"
   }
 }

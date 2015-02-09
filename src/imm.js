@@ -14,7 +14,7 @@
 		// Node. Does not work with strict CommonJS, but
 		// only CommonJS-like enviroments that support module.exports,
 		// like Node.
-		var Immutable = require('immutable');
+		var Immutable = require('seamless-immutable');
 		module.exports = factory(Immutable);
 	} else {
 		// Browser globals
@@ -45,7 +45,7 @@
 	function imm(records, key) {
 		if (!isArray(records)) throw new Error("You must provide an array");
 		// return a immutable js collection
-		var col = Immutable.Sequence(records).valueSeq();
+		var col = Immutable(records);
 		return wrap(key, col);
 	}
 
@@ -53,9 +53,16 @@
 		return toString.call(obj) === '[object Array]';
 	};
 
-	function wrap(key, col) {
+	// @param {Immutable} col
+	function wrap(key, immutableArray) {
+
+		checkImmutableArray(immutableArray);	
 
 		key = key || 'id';
+
+		function checkImmutableArray(array) {
+			if (!Immutable.isImmutable(array)) throw new Error("Not an immutable array");
+		}
 
 		function wrapWithArgs(newCol) {
 			return wrap(key, newCol);
@@ -73,9 +80,22 @@
 		}
 
 		function getRecordIndexById(id) {
-			return col.findIndex(function(record) {
-				return record[key] == id;
-			});
+			// if record doesnt have a key, then return not found
+			if (!id) return -1;
+			
+			var record;
+			for (var a=0; a < immutableArray.length; a++) {
+				record = immutableArray[a];
+				if (record[key] === id) {
+					return a;
+				}
+			}
+			return -1;
+		}
+
+		function clone(){
+			var newCol = immutableArray.slice(0);
+			return wrapWithArgs(newCol);
 		}
 
 		/**
@@ -114,10 +134,10 @@
 
 			if (index > -1) {
 				// replace record
-				newCol = col.splice(index, 1, record);
+				newCol = immutableArray.splice(index, 1, record);
 			} else {
 				// add record
-				newCol = col.concat([record]);
+				newCol = immutableArray.concat([record]);
 			}
 
 			return wrapWithArgs(newCol);
@@ -136,13 +156,29 @@
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function add(record) {
+		function add(oneOrMany) {
+			if (isArray(oneOrMany)) {
+				return addMany(oneOrMany);
+			} else {
+				return addOne(oneOrMany);
+			}	
+		}
+
+		function addOne(record) {
 			var index = getRecordIndex(record);
 			if (index == -1) {
 				return set(record);
 			} else {
 				throw new Error('Record already exists');
 			}
+		}
+
+		function addMany(records) {
+			var newCol = clone();
+			for(var a=0; a < records.length; a++) {
+				newCol = newCol.add(records[a]);
+			}
+			return newCol;
 		}
 
 		/**
@@ -193,7 +229,7 @@
 			var oldRecord = col.get(index);
 			var newRecord = mergeRecords(oldRecord, record);
 
-			var newCol = col.splice(index, 1, newRecord);
+			var newCol = immutableArray.splice(index, 1, newRecord);
 			return wrapWithArgs(newCol);
 		}
 
@@ -214,7 +250,7 @@
 			var index = getRecordIndexById(id);
 			if (index == -1) throw new Error("Record not found");
 
-			var newCol = col.splice(index, 1);
+			var newCol = immutableArray.splice(index, 1);
 			return wrapWithArgs(newCol);
 		}
 
@@ -233,7 +269,7 @@
 		* @api public
 		*/
 		function map(mapper) {
-			var newCol = col.map(mapper);
+			var newCol = immutableArray.map(mapper);
 			return wrapWithArgs(newCol);
 		}
 
@@ -251,7 +287,7 @@
 		* @api public
 		*/
 		function filter(filterer) {
-			var newCol = col.filter(filterer);
+			var newCol = immutableArray.filter(filterer);
 			return wrapWithArgs(newCol);
 		}
 
@@ -269,7 +305,7 @@
 		* @api public
 		*/
 		function sort(sorter) {
-			var newCol = col.sort(sorter);
+			var newCol = immutableArray.sort(sorter);
 			return wrapWithArgs(newCol);
 		}
 
@@ -324,22 +360,24 @@
 		* @return {Number} count
 		* @api public
 		*/
-		function count(){}
+		function count(){
+			return immutableArray.length;
+		}
 
 		return {
 			isImm:       true,
-			count:       col.count.bind(col),
+			count:       count,
 			get:         get,
-			set:         set,
+			//set:         set,
 			add:         add,
 			replace:     replace,
 			update:      update,
 			remove:      remove,
-			find:        col.find.bind(col),
+			// find:        col.find.bind(col),
 			map:         map,
 			filter:      filter,
 			sort:        sort,
-			toJS:        col.toJS.bind(col),
+			// toJS:        col.toJS.bind(col),
 			toImmutable: toImmutable,
 		};
 	}
