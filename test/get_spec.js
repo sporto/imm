@@ -14,7 +14,7 @@ describe('.get', function () {
 	})
 
 	it('returns the record by id', function (){
-		var record = col1.get('11');
+		var record = col1.get(11);
 		expect(record).to.eql({id: 11, label: 'Tess'});
 	});
 

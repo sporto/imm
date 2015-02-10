@@ -13,28 +13,61 @@ describe('.remove', function () {
 		col2 = imm(recordWithAltId(), '_id');
 	})
 
-	it('removes the record', function () {
-		expect(col1.count()).to.be(2);
-		col1 = col1.remove(11);
-		expect(col1.count()).to.be(1);
+	describe('id', function () {
+
+		describe('one', function () {
+
+			it('removes the record', function () {
+				expect(col1.count()).to.be(2);
+				var newCol = col1.remove(11);
+				expect(newCol.count()).to.be(1);
+			})
+
+			it('doesnt modify the original collection', function () {
+				expect(col1.count()).to.be(2);
+				col1.remove(11);
+				expect(col1.count()).to.be(2);
+			})
+
+			it('throws if record is not found', function () {
+				expect(function () {
+					col1.remove(13);
+				}).to.throwError();
+			})
+
+		})
+
+		describe('many', function () {
+
+			it('removes the records', function () {
+				expect(col1.count()).to.be(2);
+				var newCol = col1.remove([10, 11]);
+				expect(newCol.count()).to.be(0);
+			})
+
+			it('throws if record is not found', function () {
+				expect(function () {
+					col1.remove([10, 12]);
+				}).to.throwError();
+			})
+
+		})
+
 	})
 
-	it('removes the record', function () {
-		expect(col2.count()).to.be(2);
-		col2 = col2.remove('abc');
-		expect(col2.count()).to.be(1);
+	describe('_id', function () {
+
+		it('removes the record', function () {
+			expect(col2.count()).to.be(2);
+			col2 = col2.remove('abc');
+			expect(col2.count()).to.be(1);
+		})
+
+		it('throws if record is not found', function () {
+			expect(function () {
+				col2.remove('ijk');
+			}).to.throwError();
+		})
 	})
-
-	it('throws if record is not found', function () {
-		expect(function () {
-			col1.remove(13);
-		}).to.throwError();
-	});
-
-	it('throws if record is not found', function () {
-		expect(function () {
-			col2.remove('ijk');
-		}).to.throwError();
-	});
 
 });

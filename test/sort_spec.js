@@ -5,7 +5,6 @@ var recordWithAltId  = require('./fixtures/records_with_alt_id');
 var col1;
 var col2;
 
-
 describe('.sort', function () {
 
 	beforeEach(function () {
@@ -14,10 +13,10 @@ describe('.sort', function () {
 	})
 
 	it('sorts', function() {
-		col1 = col1.sort(function(record1, record2) {
+		var newCol = col1.sort(function(record1, record2) {
 			return record1.id < record2.id;
 		});
-		var records = col1.toJS();
+		var records = newCol.all();
 		var expected = [
 			{
 				id: 11,

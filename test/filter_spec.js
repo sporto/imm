@@ -14,11 +14,11 @@ describe('.filter', function () {
 	})
 
 	it('filters', function() {
-		col1 = col1.filter(function(record) {
+		var newCol = col1.filter(function(record) {
 			return record.label == 'Tess';
 		});
-		expect(col1.count()).to.be(1);
-		expect(col1.get('11')).to.eql({id: 11, label: 'Tess'});
+		expect(newCol.count()).to.be(1);
+		expect(newCol.get(11)).to.eql({id: 11, label: 'Tess'});
 	})
 
 	it('returns an imm collection', function() {
@@ -27,6 +27,5 @@ describe('.filter', function () {
 		});
 		expect(col1.isImm).to.be(true);
 	})
-
 
 });

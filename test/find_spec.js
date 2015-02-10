@@ -7,10 +7,11 @@ describe('.find', function () {
 
 	beforeEach(function () {
 		col = imm(records);
-	})
+	});
 
 	it('finds a record using a function', function () {
-		var record = col.find(function (v) { return v.label === 'Tess' });
+		var finder = function (v) { return v.label === 'Tess' };
+		var record = col.find(finder);
 		expect(record).to.eql({id: 11, label: 'Tess'});
-	})
+	});
 })
