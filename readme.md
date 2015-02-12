@@ -3,10 +3,14 @@ IMM
 
 [ ![Codeship Status for sporto/imm](https://www.codeship.io/projects/c6ea6970-2eac-0132-d151-0605b547a2e8/status)](https://www.codeship.io/projects/39398)
 
-Immutable data collections build on top of [immutable.js](https://github.com/facebook/immutable-js)
+Immutable data collections build on top of [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)
 
-Immutable.js is great, but it doesn't have an API that feels right for CRUD applications. Eversame wraps immutable.js to provide a familiar API.
-All collections returned by Eversame are immutable as well.
+Seemless-immutable.js is great, but it doesn't have an API that feels right for CRUD applications. 
+Imm wraps it to provide a convenient API.
+
+All collections returned by Imm are immutable as well.
+
+Initially this project used [immutable.js](https://github.com/facebook/immutable-js). But unfortuntelly Immutable.js does not create deep immutable e.g. object inside an array are still mutable.
 
 Install
 -------
