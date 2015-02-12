@@ -24,53 +24,39 @@ collection = imm(records, '_id');
 
 * **Immutable** Imm collection
 
-## get(id)
+## get(or)
 
 Get a record
 
 ```js
-var record = collection.get('11')
+var record = collection.get(11)
 ```
+Key is expected to be exactly as in the record, e.g. number or string
 
 ### Params: 
 
-* **String** *id* 
+* **Number** *or* String} id
 
 ### Return:
 
 * **Object** record
 
-## set(record)
+## add(or)
 
-Set record.
-Adds a new record if record doesn't have an id or id not found.
-Replaces an existing record if already found.
-
-```js
-collection = collection.set({id: 11, label: 'Sam'})
-```
-
-### Params: 
-
-* **Object** *record* 
-
-### Return:
-
-* **Imm** modified collection
-
-## add(record)
-
-Add a record.
+Adds one or more records.
 Adds a new record if record doesn't have an id or id not found.
 Throws an error if id already found.
 
 ```js
-collection = collection.add({id: 11, label: 'Sam'})
+// add one record
+collection = collection.add(record)
+// add many records
+collection = collection.add(array)
 ```
 
 ### Params: 
 
-* **Object** *record* 
+* **Object** *or* Array} record or records
 
 ### Return:
 
@@ -78,9 +64,9 @@ collection = collection.add({id: 11, label: 'Sam'})
 
 ## replace(record)
 
-Replace a record.
-Replaces an existing record based on the id.
-Throws if record not found.
+Replaces one item or many. 
+This discards any previous data from the replaced items.
+Throws if record / records not found.
 
 ```js
 collection = collection.replace({id: 11, label: 'Sam'})
@@ -96,8 +82,7 @@ collection = collection.replace({id: 11, label: 'Sam'})
 
 ## update(record)
 
-Update a record.
-Patches an existing record based on the id.
+Updates one item or many. This merges the given data with the existing one.
 Throws if record not found.
 
 ```js
@@ -187,7 +172,7 @@ collection = collection.sort(function (record1, record2) {
 
 ## find(finder)
 
-Finds a returns a record.
+Finds one record
 
 ```js
 var record = collection.find(function (record) { 
@@ -201,22 +186,11 @@ var record = collection.find(function (record) {
 
 ### Return:
 
-* **Object** record
-
-## toImmutable()
-
-Returns the underlaying Immutable.js collection
-
-```js
-collection = collection.toImmutable();
-```
-
-### Return:
-
-* **Immutable** Immutable JS collection
+* **Object** record or undefined
 
 ## toJS()
 
+/**
 Returns the collection as a JS Array
 
 ```js
