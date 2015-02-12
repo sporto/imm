@@ -22,6 +22,8 @@
 	}
 }(this, function (Immutable) {
 
+	"use strict";
+
 	if (Immutable == null) throw new Error('Immutable is null');
 
 	var DEFAULT_KEY = 'id';
@@ -159,7 +161,7 @@
 				if (!id) throw new Error("Invalid key");
 				existing = get(id);
 				if (existing) throw new Error('Record already exists');
-				toMerge = {}
+				toMerge = {};
 				toMerge[id] = record;
 				newCol = newCol.merge(toMerge);
 			}

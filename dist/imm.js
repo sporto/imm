@@ -22,7 +22,11 @@
 	}
 }(this, function (Immutable) {
 
+	"use strict";
+
 	if (Immutable == null) throw new Error('Immutable is null');
+
+	var DEFAULT_KEY = 'id';
 
 	/**
 	* Utility functions
@@ -35,6 +39,18 @@
 		return isArray(oneOrMany) ? oneOrMany : [oneOrMany];
 	}
 
+	function idsAsStrings(array) {
+		return array.map(function (v) {
+			return "" + v;
+		});
+	}
+
+	function idsFromRecords(array, key) {
+		return array.map(function (record) {
+			return record[key];
+		});
+	}
+
 	function arrayContains(array, value) {
 		for (var a = 0; a < array.length; a++) {
 			if (array[a] === value) return true;
@@ -42,8 +58,24 @@
 		return false;
 	}
 
+	function isImmutable(object) {
+		return Immutable.isImmutable(object);
+	}
+
+	function checkIsImmutable(object) {
+		var is = isImmutable(object);
+		if (!is) throw new Error("Not an immutable object");
+	}
+
+	function checkIsPlainArray(array) {
+		var one = !isArray(array);
+		var two = isImmutable(array);
+		if (one || two) throw new Error("You must provide an array");
+	}
+
 	/**
 	* Returns an Imm collection
+	* Keys are always sorted in alphabetical order
 	* 
 	* ```js
 	* var records = [{id: 1, label: 'Sam'}, {...}];
@@ -61,86 +93,42 @@
 	* @api public
 	*/
 	function imm(records, key) {
-		if (!isArray(records)) throw new Error("You must provide an array");
-		// return a immutable js collection
-		var col = Immutable(records);
-		return wrap(key, col);
+		return wrapPlainArray(records, key);
 	}
 
-	// @param {Immutable} col
-	function wrap(key, immutableArray) {
+	/**
+	* @param {Array}
+	* @return {Imm}
+	*/
+	function wrapPlainArray(array, key) {
+		checkIsPlainArray(array);
 
-		checkImmutableArray(immutableArray);	
+		key = key || DEFAULT_KEY;
 
-		key = key || 'id';
+		// return a immutable object
+		var col = Immutable(array).asObject(function (record) {
+			return [record[key], record];
+		});
 
-		/**
-		* Internal utility functions
-		*/
-		function checkImmutableArray(array) {
-			if (!Immutable.isImmutable(array)) throw new Error("Not an immutable array");
+		return wrapImmutableCollection(col, key);
+	}
+
+	/**
+	* @param {Immutable}
+	* @return {Imm}
+	*/
+	function wrapImmutableCollection(immutableCollection, key) {
+
+		checkIsImmutable(immutableCollection);
+
+		key = key || DEFAULT_KEY;
+
+		function wrapPlainArrayWithArgs(array) {
+			return wrapPlainArray(array, key);
 		}
 
-		function wrapWithArgs(newCol) {
-			return wrap(key, newCol);
-		}
-
-		function mergeRecords(oldRecord, newRecord) {
-			return oldRecord.merge(newRecord);
-		}
-
-		function getRecordIndex(givenRecord) {
-			return getRecordIndexById(givenRecord[key]);
-		}
-
-		function getRecordIndexById(id) {
-			// if record doesnt have a key, then return not found
-			if (!id) return -1;
-			
-			var record;
-			for (var a=0; a < immutableArray.length; a++) {
-				record = immutableArray[a];
-				if (record[key] === id) {
-					return a;
-				}
-			}
-			return -1;
-		}
-
-		/**
-		* Get all records
-		* This returns a JavaScript array
-		* 
-		* ```js
-		* var records = collection.all();
-		* ```
-		*
-		* @return {Array} records
-		* @api public
-		*/
-		function all() {
-			return immutableArray;
-		}
-
-		/**
-		* Get a record
-		*
-		* ```js
-		* var record = collection.get(11)
-		* ```
-		* Key is expected to be exactly as in the record, e.g. number or string
-		*
-		* @param {Number or String} id
-		* @return {Object} record
-		* @api public
-		*/
-		function get(id) {
-			var index = getRecordIndexById(id);
-			if (index > -1) {
-				return immutableArray[index];
-			} else {
-				return void(0);
-			}
+		function wrapImmutableCollectionWithArgs(immutableCollection) {
+			return wrapImmutableCollection(immutableCollection, key);
 		}
 
 		/**
@@ -160,107 +148,154 @@
 		* @api public
 		*/
 		function add(oneOrMany) {
-			if (isArray(oneOrMany)) {
-				return addMany(oneOrMany);
-			} else {
-				return addOne(oneOrMany);
-			}	
-		}
+			var records = wrapAsArray(oneOrMany);
+			var id, record, toMerge, existing;
 
-		function addOne(record) {
-			var index = getRecordIndex(record);
-			var newCol;
+			if (records.length === 0) return wrapImmutableCollectionWithArgs(immutableCollection);
 
-			if (index == -1) {
-				newCol = immutableArray.concat([record]);
-			} else {
-				throw new Error('Record already exists');
+			var newCol = immutableCollection;
+
+			for (var a = 0; a < records.length; a++) {
+				record = records[a];
+				id     = record[key];
+				if (!id) throw new Error("Invalid key");
+				existing = get(id);
+				if (existing) throw new Error('Record already exists');
+				toMerge = {};
+				toMerge[id] = record;
+				newCol = newCol.merge(toMerge);
 			}
 
-			return wrapWithArgs(newCol);
+			return wrapImmutableCollectionWithArgs(newCol);
 		}
 
-		function addMany(records) {
-			var newCol = immutableArray.asMutable();
-			for(var a = 0; a < records.length; a++) {
+		/**
+		* Get all records
+		* This returns a plain JavaScript array
+		* Records in the array are plain mutable JS objects
+		* 
+		* ```js
+		* var records = collection.all();
+		* ```
+		*
+		* @return {Array} records
+		* @api public
+		*/
+		function all() {
+			return asPlainArray();
+		}
+
+		function asPlainArray() {
+			return Object.keys(immutableCollection).map(function (key) {
+				return immutableCollection[key].asMutable();
+			});
+		}
+
+		/**
+		* Check if the given id or ids exists
+		*/
+		function exist(idOrIds) {
+			var ids = wrapAsArray(idOrIds);
+			for (var a = 0; a < ids.length; a++) {
+				var id = ids[a];
+				if (!immutableCollection[id]) return false;
+			}
+			return true;
+		}
+
+		/**
+		* Returns the records count
+		* 
+		* ```js
+		* count = collection.count();
+		* ```
+		*
+		* @return {Number} count
+		* @api public
+		*/
+		function count(){
+			return Object.keys(immutableCollection).length;
+		}
+
+		/**
+		* Filters the collection based on a filtering function.
+		* 
+		* ```js
+		* collection = collection.filter(function (record) { 
+		*   return record.age > 18;
+		* });
+		* ```
+		*
+		* @param {Function} Filterer
+		* @return {Imm} Modified collection
+		* @api public
+		*/
+		function filter(filterer) {
+			var newCol = asPlainArray();
+			newCol = newCol.filter(filterer);
+			return wrapPlainArrayWithArgs(newCol);
+		}
+
+		/**
+		* Finds one record
+		* Returns a plain JS mutable object
+		* 
+		* ```js
+		* var record = collection.find(function (record) { 
+		*   return record.age === 18;
+		* });
+		* ```
+		*
+		* @param {Function} Finder
+		* @return {Object} Record or undefined
+		* @api public
+		*/
+		function find(finder) {
+			var records = asPlainArray();
+			for (var a = 0; a < records.length; a++) {
 				var record = records[a];
-				// check id?
-				newCol.push(record);
+				if (finder(record)) {
+					return record;
+				}
 			}
-			newCol = Immutable(newCol);
-			return wrapWithArgs(newCol);
+			return void(0);
 		}
 
 		/**
-		* Replaces one item or many. 
-		* This discards any previous data from the replaced items.
-		* Throws if record / records not found.
-		* 
-		* ```js
-		* collection = collection.replace(record)
-		* collection = collection.replace(array)
-		* ```
+		* Get a record
+		* Returned record is a plain JS mutable object
 		*
-		* @param {Object} record
-		* @return {Imm} modified collection
+		* ```js
+		* var record = collection.get(11)
+		* ```
+		* Key is expected to be exactly as in the record, e.g. number or string
+		*
+		* @param {Number or String} id
+		* @return {Object} record
 		* @api public
 		*/
-		function replace(recordOrRecords) {
-			var records = wrapAsArray(recordOrRecords);
-			var newCol = [];
-			var replaced = 0;
-
-			for (var a = 0; a < immutableArray.length; a++) {
-				var record = immutableArray[a];
-				if (record[key] === recordOrRecords[key]) {
-					replaced++;
-					newCol.push(recordOrRecords);
-				} else {
-					newCol.push(record);
-				}
-			}
-
-			if (replaced != records.length) {
-				throw new Error('Record does not exists');
-			}
-
-			newCol = Immutable(newCol);
-			return wrapWithArgs(newCol);
+		function get(id) {
+			var record = immutableCollection[id];
+			if (!record) return void(0);
+			return record.asMutable();
 		}
 
 		/**
-		* Updates one record or many. 
-		* This merges the given data with the existing one.
-		* Throws if record / records not found.
+		* Map the collection through a given function
 		* 
 		* ```js
-		* collection = collection.update(record)
-		* collection = collection.update(array)
+		* collection = collection.map(function (record) { 
+		*   return {foo: record.id};
+		* });
 		* ```
 		*
-		* @param {Object or Array} record / records
-		* @return {Imm} modified collection
+		* @param {Function} mapper 
+		* @return {Misc} 
 		* @api public
 		*/
-		function update(recordOrRecords) {
-			// throw if no id
-			if (!recordOrRecords[key]) throw new Error('Record must have an id');
-
-			var newCol = [];
-
-			for (var a = 0; a < immutableArray.length; a++) {
-				var record = immutableArray[a];
-				if (recordOrRecords[key] === record[key]) {
-					// merge records
-					var merged = mergeRecords(record, recordOrRecords);
-					newCol.push(merged);
-				} else {
-					newCol.push(record);
-				}
-			}
-
-			newCol = Immutable(newCol);
-			return wrapWithArgs(newCol);
+		function map(mapper) {
+			var newCol = asPlainArray();
+			return newCol.map(mapper);
 		}
 
 		/**
@@ -279,113 +314,91 @@
 		function remove(idOrIds) {
 			var ids = wrapAsArray(idOrIds);
 
-			var newCol = [];
-			var removed = [];
-			for (var a = 0; a < immutableArray.length; a++) {
-				var record = immutableArray[a];
-				if (arrayContains(ids, record[key])) {
-					removed.push(record);
-				} else {
-					newCol.push(record) ;
-				}
-			}
-			if (removed.length !== ids.length) throw new Error('Not all records found');
+			if (!exist(ids)) throw new Error('Not all records found');
 
-			newCol = Immutable(newCol);
-			return wrapWithArgs(newCol);
+			// ids need to be strings for without
+			ids = idsAsStrings(ids);
+
+			var newCol = immutableCollection.without(ids);
+			return wrapImmutableCollectionWithArgs(newCol);
 		}
 
 		/**
-		* Map the collection through a given function.
+		* Replaces one item or many. 
+		* This discards any previous data from the replaced items.
+		* Throws if record / records not found.
 		* 
 		* ```js
-		* collection = collection.map(function (record) { 
-		*   return {foo: record.id};
-		* });
+		* collection = collection.replace(record)
+		* collection = collection.replace(array)
 		* ```
 		*
-		* @param {Function} mapper 
+		* @param {Object} record
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function map(mapper) {
-			var newCol = immutableArray.map(mapper);
-			return wrapWithArgs(newCol);
-		}
+		function replace(recordOrRecords) {
+			var record, id, existing;
+			var records = wrapAsArray(recordOrRecords);
+			var ids = idsFromRecords(records, key);
+			ids = idsAsStrings(ids);
+			var newCol = immutableCollection.without(ids);
+			var merges = {};
 
-		/**
-		* Filters the collection based on a filtering function.
-		* 
-		* ```js
-		* collection = collection.filter(function (record) { 
-		*   return record.age > 18;
-		* });
-		* ```
-		*
-		* @param {Function} Filterer
-		* @return {Imm} Modified collection
-		* @api public
-		*/
-		function filter(filterer) {
-			var newCol = immutableArray.filter(filterer);
-			return wrapWithArgs(newCol);
-		}
-
-		/**
-		* Sorts the collection based on a sorting function.
-		* 
-		* ```js
-		* collection = collection.sort(function (record1, record2) { 
-		*   return record1.age > record2.age;
-		* });
-		* ```
-		*
-		* @param {Function} Sorter
-		* @return {Imm} Modified collection
-		* @api public
-		*/
-		function sort(sorter) {
-			var newCol = immutableArray.asMutable();
-			var newCol = newCol.sort(sorter);
-			newCol = Immutable(newCol);
-			return wrapWithArgs(newCol);
-		}
-
-		/**
-		* Finds one record
-		* 
-		* ```js
-		* var record = collection.find(function (record) { 
-		*   return record.age === 18;
-		* });
-		* ```
-		*
-		* @param {Function} Finder
-		* @return {Object} Record or undefined
-		* @api public
-		*/
-		function find(finder) {
-			for (var a = 0; a < immutableArray.length; a++) {
-				var record = immutableArray[a];
-				if (finder(record)) {
-					return record;
-				}
+			for (var a = 0; a < records.length; a++) {
+				record = records[a];
+				id = record[key];
+				existing = get(id);
+				if (!existing) throw new Error('Record ' + id + ' does not exists');
+				merges[id] = record;
 			}
-			return void(0);
+
+			newCol = newCol.merge(merges);
+
+			return wrapImmutableCollectionWithArgs(newCol);
+		}
+
+		function toImmutable() {
+			return immutableCollection;
 		}
 
 		/**
-		* Returns the records count
+		* Updates one record or many. 
+		* This merges the given data with the existing one.
+		* Throws if record / records not found.
 		* 
 		* ```js
-		* count = collection.count();
+		* collection = collection.update(record)
+		* collection = collection.update(array)
 		* ```
 		*
-		* @return {Number} count
+		* @param {Object or Array} record / records
+		* @return {Imm} modified collection
 		* @api public
 		*/
-		function count(){
-			return immutableArray.length;
+		function update(recordOrRecords) {
+			var givenId, givenRecord, toMerge, existing;
+			var givenRecords = wrapAsArray(recordOrRecords);
+			var newCol = immutableCollection;
+
+			for (var a = 0; a < givenRecords.length; a++) {
+				givenRecord = givenRecords[a];
+				givenId = givenRecord[key];
+				// throw if no givenId
+				if (!givenId) throw new Error('Record must have .' + key);
+
+				existing = immutableCollection[givenId];
+				if (!existing) throw new Error('Record not found ' + givenId);
+
+				existing = existing.merge(givenRecord);
+
+				toMerge = {};
+				toMerge[givenId] = existing;
+
+				newCol = newCol.merge(toMerge);
+			}
+
+			return wrapImmutableCollectionWithArgs(newCol);
 		}
 
 		return {
@@ -399,8 +412,8 @@
 			replace:     replace,
 			map:         map,
 			remove:      remove,
+			toImmutable: toImmutable,
 			update:      update,
-			sort:        sort,
 		};
 	}
 

@@ -9,6 +9,7 @@ Utility functions
 ## imm(Array, [key])
 
 Returns an Imm collection
+Keys are always sorted in alphabetical order
 
 ```js
 var records = [{id: 1, label: 'Sam'}, {...}];
@@ -20,7 +21,7 @@ imm assumes that the id key is called `id`. You can provide an optional argument
 collection = imm(records, '_id');
 ```
 
-### Params: 
+### Params:
 
 * **Array** *Array* of records
 * **String** *[key]* Optional name of id key e.g. _id
@@ -29,41 +30,27 @@ collection = imm(records, '_id');
 
 * **Imm** Imm collection
 
-## checkImmutableArray()
+## wrapPlainArray()
 
-Internal utility functions
+### Params:
 
-## all()
-
-Get all records
-This returns a JavaScript array
-
-```js
-var records = collection.all();
-```
+* **Array** ** 
 
 ### Return:
 
-* **Array** records
+* **Imm** 
 
-## get(or)
+## wrapImmutableCollection()
 
-Get a record
+### Params:
 
-```js
-var record = collection.get(11)
-```
-Key is expected to be exactly as in the record, e.g. number or string
-
-### Params: 
-
-* **Number** *or* String} id
+* **Immutable** ** 
 
 ### Return:
 
-* **Object** record
+* **Imm** 
 
-## add(or)
+## add(record)
 
 Adds one or more records.
 Adds a new record if record doesn't have an id or id not found.
@@ -76,9 +63,130 @@ collection = collection.add(record)
 collection = collection.add(array)
 ```
 
-### Params: 
+### Params:
 
-* **Object** *or* Array} record or records
+* **ObjectorArray** *record* or records
+
+### Return:
+
+* **Imm** modified collection
+
+## all()
+
+Get all records
+This returns a plain JavaScript array
+Records in the array are plain mutable JS objects
+
+```js
+var records = collection.all();
+```
+
+### Return:
+
+* **Array** records
+
+## exist()
+
+Check if the given id or ids exists
+
+## count()
+
+Returns the records count
+
+```js
+count = collection.count();
+```
+
+### Return:
+
+* **Number** count
+
+## filter(Filterer)
+
+Filters the collection based on a filtering function.
+
+```js
+collection = collection.filter(function (record) { 
+  return record.age > 18;
+});
+```
+
+### Params:
+
+* **Function** *Filterer* 
+
+### Return:
+
+* **Imm** Modified collection
+
+## find(Finder)
+
+Finds one record
+Returns a plain JS mutable object
+
+```js
+var record = collection.find(function (record) { 
+  return record.age === 18;
+});
+```
+
+### Params:
+
+* **Function** *Finder* 
+
+### Return:
+
+* **Object** Record or undefined
+
+## get(id)
+
+Get a record
+Returned record is a plain JS mutable object
+
+```js
+var record = collection.get(11)
+```
+Key is expected to be exactly as in the record, e.g. number or string
+
+### Params:
+
+* **NumberorString** *id* 
+
+### Return:
+
+* **Object** record
+
+## map(mapper)
+
+Map the collection through a given function
+
+```js
+collection = collection.map(function (record) { 
+  return {foo: record.id};
+});
+```
+
+### Params:
+
+* **Function** *mapper* 
+
+### Return:
+
+* **Misc** 
+
+## remove(id)
+
+Removes one or many records based on the id.
+Throws if record/records not found.
+
+```js
+collection = collection.remove(id);
+collection = collection.remove(arrayOfIds);
+```
+
+### Params:
+
+* **NumberorStringorArray** *id* or ids
 
 ### Return:
 
@@ -95,7 +203,7 @@ collection = collection.replace(record)
 collection = collection.replace(array)
 ```
 
-### Params: 
+### Params:
 
 * **Object** *record* 
 
@@ -103,7 +211,7 @@ collection = collection.replace(array)
 
 * **Imm** modified collection
 
-## update(or)
+## update(record)
 
 Updates one record or many. 
 This merges the given data with the existing one.
@@ -114,115 +222,13 @@ collection = collection.update(record)
 collection = collection.update(array)
 ```
 
-### Params: 
+### Params:
 
-* **Object** *or* Array} record / records
-
-### Return:
-
-* **Imm** modified collection
-
-## remove(or)
-
-Removes one or many records based on the id.
-Throws if record/records not found.
-
-```js
-collection = collection.remove(id);
-collection = collection.remove(arrayOfIds);
-```
-
-### Params: 
-
-* **Number** *or* String or Array} id or ids
+* **ObjectorArray** *record* / records
 
 ### Return:
 
 * **Imm** modified collection
-
-## map(mapper)
-
-Map the collection through a given function.
-
-```js
-collection = collection.map(function (record) { 
-  return {foo: record.id};
-});
-```
-
-### Params: 
-
-* **Function** *mapper* 
-
-### Return:
-
-* **Imm** modified collection
-
-## filter(Filterer)
-
-Filters the collection based on a filtering function.
-
-```js
-collection = collection.filter(function (record) { 
-  return record.age > 18;
-});
-```
-
-### Params: 
-
-* **Function** *Filterer* 
-
-### Return:
-
-* **Imm** Modified collection
-
-## sort(Sorter)
-
-Sorts the collection based on a sorting function.
-
-```js
-collection = collection.sort(function (record1, record2) { 
-  return record1.age > record2.age;
-});
-```
-
-### Params: 
-
-* **Function** *Sorter* 
-
-### Return:
-
-* **Imm** Modified collection
-
-## find(Finder)
-
-Finds one record
-
-```js
-var record = collection.find(function (record) { 
-  return record.age === 18;
-});
-```
-
-### Params: 
-
-* **Function** *Finder* 
-
-### Return:
-
-* **Object** Record or undefined
-
-## count()
-
-Returns the records count
-
-```js
-count = collection.count();
-```
-
-### Return:
-
-* **Number** count
 
 <!-- End src/imm.js -->
 
