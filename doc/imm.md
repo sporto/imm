@@ -69,7 +69,8 @@ This discards any previous data from the replaced items.
 Throws if record / records not found.
 
 ```js
-collection = collection.replace({id: 11, label: 'Sam'})
+collection = collection.replace(record)
+collection = collection.replace(array)
 ```
 
 ### Params: 
@@ -80,36 +81,38 @@ collection = collection.replace({id: 11, label: 'Sam'})
 
 * **Imm** modified collection
 
-## update(record)
+## update(or)
 
-Updates one item or many. This merges the given data with the existing one.
-Throws if record not found.
+Updates one record or many. 
+This merges the given data with the existing one.
+Throws if record / records not found.
 
 ```js
-collection = collection.update({id: 11, label: 'Sam'})
+collection = collection.update(record)
+collection = collection.update(array)
 ```
 
 ### Params: 
 
-* **Object** *record* 
+* **Object** *or* Array} record / records
 
 ### Return:
 
 * **Imm** modified collection
 
-## remove(id)
+## remove(or)
 
-Remove a record.
-Removes an existing record based on the id.
-Throws if record not found.
+Removes one or many records based on the id.
+Throws if record/records not found.
 
 ```js
 collection = collection.remove(id);
+collection = collection.remove(arrayOfIds);
 ```
 
 ### Params: 
 
-* **String** *id* 
+* **Number** *or* String or Array} id or ids
 
 ### Return:
 
@@ -118,7 +121,6 @@ collection = collection.remove(id);
 ## map(mapper)
 
 Map the collection through a given function.
-Caveat: If you modify the record in the map, the original object get modified.
 
 ```js
 collection = collection.map(function (record) { 
@@ -134,7 +136,7 @@ collection = collection.map(function (record) {
 
 * **Imm** modified collection
 
-## filter(filterer)
+## filter(Filterer)
 
 Filters the collection based on a filtering function.
 
@@ -146,13 +148,13 @@ collection = collection.filter(function (record) {
 
 ### Params: 
 
-* **Function** *filterer* 
+* **Function** *Filterer* 
 
 ### Return:
 
-* **Imm** modified collection
+* **Imm** Modified collection
 
-## sort(sorter)
+## sort(Sorter)
 
 Sorts the collection based on a sorting function.
 
@@ -164,13 +166,13 @@ collection = collection.sort(function (record1, record2) {
 
 ### Params: 
 
-* **Function** *sorter* 
+* **Function** *Sorter* 
 
 ### Return:
 
-* **Imm** modified collection
+* **Imm** Modified collection
 
-## find(finder)
+## find(Finder)
 
 Finds one record
 
@@ -182,24 +184,11 @@ var record = collection.find(function (record) {
 
 ### Params: 
 
-* **Function** *finder* 
+* **Function** *Finder* 
 
 ### Return:
 
-* **Object** record or undefined
-
-## toJS()
-
-/**
-Returns the collection as a JS Array
-
-```js
-records = collection.toJS();
-```
-
-### Return:
-
-* **Array** JS Array
+* **Object** Record or undefined
 
 ## count()
 

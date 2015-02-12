@@ -13,7 +13,9 @@ Install
 
 ### Using NPM
 
-	npm install imm
+```bash
+npm install imm
+```
 
 ### Browser global
 
@@ -27,10 +29,16 @@ Please see API [documentation here](./doc/imm.md)
 Test
 ----
 
-	npm install
-	npm test
+```bash
+npm install
+npm test
+```
 
 Build
 -----
 
-	gulp
+This will lint, test, minify and create documentation
+
+```bash
+gulp
+```

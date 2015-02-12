@@ -180,26 +180,30 @@
 		* Throws if record / records not found.
 		* 
 		* ```js
-		* collection = collection.replace({id: 11, label: 'Sam'})
+		* collection = collection.replace(record)
+		* collection = collection.replace(array)
 		* ```
 		*
 		* @param {Object} record
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function replace(newRecord) {
+		function replace(recordOrRecords) {
+			var records = wrapAsArray(recordOrRecords);
 			var newCol = [];
-			var replaced = false;
+			var replaced = 0;
+
 			for (var a = 0; a < immutableArray.length; a++) {
 				var record = immutableArray[a];
-				if (record[key] === newRecord[key]) {
-					replaced = true;
-					newCol.push(newRecord);
+				if (record[key] === recordOrRecords[key]) {
+					replaced++;
+					newCol.push(recordOrRecords);
 				} else {
 					newCol.push(record);
 				}
 			}
-			if (!replaced) {
+
+			if (replaced != records.length) {
 				throw new Error('Record does not exists');
 			}
 
@@ -208,28 +212,30 @@
 		}
 
 		/**
-		* Updates one item or many. This merges the given data with the existing one.
-		* Throws if record not found.
+		* Updates one record or many. 
+		* This merges the given data with the existing one.
+		* Throws if record / records not found.
 		* 
 		* ```js
-		* collection = collection.update({id: 11, label: 'Sam'})
+		* collection = collection.update(record)
+		* collection = collection.update(array)
 		* ```
 		*
-		* @param {Object} record
+		* @param {Object or Array} record / records
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function update(givenRecord) {
+		function update(recordOrRecords) {
 			// throw if no id
-			if (!givenRecord[key]) throw new Error('Record must have an id');
+			if (!recordOrRecords[key]) throw new Error('Record must have an id');
 
 			var newCol = [];
 
 			for (var a = 0; a < immutableArray.length; a++) {
 				var record = immutableArray[a];
-				if (givenRecord[key] === record[key]) {
+				if (recordOrRecords[key] === record[key]) {
 					// merge records
-					var merged = mergeRecords(record, givenRecord);
+					var merged = mergeRecords(record, recordOrRecords);
 					newCol.push(merged);
 				} else {
 					newCol.push(record);
@@ -241,15 +247,15 @@
 		}
 
 		/**
-		* Remove a record.
-		* Removes an existing record based on the id.
-		* Throws if record not found.
+		* Removes one or many records based on the id.
+		* Throws if record/records not found.
 		* 
 		* ```js
 		* collection = collection.remove(id);
+		* collection = collection.remove(arrayOfIds);
 		* ```
 		*
-		* @param {String} id
+		* @param {Number or String or Array} id or ids
 		* @return {Imm} modified collection
 		* @api public
 		*/
@@ -274,7 +280,6 @@
 
 		/**
 		* Map the collection through a given function.
-		* Caveat: If you modify the record in the map, the original object get modified.
 		* 
 		* ```js
 		* collection = collection.map(function (record) { 
@@ -300,8 +305,8 @@
 		* });
 		* ```
 		*
-		* @param {Function} filterer
-		* @return {Imm} modified collection
+		* @param {Function} Filterer
+		* @return {Imm} Modified collection
 		* @api public
 		*/
 		function filter(filterer) {
@@ -318,8 +323,8 @@
 		* });
 		* ```
 		*
-		* @param {Function} sorter
-		* @return {Imm} modified collection
+		* @param {Function} Sorter
+		* @return {Imm} Modified collection
 		* @api public
 		*/
 		function sort(sorter) {
@@ -338,8 +343,8 @@
 		* });
 		* ```
 		*
-		* @param {Function} finder
-		* @return {Object} record or undefined
+		* @param {Function} Finder
+		* @return {Object} Record or undefined
 		* @api public
 		*/
 		function find(finder) {
@@ -351,19 +356,6 @@
 			}
 			return void(0);
 		}
-
-		/*
-		/**
-		* Returns the collection as a JS Array
-		* 
-		* ```js
-		* records = collection.toJS();
-		* ```
-		*
-		* @return {Array} JS Array
-		* @api public
-		*/
-		function toJS(){}
 
 		/**
 		* Returns the records count
@@ -381,7 +373,6 @@
 
 		return {
 			isImm:       true,
-			//set:         set,
 			add:         add,
 			all:         all,
 			count:       count,
