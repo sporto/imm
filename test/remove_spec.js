@@ -25,11 +25,17 @@ describe('.remove', function () {
 				expect(col.count()).to.be(2);
 			})
 
-			it('throws if record is not found', function () {
-				expect(function () {
-					col.remove(13);
-				}).to.throwError();
+			it('handles a non existent id', function () {
+				expect(col.count()).to.be(2);
+				var newCol = col.remove(20);
+				expect(newCol.count()).to.be(2);
 			})
+
+			// it('throws if record is not found', function () {
+			// 	expect(function () {
+			// 		col.remove(13);
+			// 	}).to.throwError();
+			// })
 		})
 
 		describe('many', function () {
@@ -40,10 +46,16 @@ describe('.remove', function () {
 				expect(newCol.count()).to.be(0);
 			})
 
-			it('throws if record is not found', function () {
-				expect(function () {
-					col.remove([10, 12]);
-				}).to.throwError();
+			// it('throws if record is not found', function () {
+			// 	expect(function () {
+			// 		col.remove([10, 12]);
+			// 	}).to.throwError();
+			// })
+
+			it('handles non existent ids', function () {
+				expect(col.count()).to.be(2);
+				var newCol = col.remove([10, 20]);
+				expect(newCol.count()).to.be(1);
 			})
 
 		})
@@ -61,11 +73,6 @@ describe('.remove', function () {
 				expect(col2.count()).to.be(1);
 			})
 
-			it('throws if record is not found', function () {
-				expect(function () {
-					col2.remove('ijk');
-				}).to.throwError();
-			})
 		})
 	})
 

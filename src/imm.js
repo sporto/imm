@@ -49,6 +49,7 @@
 	}
 
 	function _idsFromRecords(array, key) {
+		if (!key) throw new Error("Must provide a key");
 		return array.map(function (record) {
 			return record[key];
 		});
@@ -132,21 +133,33 @@
 
 		/**
 		* Adds one or more records.
-		* Adds a new record if record doesn't have an id or id not found.
-		* Throws an error if id already found.
+		* If record already exists then it gets replaced.
 		* 
 		* ```js
 		* // add one record
 		* collection = collection.add(record)
+		*
 		* // add many records
 		* collection = collection.add(array)
 		* ```
 		*
 		* @param {Object|Array} recordOrRecords Record or records to add
+		* @param {Object} [args] Optional arguments
+		*   @param {Boolean} [args.strict] Throw if record already exists
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function add(recordOrRecords) {
+		function add(recordOrRecords, args) {
+			if (args && args.strict) {
+				// throw if any record exists
+				var records = _wrapAsArray(recordOrRecords);
+				var ids     = _idsFromRecords(records, key);
+				if (exist(ids)) throw new Error('Some records already exist');
+			}
+			return replace(recordOrRecords);
+		}
+
+		function addThrow(recordOrRecords) {
 			var records = _wrapAsArray(recordOrRecords);
 			var id, record, toMerge, existing;
 
@@ -194,6 +207,7 @@
 		*
 		* @param {Number|String|Array} idOrIds Id or Ids to check
 		* @return {Booelan}
+		* @api public
 		*/
 		function exist(idOrIds) {
 			var ids = _wrapAsArray(idOrIds);
@@ -301,7 +315,7 @@
 
 		/**
 		* Removes one or many records based on the id.
-		* Throws if record/records not found.
+		* If record is not found then it just gets skipped.
 		* 
 		* ```js
 		* collection = collection.remove(id);
@@ -313,6 +327,16 @@
 		* @api public
 		*/
 		function remove(idOrIds) {
+			var ids = _wrapAsArray(idOrIds);
+
+			// ids need to be strings for without
+			ids = _idsAsStrings(ids);
+
+			var newCol = immutableCollection.without(ids);
+			return _wrapImmutableCollectionWithArgs(newCol);
+		}
+
+		function removeThrow(idOrIds) {
 			var ids = _wrapAsArray(idOrIds);
 
 			if (!exist(ids)) throw new Error('Not all records found');
@@ -327,7 +351,7 @@
 		/**
 		* Replaces one item or many. 
 		* This discards any previous data from the replaced items.
-		* Throws if record / records not found.
+		* If records doesn't exist then it just gets added
 		* 
 		* ```js
 		* collection = collection.replace(record)
@@ -339,6 +363,26 @@
 		* @api public
 		*/
 		function replace(recordOrRecords) {
+			var record, id;
+			var records = _wrapAsArray(recordOrRecords);
+			var ids = _idsFromRecords(records, key);
+			ids = _idsAsStrings(ids);
+			var newCol = immutableCollection.without(ids);
+			var merges = {};
+
+			for (var a = 0; a < records.length; a++) {
+				record = records[a];
+				id = record[key];
+				if (!id) throw new Error("Record must have ." + key);
+				merges[id] = record;
+			}
+
+			newCol = newCol.merge(merges);
+
+			return _wrapImmutableCollectionWithArgs(newCol);
+		}
+
+		function replaceThrow(recordOrRecords) {
 			var record, id, existing;
 			var records = _wrapAsArray(recordOrRecords);
 			var ids = _idsFromRecords(records, key);
@@ -366,7 +410,7 @@
 		/**
 		* Updates one record or many. 
 		* This merges the given data with the existing one.
-		* Throws if record / records not found.
+		* If a record is not found then it gets added.
 		* 
 		* ```js
 		* collection = collection.update(record)
@@ -378,6 +422,33 @@
 		* @api public
 		*/
 		function update(recordOrRecords) {
+			var givenId, givenRecord, toMerge, existing, mergedRecord;
+			var givenRecords = _wrapAsArray(recordOrRecords);
+			var newCol = immutableCollection;
+
+			for (var a = 0; a < givenRecords.length; a++) {
+				givenRecord = givenRecords[a];
+				givenId = givenRecord[key];
+				// throw if no givenId
+				if (!givenId) throw new Error('Record must have .' + key);
+
+				existing = immutableCollection[givenId];
+				if (existing) {
+					mergedRecord = existing.merge(givenRecord);
+				} else {
+					mergedRecord = givenRecord;
+				}
+
+				toMerge = {};
+				toMerge[givenId] = mergedRecord;
+
+				newCol = newCol.merge(toMerge);
+			}
+
+			return _wrapImmutableCollectionWithArgs(newCol);
+		}
+
+		function updateThrow(recordOrRecords) {
 			var givenId, givenRecord, toMerge, existing;
 			var givenRecords = _wrapAsArray(recordOrRecords);
 			var newCol = immutableCollection;
@@ -407,6 +478,7 @@
 			add:         add,
 			array:       array,
 			count:       count,
+			exist:       exist,
 			filter:      filter,
 			find:        find,
 			get:         get,

@@ -24,10 +24,13 @@ describe('.add', function () {
 				}).to.throwError();
 			})
 
-			it('throws if there is an existing record', function () {
-				expect(function () {
-					col.add({id: 11, label: 'Not Tess'});
-				}).to.throwError();
+			it('replaces an existing record', function () {
+				expect(col.count()).to.be(2);
+				expect(col.get(10)).to.eql({id: 10, label: 'Sam'});
+
+				var newCol = col.add({id: 10, age: 22});
+				expect(newCol.count()).to.be(2);
+				expect(newCol.get(10)).to.eql({id: 10, age: 22});
 			})
 
 			it('doesnt modify the original collection', function () {
@@ -57,6 +60,16 @@ describe('.add', function () {
 				expect(newCol.count()).to.be(2)
 			})
 		})
+
+		describe('strict', function () {
+			it('throws if record already exists', function () {
+				var record = {id: 10, label: 'Sam'};
+				expect(col.exist(10)).to.be(true);
+				expect(function () {
+					col.add(record, {strict: true});
+				}).to.throwError(/already exist/);
+			})
+		})
 	})
 
 	describe('_id', function () {
@@ -73,10 +86,13 @@ describe('.add', function () {
 				expect(newCol.count()).to.be(3);
 			})
 
-			it('throws if there is an existing record (_id)', function () {
-				expect(function () {
-					col.add({_id: 'xyz', label: 'Not Tess'});
-				}).to.throwError();
+			it('replaces existing record', function () {
+				expect(col.count()).to.be(2);
+				expect(col.get('xyz')).to.eql({_id: 'xyz', label: 'Tess'});
+
+				var newCol = col.add({_id: 'xyz', age: 22});
+				expect(newCol.count()).to.be(2);
+				expect(newCol.get('xyz')).to.eql({_id: 'xyz', age: 22});
 			})
 		})
 	})

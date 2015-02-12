@@ -22,10 +22,10 @@ describe('.replace', function () {
 				expect(newCol.get(11)).to.eql(record);
 			})
 
-			it('throws if there is no existing record', function () {
-				expect(function () {
-					col.replace({id: 13, label: 'Not there'});
-				}).to.throwError();
+			it('adds a no existing record', function () {
+				var record = {id: 20, label: 'Will'};
+				var newCol = col.replace(record);
+				expect(newCol.count()).to.be(3);
 			})
 		})
 
@@ -35,9 +35,19 @@ describe('.replace', function () {
 				var record2 = {id: 11, label: 'New Sam'};
 				var records = [record1, record2];
 				expect(col.count()).to.be(2);
+
 				var newCol = col.replace(records);
 				expect(newCol.get(10)).to.eql(record1);
 				expect(newCol.get(11)).to.eql(record2);
+			})
+
+			it('adds non existing records', function () {
+				var record1 = {id: 10, label: 'New Tess'};
+				var record2 = {id: 20, label: 'Will'};
+				var records = [record1, record2];
+
+				var newCol = col.replace(records);
+				expect(newCol.count()).to.be(3);
 			})
 		})
 
@@ -58,11 +68,6 @@ describe('.replace', function () {
 				expect(col.get('xyz')).to.eql(record);
 			})
 
-			it('throws if there is no existing record (_id)', function () {
-				expect(function () {
-					col.replace({_id: 'ijk', label: 'Not there'});
-				}).to.throwError();
-			})
 		})
 	})
 

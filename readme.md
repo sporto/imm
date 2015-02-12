@@ -1,4 +1,4 @@
-IMM
+IMM.js
 ========
 
 [ ![Codeship Status for sporto/imm](https://www.codeship.io/projects/c6ea6970-2eac-0132-d151-0605b547a2e8/status)](https://www.codeship.io/projects/39398)
@@ -49,3 +49,9 @@ This will lint, test, minify and create documentation
 ```bash
 gulp
 ```
+
+Related projects
+----------------
+
+- [immutable.js](https://github.com/facebook/immutable-js)
+- [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)

@@ -25,10 +25,17 @@ describe('.update', function () {
 				expect(col.get(11)).to.eql({id: 11, label: 'Tess'});
 			})
 
-			it('throws if there is no existing record', function () {
+			it('doesnt throw if there is no existing record', function () {
 				expect(function () {
 					col.remove({id: 20});
-				}).to.throwError();
+				}).not.to.throwError();
+			})
+
+			it('adds a non existing record', function () {
+				var record = {id: 20, name: 'Maria'};
+				var newCol = col.update(record);
+				expect(newCol.count()).to.be(3);
+				expect(newCol.get(20)).to.eql(record);
 			})
 		})
 
@@ -44,6 +51,16 @@ describe('.update', function () {
 				expect(newCol.count()).to.be(2);
 				expect(newCol.get(10)).to.eql({id: 10, label: 'Sam', age: 22});
 				expect(newCol.get(11)).to.eql({id: 11, label: 'Tess', age: 11});
+			})
+
+			it('adds non existing records', function () {
+				var record1 = {id: 10, age: 22};
+				var record2 = {id: 20, age: 11};
+				var records = [record1, record2];
+
+				var newCol = col.update(records);
+				expect(newCol.count()).to.be(3);
+				expect(newCol.get(20)).to.eql(record2);
 			})
 		})
 
