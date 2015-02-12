@@ -2,19 +2,18 @@ var imm              = require('../src/imm');
 var expect           = require('expect.js');
 var records          = require('./fixtures/records');
 var recordWithAltId  = require('./fixtures/records_with_alt_id');
-var col1;
-var col2;
+var col;
 
 
 describe('.filter', function () {
 
 	beforeEach(function () {
-		col1 = imm(records());
+		col = imm(records());
 		col2 = imm(recordWithAltId(), '_id');
 	})
 
 	it('filters', function() {
-		var newCol = col1.filter(function(record) {
+		var newCol = col.filter(function(record) {
 			return record.label == 'Tess';
 		});
 		expect(newCol.count()).to.be(1);
@@ -22,10 +21,10 @@ describe('.filter', function () {
 	})
 
 	it('returns an imm collection', function() {
-		col1 = col1.filter(function(record) {
+		col = col.filter(function(record) {
 			return record.label == 'Tess';
 		});
-		expect(col1.isImm).to.be(true);
+		expect(col.isImm).to.be(true);
 	})
 
 });

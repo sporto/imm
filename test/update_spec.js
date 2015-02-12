@@ -22,31 +22,17 @@ describe('.update', function () {
 			expect(newCol.get(11)).to.eql({id: 11, label: 'Tess', name: 'Maria'});
 		})
 
+		it('doesnt update the original collection', function () {
+			var newCol = col.update({id: 11, name: 'Maria'});
+			expect(col.get(11)).to.eql({id: 11, label: 'Tess'});
+		})
+
+		it('throws if there is no existing record', function () {
+			expect(function () {
+				col.remove({id: 20});
+			}).to.throwError();
+		})
+
 	})
-
-	// beforeEach(function () {
-	// 	col1 = imm(records());
-	// 	col2 = imm(recordWithAltId(), '_id');
-	// })
-
-	
-	// it('patches an existing record (_id)', function () {
-	// 	expect(col2.count()).to.be(2);
-	// 	col2 = col2.update({_id: 'xyz', name: 'Maria'});
-	// 	expect(col2.count()).to.be(2);
-	// 	expect(col2.get('xyz')).to.eql({_id: 'xyz', label: 'Tess', name: 'Maria'});
-	// })
-
-	// it('throws if there is no existing record', function () {
-	// 	expect(function () {
-	// 		col1.update({id: 13, label: 'Not there'});
-	// 	}).to.throwError();
-	// })
-
-	// it('throws if there is no existing record (_id)', function () {
-	// 	expect(function () {
-	// 		col2.update({_id: 'ijk', label: 'Not there'});
-	// 	}).to.throwError();
-	// })
 
 });
