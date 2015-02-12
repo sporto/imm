@@ -2,13 +2,27 @@ var imm              = require('../src/imm');
 var expect           = require('expect.js');
 var records          = require('./fixtures/records');
 var recordWithAltId  = require('./fixtures/records_with_alt_id');
+var col;
 
 describe('imm', function(){
 
 	describe('id', function () {
 		it('creates a collection', function () {
-			var col = imm(records());
+			col = imm(records());
 			expect(col.count()).to.be(2)
+		})
+
+		it('is immutable', function () {
+			var items = records();
+			col = imm(items);
+
+			expect(items[0]).to.eql({id: 10, label: 'Sam'})
+			expect(col.get(10)).to.eql({id: 10, label: 'Sam'})
+
+			// mutate the original item
+			items[0].label = 'Mutated';
+			expect(items[0]).to.eql({id: 10, label: 'Mutated'})
+			expect(col.get(10)).to.eql({id: 10, label: 'Sam'})
 		})
 
 		it('throws if not given an array', function () {
@@ -24,7 +38,7 @@ describe('imm', function(){
 				_id: 'xyz',
 				label: 'Tess'
 			}
-			var col = imm(recordWithAltId(), '_id');
+			col = imm(recordWithAltId(), '_id');
 			expect(col.get('xyz')).to.eql(record);
 		})
 	})
