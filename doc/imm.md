@@ -17,7 +17,7 @@ imm assumes that the id key is called `id`. You can provide an optional argument
 collection = imm(records, '_id');
 ```
 
-### Params:
+### Params: 
 
 * **Array** *records* Array of records
 * **String** *[key]* Optional name of id key e.g. _id
@@ -26,35 +26,35 @@ collection = imm(records, '_id');
 
 * **Imm** Imm collection
 
-## add(recordOrRecords)
+## add(recordOrRecords, [args])
 
 Adds one or more records.
-Adds a new record if record doesn't have an id or id not found.
-Throws an error if id already found.
+If record already exists then it gets replaced.
 
 ```js
 // add one record
 collection = collection.add(record)
+
 // add many records
 collection = collection.add(array)
 ```
 
-### Params:
+### Params: 
 
 * **Object|Array** *recordOrRecords* Record or records to add
+* **Object** *[args]* Optional arguments   @param {Boolean} [args.strict] Throw if record already exists
 
 ### Return:
 
 * **Imm** modified collection
 
-## all()
+## array()
 
-Get all records
-This returns a plain JavaScript array
+Get all records as a plain JavaScript array
 Records in the array are plain mutable JS objects
 
 ```js
-var records = collection.all();
+var records = collection.array();
 ```
 
 ### Return:
@@ -65,7 +65,7 @@ var records = collection.all();
 
 Check if the given id or ids exists
 
-### Params:
+### Params: 
 
 * **Number|String|Array** *idOrIds* Id or Ids to check
 
@@ -95,7 +95,7 @@ collection = collection.filter(function (record) {
 });
 ```
 
-### Params:
+### Params: 
 
 * **Function** *filterer* Filterer function
 
@@ -114,7 +114,7 @@ var record = collection.find(function (record) {
 });
 ```
 
-### Params:
+### Params: 
 
 * **Function** *finder* Finder function
 
@@ -132,7 +132,7 @@ var record = collection.get(11)
 ```
 Key is expected to be exactly as in the record, e.g. number or string
 
-### Params:
+### Params: 
 
 * **Number|String** *id* Id to get
 
@@ -150,7 +150,7 @@ collection = collection.map(function (record) {
 });
 ```
 
-### Params:
+### Params: 
 
 * **Function** *mapper* Mapping function
 
@@ -161,14 +161,14 @@ collection = collection.map(function (record) {
 ## remove(idOrIds)
 
 Removes one or many records based on the id.
-Throws if record/records not found.
+If record is not found then it just gets skipped.
 
 ```js
 collection = collection.remove(id);
 collection = collection.remove(arrayOfIds);
 ```
 
-### Params:
+### Params: 
 
 * **Number|String|Array** *idOrIds* Id or ids to remove
 
@@ -180,14 +180,14 @@ collection = collection.remove(arrayOfIds);
 
 Replaces one item or many. 
 This discards any previous data from the replaced items.
-Throws if record / records not found.
+If records doesn't exist then it just gets added
 
 ```js
 collection = collection.replace(record)
 collection = collection.replace(array)
 ```
 
-### Params:
+### Params: 
 
 * **Object** *recordOrRecords* Record or records to replace
 
@@ -199,14 +199,14 @@ collection = collection.replace(array)
 
 Updates one record or many. 
 This merges the given data with the existing one.
-Throws if record / records not found.
+If a record is not found then it gets added.
 
 ```js
 collection = collection.update(record)
 collection = collection.update(array)
 ```
 
-### Params:
+### Params: 
 
 * **Object|Array** *recordOrRecords* Record or records to update
 
