@@ -2,10 +2,6 @@
 
 <!-- Start src/imm.js -->
 
-## isArray
-
-Utility functions
-
 ## imm(Array, [key])
 
 Returns an Imm collection
@@ -29,26 +25,6 @@ collection = imm(records, '_id');
 ### Return:
 
 * **Imm** Imm collection
-
-## wrapPlainArray()
-
-### Params:
-
-* **Array** ** 
-
-### Return:
-
-* **Imm** 
-
-## wrapImmutableCollection()
-
-### Params:
-
-* **Immutable** ** 
-
-### Return:
-
-* **Imm** 
 
 ## add(record)
 
@@ -88,6 +64,14 @@ var records = collection.all();
 ## exist()
 
 Check if the given id or ids exists
+
+### Params:
+
+* **NumberorStringorArray** ** 
+
+### Return:
+
+* **Booelan** 
 
 ## count()
 

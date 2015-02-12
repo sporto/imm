@@ -28,48 +28,46 @@
 
 	var DEFAULT_KEY = 'id';
 
-	/**
-	* Utility functions
-	*/
-	var isArray = Array.isArray || function(obj) {
+	// Utility functions
+	var _isArray = Array.isArray || function(obj) {
 		return toString.call(obj) === '[object Array]';
 	};
 
-	function wrapAsArray(oneOrMany) {
-		return isArray(oneOrMany) ? oneOrMany : [oneOrMany];
+	function _wrapAsArray(oneOrMany) {
+		return _isArray(oneOrMany) ? oneOrMany : [oneOrMany];
 	}
 
-	function idsAsStrings(array) {
+	function _idsAsStrings(array) {
 		return array.map(function (v) {
 			return "" + v;
 		});
 	}
 
-	function idsFromRecords(array, key) {
+	function _idsFromRecords(array, key) {
 		return array.map(function (record) {
 			return record[key];
 		});
 	}
 
-	function arrayContains(array, value) {
+	function _arrayContains(array, value) {
 		for (var a = 0; a < array.length; a++) {
 			if (array[a] === value) return true;
 		}
 		return false;
 	}
 
-	function isImmutable(object) {
+	function _isImmutable(object) {
 		return Immutable.isImmutable(object);
 	}
 
-	function checkIsImmutable(object) {
-		var is = isImmutable(object);
+	function _checkIsImmutable(object) {
+		var is = _isImmutable(object);
 		if (!is) throw new Error("Not an immutable object");
 	}
 
-	function checkIsPlainArray(array) {
-		var one = !isArray(array);
-		var two = isImmutable(array);
+	function _checkIsPlainArray(array) {
+		var one = !_isArray(array);
+		var two = _isImmutable(array);
 		if (one || two) throw new Error("You must provide an array");
 	}
 
@@ -93,15 +91,13 @@
 	* @api public
 	*/
 	function imm(records, key) {
-		return wrapPlainArray(records, key);
+		return _wrapPlainArray(records, key);
 	}
 
-	/**
-	* @param {Array}
-	* @return {Imm}
-	*/
-	function wrapPlainArray(array, key) {
-		checkIsPlainArray(array);
+	// @param {Array}
+	// @return {Imm}
+	function _wrapPlainArray(array, key) {
+		_checkIsPlainArray(array);
 
 		key = key || DEFAULT_KEY;
 
@@ -110,25 +106,23 @@
 			return [record[key], record];
 		});
 
-		return wrapImmutableCollection(col, key);
+		return _wrapImmutableCollection(col, key);
 	}
 
-	/**
-	* @param {Immutable}
-	* @return {Imm}
-	*/
-	function wrapImmutableCollection(immutableCollection, key) {
+	// @param {Immutable}
+	// @return {Imm}
+	function _wrapImmutableCollection(immutableCollection, key) {
 
-		checkIsImmutable(immutableCollection);
+		_checkIsImmutable(immutableCollection);
 
 		key = key || DEFAULT_KEY;
 
-		function wrapPlainArrayWithArgs(array) {
-			return wrapPlainArray(array, key);
+		function _wrapPlainArrayWithArgs(array) {
+			return _wrapPlainArray(array, key);
 		}
 
-		function wrapImmutableCollectionWithArgs(immutableCollection) {
-			return wrapImmutableCollection(immutableCollection, key);
+		function _wrapImmutableCollectionWithArgs(immutableCollection) {
+			return _wrapImmutableCollection(immutableCollection, key);
 		}
 
 		/**
@@ -148,10 +142,10 @@
 		* @api public
 		*/
 		function add(oneOrMany) {
-			var records = wrapAsArray(oneOrMany);
+			var records = _wrapAsArray(oneOrMany);
 			var id, record, toMerge, existing;
 
-			if (records.length === 0) return wrapImmutableCollectionWithArgs(immutableCollection);
+			if (records.length === 0) return _wrapImmutableCollectionWithArgs(immutableCollection);
 
 			var newCol = immutableCollection;
 
@@ -166,7 +160,7 @@
 				newCol = newCol.merge(toMerge);
 			}
 
-			return wrapImmutableCollectionWithArgs(newCol);
+			return _wrapImmutableCollectionWithArgs(newCol);
 		}
 
 		/**
@@ -193,9 +187,12 @@
 
 		/**
 		* Check if the given id or ids exists
+		*
+		* @param {Number or String or Array}
+		* @return {Booelan}
 		*/
 		function exist(idOrIds) {
-			var ids = wrapAsArray(idOrIds);
+			var ids = _wrapAsArray(idOrIds);
 			for (var a = 0; a < ids.length; a++) {
 				var id = ids[a];
 				if (!immutableCollection[id]) return false;
@@ -233,7 +230,7 @@
 		function filter(filterer) {
 			var newCol = asPlainArray();
 			newCol = newCol.filter(filterer);
-			return wrapPlainArrayWithArgs(newCol);
+			return _wrapPlainArrayWithArgs(newCol);
 		}
 
 		/**
@@ -312,15 +309,15 @@
 		* @api public
 		*/
 		function remove(idOrIds) {
-			var ids = wrapAsArray(idOrIds);
+			var ids = _wrapAsArray(idOrIds);
 
 			if (!exist(ids)) throw new Error('Not all records found');
 
 			// ids need to be strings for without
-			ids = idsAsStrings(ids);
+			ids = _idsAsStrings(ids);
 
 			var newCol = immutableCollection.without(ids);
-			return wrapImmutableCollectionWithArgs(newCol);
+			return _wrapImmutableCollectionWithArgs(newCol);
 		}
 
 		/**
@@ -339,9 +336,9 @@
 		*/
 		function replace(recordOrRecords) {
 			var record, id, existing;
-			var records = wrapAsArray(recordOrRecords);
-			var ids = idsFromRecords(records, key);
-			ids = idsAsStrings(ids);
+			var records = _wrapAsArray(recordOrRecords);
+			var ids = _idsFromRecords(records, key);
+			ids = _idsAsStrings(ids);
 			var newCol = immutableCollection.without(ids);
 			var merges = {};
 
@@ -355,7 +352,7 @@
 
 			newCol = newCol.merge(merges);
 
-			return wrapImmutableCollectionWithArgs(newCol);
+			return _wrapImmutableCollectionWithArgs(newCol);
 		}
 
 		function toImmutable() {
@@ -378,7 +375,7 @@
 		*/
 		function update(recordOrRecords) {
 			var givenId, givenRecord, toMerge, existing;
-			var givenRecords = wrapAsArray(recordOrRecords);
+			var givenRecords = _wrapAsArray(recordOrRecords);
 			var newCol = immutableCollection;
 
 			for (var a = 0; a < givenRecords.length; a++) {
@@ -398,7 +395,7 @@
 				newCol = newCol.merge(toMerge);
 			}
 
-			return wrapImmutableCollectionWithArgs(newCol);
+			return _wrapImmutableCollectionWithArgs(newCol);
 		}
 
 		return {
