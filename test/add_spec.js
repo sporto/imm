@@ -63,10 +63,11 @@ describe('.add', function () {
 
 		describe('strict', function () {
 			it('throws if record already exists', function () {
-				var record = {id: 10, label: 'Sam'};
-				expect(col.exist(10)).to.be(true);
+				var record1 = {id: 10, label: 'Sam'};
+				var record2 = {id: 20, label: 'New'};
+				expect(col.anyExist(10)).to.be(true);
 				expect(function () {
-					col.add(record, {strict: true});
+					col.add([record1, record2], {strict: true});
 				}).to.throwError(/already exist/);
 			})
 		})

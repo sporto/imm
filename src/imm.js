@@ -154,31 +154,43 @@
 				// throw if any record exists
 				var records = _wrapAsArray(recordOrRecords);
 				var ids     = _idsFromRecords(records, key);
-				if (exist(ids)) throw new Error('Some records already exist');
+				if (anyExist(ids)) throw new Error('Some records already exist');
 			}
 			return replace(recordOrRecords);
 		}
 
-		function addThrow(recordOrRecords) {
-			var records = _wrapAsArray(recordOrRecords);
-			var id, record, toMerge, existing;
-
-			if (records.length === 0) return _wrapImmutableCollectionWithArgs(immutableCollection);
-
-			var newCol = immutableCollection;
-
-			for (var a = 0; a < records.length; a++) {
-				record = records[a];
-				id     = record[key];
-				if (!id) throw new Error("Invalid key");
-				existing = get(id);
-				if (existing) throw new Error('Record already exists');
-				toMerge = {};
-				toMerge[id] = record;
-				newCol = newCol.merge(toMerge);
+		/**
+		* Check if the given id or all given ids exist
+		* Return true if all record exist
+		*
+		* @param {Number|String|Array} idOrIds Id or Ids to check
+		* @return {Booelan}
+		* @api public
+		*/
+		function allExist(idOrIds) {
+			var ids = _wrapAsArray(idOrIds);
+			for (var a = 0; a < ids.length; a++) {
+				var id = ids[a];
+				if (!immutableCollection[id]) return false;
 			}
+			return true;
+		}
 
-			return _wrapImmutableCollectionWithArgs(newCol);
+		/**
+		* Check if the given id or any given ids exist
+		* Return true if any ids exist
+		*
+		* @param {Number|String|Array} idOrIds Id or Ids to check
+		* @return {Booelan}
+		* @api public
+		*/
+		function anyExist(idOrIds) {
+			var ids = _wrapAsArray(idOrIds);
+			for (var a = 0; a < ids.length; a++) {
+				var id = ids[a];
+				if (immutableCollection[id]) return true;
+			}
+			return false;
 		}
 
 		/**
@@ -200,22 +212,6 @@
 			return Object.keys(immutableCollection).map(function (key) {
 				return immutableCollection[key].asMutable();
 			});
-		}
-
-		/**
-		* Check if the given id or ids exists
-		*
-		* @param {Number|String|Array} idOrIds Id or Ids to check
-		* @return {Booelan}
-		* @api public
-		*/
-		function exist(idOrIds) {
-			var ids = _wrapAsArray(idOrIds);
-			for (var a = 0; a < ids.length; a++) {
-				var id = ids[a];
-				if (!immutableCollection[id]) return false;
-			}
-			return true;
 		}
 
 		/**
@@ -323,26 +319,20 @@
 		* ```
 		*
 		* @param {Number|String|Array} idOrIds Id or ids to remove
+		* @param {Object} [args] Optional arguments
+		* @param {Boolean} [args.strict] Throw if record(s) doesn't exists
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function remove(idOrIds) {
+		function remove(idOrIds, args) {
 			var ids = _wrapAsArray(idOrIds);
 
 			// ids need to be strings for without
 			ids = _idsAsStrings(ids);
 
-			var newCol = immutableCollection.without(ids);
-			return _wrapImmutableCollectionWithArgs(newCol);
-		}
-
-		function removeThrow(idOrIds) {
-			var ids = _wrapAsArray(idOrIds);
-
-			if (!exist(ids)) throw new Error('Not all records found');
-
-			// ids need to be strings for without
-			ids = _idsAsStrings(ids);
+			if (args && args.strict) {
+				if (!allExist(ids)) throw new Error('Some records do not exist');
+			}
 
 			var newCol = immutableCollection.without(ids);
 			return _wrapImmutableCollectionWithArgs(newCol);
@@ -362,6 +352,7 @@
 		* @return {Imm} modified collection
 		* @api public
 		*/
+		// TODO add strict
 		function replace(recordOrRecords) {
 			var record, id;
 			var records = _wrapAsArray(recordOrRecords);
@@ -421,6 +412,7 @@
 		* @return {Imm} modified collection
 		* @api public
 		*/
+		// TODO add strict
 		function update(recordOrRecords) {
 			var givenId, givenRecord, toMerge, existing, mergedRecord;
 			var givenRecords = _wrapAsArray(recordOrRecords);
@@ -476,9 +468,10 @@
 		return {
 			isImm:       true,
 			add:         add,
+			allExist:    allExist,
+			anyExist:    anyExist,
 			array:       array,
 			count:       count,
-			exist:       exist,
 			filter:      filter,
 			find:        find,
 			get:         get,

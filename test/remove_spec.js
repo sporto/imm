@@ -31,11 +31,6 @@ describe('.remove', function () {
 				expect(newCol.count()).to.be(2);
 			})
 
-			// it('throws if record is not found', function () {
-			// 	expect(function () {
-			// 		col.remove(13);
-			// 	}).to.throwError();
-			// })
 		})
 
 		describe('many', function () {
@@ -46,18 +41,21 @@ describe('.remove', function () {
 				expect(newCol.count()).to.be(0);
 			})
 
-			// it('throws if record is not found', function () {
-			// 	expect(function () {
-			// 		col.remove([10, 12]);
-			// 	}).to.throwError();
-			// })
-
 			it('handles non existent ids', function () {
 				expect(col.count()).to.be(2);
 				var newCol = col.remove([10, 20]);
 				expect(newCol.count()).to.be(1);
 			})
 
+		})
+
+		describe('strict', function () {
+			it('throws if records doesnt exist', function () {
+				expect(col.allExist([10, 12])).to.be(false);
+				expect(function () {
+					col.remove([10, 12], {strict: true});
+				}).to.throwError(/do not exist/);
+			})
 		})
 	})
 

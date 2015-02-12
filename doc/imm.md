@@ -49,6 +49,32 @@ collection = collection.add(array)
 
 * **Imm** modified collection
 
+## allExist(idOrIds)
+
+Check if the given id or all given ids exist
+Return true if all record exist
+
+### Params: 
+
+* **Number|String|Array** *idOrIds* Id or Ids to check
+
+### Return:
+
+* **Booelan** 
+
+## anyExist(idOrIds)
+
+Check if the given id or any given ids exist
+Return true if any ids exist
+
+### Params: 
+
+* **Number|String|Array** *idOrIds* Id or Ids to check
+
+### Return:
+
+* **Booelan** 
+
 ## array()
 
 Get all records as a plain JavaScript array
@@ -61,18 +87,6 @@ var records = collection.array();
 ### Return:
 
 * **Array** records
-
-## exist(idOrIds)
-
-Check if the given id or ids exists
-
-### Params: 
-
-* **Number|String|Array** *idOrIds* Id or Ids to check
-
-### Return:
-
-* **Booelan** 
 
 ## count()
 
@@ -159,7 +173,7 @@ collection = collection.map(function (record) {
 
 * **Misc** Anything depending on the mapper
 
-## remove(idOrIds)
+## remove(idOrIds, [args], [args.strict])
 
 Removes one or many records based on the id.
 If record is not found then it just gets skipped.
@@ -172,12 +186,12 @@ collection = collection.remove(arrayOfIds);
 ### Params: 
 
 * **Number|String|Array** *idOrIds* Id or ids to remove
+* **Object** *[args]* Optional arguments
+* **Boolean** *[args.strict]* Throw if record(s) doesn't exists
 
 ### Return:
 
 * **Imm** modified collection
-
-## replace(recordOrRecords)
 
 Replaces one item or many. 
 This discards any previous data from the replaced items.
@@ -195,8 +209,6 @@ collection = collection.replace(array)
 ### Return:
 
 * **Imm** modified collection
-
-## update(recordOrRecords)
 
 Updates one record or many. 
 This merges the given data with the existing one.
