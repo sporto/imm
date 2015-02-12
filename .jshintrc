@@ -1,6 +1,6 @@
 {
-	"eqeqeq": false,
-	"nonew":  false,
+	"eqnull": true,
+	"newcap": false,
 	"indent":  4,
 	"undef":  true,
 	"globals": {
