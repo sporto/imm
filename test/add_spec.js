@@ -3,7 +3,6 @@ var expect           = require('expect.js');
 var records          = require('./fixtures/records');
 var recordWithAltId  = require('./fixtures/records_with_alt_id');
 var col;
-var col;
 
 describe('.add', function () {
 

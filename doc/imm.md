@@ -2,12 +2,17 @@
 
 <!-- Start src/imm.js -->
 
-## imm(array, [key])
+## isArray
+
+Utility functions
+
+## imm(Array, [key])
 
 Returns an Imm collection
 
 ```js
-collection = imm([{id: 1, label: 'Sam'}, {...}]);
+var records = [{id: 1, label: 'Sam'}, {...}];
+collection = imm(records);
 ```
 imm assumes that the id key is called `id`. You can provide an optional argument:
 
@@ -17,12 +22,29 @@ collection = imm(records, '_id');
 
 ### Params: 
 
-* **Array** *array* of records
-* **String** *[key]* Optional name of id key
+* **Array** *Array* of records
+* **String** *[key]* Optional name of id key e.g. _id
 
 ### Return:
 
-* **Immutable** Imm collection
+* **Imm** Imm collection
+
+## checkImmutableArray()
+
+Internal utility functions
+
+## all()
+
+Get all records
+This returns a JavaScript array
+
+```js
+var records = collection.all();
+```
+
+### Return:
+
+* **Array** records
 
 ## get(or)
 

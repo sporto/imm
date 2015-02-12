@@ -25,30 +25,8 @@
 	if (Immutable == null) throw new Error('Immutable is null');
 
 	/**
-	* Returns an Imm collection
-	* 
-	* ```js
-	* collection = imm([{id: 1, label: 'Sam'}, {...}]);
-	* ```
-	* imm assumes that the id key is called `id`. You can provide an optional argument:
-	*
-	* ```js
-	* collection = imm(records, '_id');
-	* ```
-	* 
-	* @param {Array} array of records
-	* @param {String} [key] Optional name of id key
-	* @return {Immutable} Imm collection
-	* @api public
+	* Utility functions
 	*/
-
-	function imm(records, key) {
-		if (!isArray(records)) throw new Error("You must provide an array");
-		// return a immutable js collection
-		var col = Immutable(records);
-		return wrap(key, col);
-	}
-
 	var isArray = Array.isArray || function(obj) {
 		return toString.call(obj) === '[object Array]';
 	};
@@ -64,6 +42,31 @@
 		return false;
 	}
 
+	/**
+	* Returns an Imm collection
+	* 
+	* ```js
+	* var records = [{id: 1, label: 'Sam'}, {...}];
+	* collection = imm(records);
+	* ```
+	* imm assumes that the id key is called `id`. You can provide an optional argument:
+	*
+	* ```js
+	* collection = imm(records, '_id');
+	* ```
+	* 
+	* @param {Array} Array of records
+	* @param {String} [key] Optional name of id key e.g. _id
+	* @return {Imm} Imm collection
+	* @api public
+	*/
+	function imm(records, key) {
+		if (!isArray(records)) throw new Error("You must provide an array");
+		// return a immutable js collection
+		var col = Immutable(records);
+		return wrap(key, col);
+	}
+
 	// @param {Immutable} col
 	function wrap(key, immutableArray) {
 
@@ -71,16 +74,15 @@
 
 		key = key || 'id';
 
+		/**
+		* Internal utility functions
+		*/
 		function checkImmutableArray(array) {
 			if (!Immutable.isImmutable(array)) throw new Error("Not an immutable array");
 		}
 
 		function wrapWithArgs(newCol) {
 			return wrap(key, newCol);
-		}
-
-		function all() {
-			return immutableArray;
 		}
 
 		function mergeRecords(oldRecord, newRecord) {
@@ -103,6 +105,21 @@
 				}
 			}
 			return -1;
+		}
+
+		/**
+		* Get all records
+		* This returns a JavaScript array
+		* 
+		* ```js
+		* var records = collection.all();
+		* ```
+		*
+		* @return {Array} records
+		* @api public
+		*/
+		function all() {
+			return immutableArray;
 		}
 
 		/**

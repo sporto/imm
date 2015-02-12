@@ -10,7 +10,7 @@ Imm wraps it to provide a convenient API.
 
 All collections returned by Imm are immutable as well.
 
-Initially this project used [immutable.js](https://github.com/facebook/immutable-js). But unfortuntelly Immutable.js does not create deep immutable e.g. object inside an array are still mutable.
+Initially this project used [immutable.js](https://github.com/facebook/immutable-js). But unfortunatelly Immutable.js does not create deep immutable object e.g. object inside an array are still mutable.
 
 Install
 -------
