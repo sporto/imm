@@ -62,23 +62,29 @@
 	*/
 	function imm(records, key) {
 		if (!isArray(records)) throw new Error("You must provide an array");
-		// return a immutable js collection
-		var col = Immutable(records);
+
+		key = key || 'id';
+
+		// return a immutable object
+		var col = Immutable(records).asObject(function (record) {
+			return [record[key], record];
+		});
+
 		return wrap(key, col);
 	}
 
 	// @param {Immutable} col
-	function wrap(key, immutableArray) {
+	function wrap(key, immutableCollection) {
 
-		checkImmutableArray(immutableArray);	
+		checkIsImmutable(immutableCollection);
 
 		key = key || 'id';
 
 		/**
 		* Internal utility functions
 		*/
-		function checkImmutableArray(array) {
-			if (!Immutable.isImmutable(array)) throw new Error("Not an immutable array");
+		function checkIsImmutable(object) {
+			if (!Immutable.isImmutable(object)) throw new Error("Not an immutable object");
 		}
 
 		function wrapWithArgs(newCol) {
@@ -89,59 +95,23 @@
 			return oldRecord.merge(newRecord);
 		}
 
-		function getRecordIndex(givenRecord) {
-			return getRecordIndexById(givenRecord[key]);
-		}
+		// function getRecordIndex(givenRecord) {
+		// 	return getRecordIndexById(givenRecord[key]);
+		// }
 
-		function getRecordIndexById(id) {
-			// if record doesnt have a key, then return not found
-			if (!id) return -1;
+		// function getRecordIndexById(id) {
+		// 	// if record doesnt have a key, then return not found
+		// 	if (!id) return -1;
 			
-			var record;
-			for (var a=0; a < immutableArray.length; a++) {
-				record = immutableArray[a];
-				if (record[key] === id) {
-					return a;
-				}
-			}
-			return -1;
-		}
-
-		/**
-		* Get all records
-		* This returns a JavaScript array
-		* 
-		* ```js
-		* var records = collection.all();
-		* ```
-		*
-		* @return {Array} records
-		* @api public
-		*/
-		function all() {
-			return immutableArray.asMutable();
-		}
-
-		/**
-		* Get a record
-		*
-		* ```js
-		* var record = collection.get(11)
-		* ```
-		* Key is expected to be exactly as in the record, e.g. number or string
-		*
-		* @param {Number or String} id
-		* @return {Object} record
-		* @api public
-		*/
-		function get(id) {
-			var index = getRecordIndexById(id);
-			if (index > -1) {
-				return immutableArray[index];
-			} else {
-				return void(0);
-			}
-		}
+		// 	var record;
+		// 	for (var a=0; a < immutableCollection.length; a++) {
+		// 		record = immutableCollection[a];
+		// 		if (record[key] === id) {
+		// 			return a;
+		// 		}
+		// 	}
+		// 	return -1;
+		// }
 
 		/**
 		* Adds one or more records.
@@ -160,35 +130,56 @@
 		* @api public
 		*/
 		function add(oneOrMany) {
-			if (isArray(oneOrMany)) {
-				return addMany(oneOrMany);
-			} else {
-				return addOne(oneOrMany);
-			}	
-		}
+			var records = wrapAsArray(oneOrMany);
+			var id, record, toMerge, existing;
 
-		function addOne(record) {
-			var index = getRecordIndex(record);
-			var newCol;
+			if (records.length === 0) return wrapWithArgs(immutableCollection);
 
-			if (index == -1) {
-				newCol = immutableArray.concat([record]);
-			} else {
-				throw new Error('Record already exists');
+			var newCol = immutableCollection;
+
+			for (var a = 0; a < records.length; a++) {
+				record = records[a];
+				id     = record[key];
+				if (!id) throw new Error("Invalid key");
+				existing = get(id);
+				if (existing) throw new Error('Record already exists');
+				toMerge = {}
+				toMerge[id] = record;
+				newCol = newCol.merge(toMerge);
 			}
 
 			return wrapWithArgs(newCol);
 		}
 
-		function addMany(records) {
-			var newCol = immutableArray.asMutable();
-			for(var a = 0; a < records.length; a++) {
-				var record = records[a];
-				// check id?
-				newCol.push(record);
-			}
-			newCol = Immutable(newCol);
-			return wrapWithArgs(newCol);
+		/**
+		* Get all records
+		* This returns a JavaScript array
+		* 
+		* ```js
+		* var records = collection.all();
+		* ```
+		*
+		* @return {Array} records
+		* @api public
+		*/
+		function all() {
+			return immutableCollection.asMutable();
+		}
+
+		/**
+		* Get a record
+		*
+		* ```js
+		* var record = collection.get(11)
+		* ```
+		* Key is expected to be exactly as in the record, e.g. number or string
+		*
+		* @param {Number or String} id
+		* @return {Object} record
+		* @api public
+		*/
+		function get(id) {
+			return immutableCollection[id];
 		}
 
 		/**
@@ -210,8 +201,8 @@
 			var newCol = [];
 			var replaced = 0;
 
-			for (var a = 0; a < immutableArray.length; a++) {
-				var record = immutableArray[a];
+			for (var a = 0; a < immutableCollection.length; a++) {
+				var record = immutableCollection[a];
 				if (record[key] === recordOrRecords[key]) {
 					replaced++;
 					newCol.push(recordOrRecords);
@@ -248,8 +239,8 @@
 
 			var newCol = [];
 
-			for (var a = 0; a < immutableArray.length; a++) {
-				var record = immutableArray[a];
+			for (var a = 0; a < immutableCollection.length; a++) {
+				var record = immutableCollection[a];
 				if (recordOrRecords[key] === record[key]) {
 					// merge records
 					var merged = mergeRecords(record, recordOrRecords);
@@ -281,8 +272,8 @@
 
 			var newCol = [];
 			var removed = [];
-			for (var a = 0; a < immutableArray.length; a++) {
-				var record = immutableArray[a];
+			for (var a = 0; a < immutableCollection.length; a++) {
+				var record = immutableCollection[a];
 				if (arrayContains(ids, record[key])) {
 					removed.push(record);
 				} else {
@@ -309,7 +300,7 @@
 		* @api public
 		*/
 		function map(mapper) {
-			var newCol = immutableArray.map(mapper);
+			var newCol = immutableCollection.map(mapper);
 			return wrapWithArgs(newCol);
 		}
 
@@ -327,7 +318,7 @@
 		* @api public
 		*/
 		function filter(filterer) {
-			var newCol = immutableArray.filter(filterer);
+			var newCol = immutableCollection.filter(filterer);
 			return wrapWithArgs(newCol);
 		}
 
@@ -345,7 +336,7 @@
 		* @api public
 		*/
 		function sort(sorter) {
-			var newCol = immutableArray.asMutable();
+			var newCol = immutableCollection.asMutable();
 			var newCol = newCol.sort(sorter);
 			newCol = Immutable(newCol);
 			return wrapWithArgs(newCol);
@@ -365,8 +356,8 @@
 		* @api public
 		*/
 		function find(finder) {
-			for (var a = 0; a < immutableArray.length; a++) {
-				var record = immutableArray[a];
+			for (var a = 0; a < immutableCollection.length; a++) {
+				var record = immutableCollection[a];
 				if (finder(record)) {
 					return record;
 				}
@@ -385,7 +376,7 @@
 		* @api public
 		*/
 		function count(){
-			return immutableArray.length;
+			return Object.keys(immutableCollection).length;
 		}
 
 		return {

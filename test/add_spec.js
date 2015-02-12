@@ -12,16 +12,16 @@ describe('.add', function () {
 		})
 
 		describe('one', function () {
-			it('adds a new record when there is no id', function () {
-				expect(col.count()).to.be(2);
-				col = col.add({label: 'Not ID'});
-				expect(col.count()).to.be(3);
-			})
-
 			it('adds a new record when it has an id', function () {
 				expect(col.count()).to.be(2);
-				col = col.add({id: 13, label: 'Julia'});
-				expect(col.count()).to.be(3);
+				var newCol = col.add({id: 13, label: 'Julia'});
+				expect(newCol.count()).to.be(3);
+			})
+
+			it('throws when there is no id', function () {
+				expect(function () {
+					col.add({label: 'Not ID'});
+				}).to.throwError();
 			})
 
 			it('throws if there is an existing record', function () {
@@ -29,21 +29,26 @@ describe('.add', function () {
 					col.add({id: 11, label: 'Not Tess'});
 				}).to.throwError();
 			})
+
+			it('doesnt modify the original collection')
 		})
 
 		describe('many', function () {
 			it('adds new records', function () {
-				var records = [{label: 'Sam'}, {label: 'Sul'}];
+				expect(col.count()).to.be(2);
+				var records = [{id: 20, label: 'Sam'}, {id: 21, label: 'Sul'}];
 				var newCol = col.add(records);
 				expect(newCol.count()).to.be(4);
 			})
 
 			it('doesnt modify the original collection', function () {
 				expect(col.count()).to.be(2);
-				var records = [{label: 'Sam'}, {label: 'Sul'}];
+				var records = [{id: 20, label: 'Sam'}];
 				col.add(records);
 				expect(col.count()).to.be(2);
 			})
+
+			it('returns the same when given an empty array')
 		})
 	})
 
@@ -53,11 +58,6 @@ describe('.add', function () {
 		})
 
 		describe('one', function () {
-			it('adds a new record when there is no _id', function () {
-				expect(col.count()).to.be(2);
-				col = col.add({label: 'Not ID'});
-				expect(col.count()).to.be(3);
-			})
 
 			it('adds a new record when it has an _id', function () {
 				expect(col.count()).to.be(2);
