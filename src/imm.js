@@ -169,18 +169,17 @@
 		}
 
 		/**
-		* Get all records
-		* This returns a plain JavaScript array
+		* Get all records as a plain JavaScript array
 		* Records in the array are plain mutable JS objects
 		* 
 		* ```js
-		* var records = collection.all();
+		* var records = collection.array();
 		* ```
 		*
 		* @return {Array} records
 		* @api public
 		*/
-		function all() {
+		function array() {
 			return asPlainArray();
 		}
 
@@ -406,7 +405,7 @@
 		return {
 			isImm:       true,
 			add:         add,
-			all:         all,
+			array:       array,
 			count:       count,
 			filter:      filter,
 			find:        find,

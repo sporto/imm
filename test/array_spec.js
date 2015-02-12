@@ -5,7 +5,7 @@ var records          = require('./fixtures/records');
 var recordWithAltId  = require('./fixtures/records_with_alt_id');
 var col;
 
-describe('.add', function () {
+describe('.array', function () {
 
 	describe('id', function () {
 		beforeEach(function () {
@@ -13,18 +13,18 @@ describe('.add', function () {
 		})
 
 		it('returns the records', function () {
-			var records = col.all();
+			var records = col.array();
 			expect(records.length).to.be(2)
 		})
 
 		it('returns a plain array', function () {
-			var records = col.all();
+			var records = col.array();
 			expect(records).to.be.an('array');
 			expect(Immutable.isImmutable(records)).not.to.be(true)
 		})
 
 		it('returns plain mutable js records', function () {
-			var records = col.all();
+			var records = col.array();
 			var record = records[0];
 			expect(record).to.eql({id: 10, label: 'Sam'});
 			record.label = 'Julia'
