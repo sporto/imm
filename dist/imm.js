@@ -1,3 +1,8 @@
+//! Imm
+//! Immutable collections
+//! (c) 2015 Sebastian Porto
+//! MIT license.
+//! https://github.com/sporto/imm
 
 
 // CommonJS + AMD + Global boilerplate
@@ -33,8 +38,8 @@
 		return toString.call(obj) === '[object Array]';
 	};
 
-	function _wrapAsArray(oneOrMany) {
-		return _isArray(oneOrMany) ? oneOrMany : [oneOrMany];
+	function _wrapAsArray(recordOrRecords) {
+		return _isArray(recordOrRecords) ? recordOrRecords : [recordOrRecords];
 	}
 
 	function _idsAsStrings(array) {
@@ -137,12 +142,12 @@
 		* collection = collection.add(array)
 		* ```
 		*
-		* @param {Object|Array} oneOrMany Record or records to add
+		* @param {Object|Array} recordOrRecords Record or records to add
 		* @return {Imm} modified collection
 		* @api public
 		*/
-		function add(oneOrMany) {
-			var records = _wrapAsArray(oneOrMany);
+		function add(recordOrRecords) {
+			var records = _wrapAsArray(recordOrRecords);
 			var id, record, toMerge, existing;
 
 			if (records.length === 0) return _wrapImmutableCollectionWithArgs(immutableCollection);

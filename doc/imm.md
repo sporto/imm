@@ -26,7 +26,7 @@ collection = imm(records, '_id');
 
 * **Imm** Imm collection
 
-## add(oneOrMany)
+## add(recordOrRecords)
 
 Adds one or more records.
 Adds a new record if record doesn't have an id or id not found.
@@ -41,7 +41,7 @@ collection = collection.add(array)
 
 ### Params:
 
-* **Object|Array** *oneOrMany* Record or records to add
+* **Object|Array** *recordOrRecords* Record or records to add
 
 ### Return:
 

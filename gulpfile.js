@@ -27,7 +27,7 @@ gulp.task('min', function() {
 	// This will output the non-minified version
 	.pipe(gulp.dest(DEST))
 	// This will minify and rename to foo.min.js
-	.pipe(uglify())
+	.pipe(uglify({preserveComments: 'some'}))
 	.pipe(rename({ extname: '.min.js' }))
 	.pipe(gulp.dest(DEST));
 });
