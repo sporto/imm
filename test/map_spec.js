@@ -17,27 +17,22 @@ describe('.map', function () {
 			var newCol = col.map(function(record) {
 				return record.id;
 			});
-			expect(newCol.count()).to.be(2);
-			expect(newCol.all()).to.eql([10, 11]);
-		});
+			expect(newCol).to.eql([10, 11]);
+		})
 
-		it('doesnt modify original objects', function() {
-			col.map(function(record) {
-				record.foo = 1;
+		it('maps', function() {
+			var newCol = col.map(function(record) {
 				return record;
 			});
-			expect(col.get(11)).to.eql({id: 11, label: 'Tess'});
-		});
-
-		it('returns an imm collection', function() {
-			col = col.map(function(record) {
-				return record;
-			});
-			expect(col.isImm).to.be(true);
-		});
+			expect(newCol[0]).to.eql({id: 10, label: "Sam"});
+		})
 
 		it('doest mutate the original values', function () {
-			
-		});
+			col.map(function(record) {
+				record.label = 'LOL';
+				return record;
+			});
+			expect(col.get(10)).to.eql({id: 10, label: 'Sam'});
+		})
 	})
 });

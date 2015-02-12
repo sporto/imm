@@ -34,16 +34,16 @@ describe('.update', function () {
 
 		describe('many', function () {
 			it('patches an existing records', function () {
-				var record1 = {id: 11, age: 22};
-				var record2 = {id: 12, age: 11};
+				var record1 = {id: 10, age: 22};
+				var record2 = {id: 11, age: 11};
 				var records = [record1, record2];
 				
 				expect(col.count()).to.be(2);
 
 				var newCol = col.update(records);
 				expect(newCol.count()).to.be(2);
-				expect(newCol.get(11)).to.eql({id: 11, label: 'Tess', age: 22});
-				expect(newCol.get(12)).to.eql({id: 12, label: 'Sam', age: 11});
+				expect(newCol.get(10)).to.eql({id: 10, label: 'Sam', age: 22});
+				expect(newCol.get(11)).to.eql({id: 11, label: 'Tess', age: 11});
 			})
 		})
 

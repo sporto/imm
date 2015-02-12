@@ -7,24 +7,25 @@ var col;
 
 describe('.filter', function () {
 
-	beforeEach(function () {
-		col = imm(records());
-		col2 = imm(recordWithAltId(), '_id');
-	})
+	describe('id', function () {
 
-	it('filters', function() {
-		var newCol = col.filter(function(record) {
-			return record.label == 'Tess';
-		});
-		expect(newCol.count()).to.be(1);
-		expect(newCol.get(11)).to.eql({id: 11, label: 'Tess'});
-	})
+		beforeEach(function () {
+			col = imm(records());
+		})
 
-	it('returns an imm collection', function() {
-		col = col.filter(function(record) {
-			return record.label == 'Tess';
-		});
-		expect(col.isImm).to.be(true);
-	})
+		it('filters', function() {
+			var newCol = col.filter(function(record) {
+				return record.label == 'Tess';
+			});
+			expect(newCol.count()).to.be(1);
+			expect(newCol.get(11)).to.eql({id: 11, label: 'Tess'});
+		})
 
+		it('returns an imm collection', function() {
+			col = col.filter(function(record) {
+				return record.label == 'Tess';
+			});
+			expect(col.isImm).to.be(true);
+		})
+	})
 });

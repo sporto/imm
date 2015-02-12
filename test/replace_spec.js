@@ -31,13 +31,13 @@ describe('.replace', function () {
 
 		describe('many', function () {
 			it('replaces many existing records', function () {
-				var record1 = {id: 11, label: 'New Tess'};
-				var record2 = {id: 12, label: 'New Sam'};
+				var record1 = {id: 10, label: 'New Tess'};
+				var record2 = {id: 11, label: 'New Sam'};
 				var records = [record1, record2];
 				expect(col.count()).to.be(2);
 				var newCol = col.replace(records);
-				expect(newCol.get(11)).to.eql(record1);
-				expect(newCol.get(12)).to.eql(record2);
+				expect(newCol.get(10)).to.eql(record1);
+				expect(newCol.get(11)).to.eql(record2);
 			})
 		})
 
@@ -52,15 +52,15 @@ describe('.replace', function () {
 		describe('one', function () {
 			it('replaces an existing record (_id)', function () {
 				var record = {_id: 'xyz', label: 'New Tess'};
-				expect(col2.count()).to.be(2);
-				col2 = col2.replace(record);
-				expect(col2.count()).to.be(2);
-				expect(col2.get('xyz')).to.eql(record);
+				expect(col.count()).to.be(2);
+				col = col.replace(record);
+				expect(col.count()).to.be(2);
+				expect(col.get('xyz')).to.eql(record);
 			})
 
 			it('throws if there is no existing record (_id)', function () {
 				expect(function () {
-					col2.replace({_id: 'ijk', label: 'Not there'});
+					col.replace({_id: 'ijk', label: 'Not there'});
 				}).to.throwError();
 			})
 		})

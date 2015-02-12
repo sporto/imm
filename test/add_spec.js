@@ -30,7 +30,11 @@ describe('.add', function () {
 				}).to.throwError();
 			})
 
-			it('doesnt modify the original collection')
+			it('doesnt modify the original collection', function () {
+				expect(col.count()).to.be(2);
+				col.add({id: 20, label: 'Sam'});
+				expect(col.count()).to.be(2);
+			})
 		})
 
 		describe('many', function () {
@@ -48,7 +52,10 @@ describe('.add', function () {
 				expect(col.count()).to.be(2);
 			})
 
-			it('returns the same when given an empty array')
+			it('returns the same when given an empty array', function () {
+				var newCol = col.add([]);
+				expect(newCol.count()).to.be(2)
+			})
 		})
 	})
 

@@ -7,6 +7,12 @@ var col;
 describe('imm', function(){
 
 	describe('id', function () {
+
+		it('creates an Imm collection', function () {
+			col = imm(records());
+			expect(col.isImm).to.be(true)
+		})
+
 		it('creates a collection', function () {
 			col = imm(records());
 			expect(col.count()).to.be(2)
@@ -30,6 +36,7 @@ describe('imm', function(){
 				imm('A String');
 			}).to.throwError();
 		})
+
 	})
 
 	describe('_id', function () {

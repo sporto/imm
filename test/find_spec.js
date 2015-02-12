@@ -13,5 +13,12 @@ describe('.find', function () {
 		var finder = function (v) { return v.label === 'Tess' };
 		var record = col.find(finder);
 		expect(record).to.eql({id: 11, label: 'Tess'});
-	});
+	})
+
+	it('returns a mutable object', function () {
+		var record = col.find(function (r) { return true; });
+		expect(record).to.eql({id: 10, label: 'Sam'});
+		record.label = 'Julia';
+		expect(record).to.eql({id: 10, label: 'Julia'});
+	})
 })

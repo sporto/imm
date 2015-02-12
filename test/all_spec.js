@@ -17,10 +17,18 @@ describe('.add', function () {
 			expect(records.length).to.be(2)
 		})
 
-		it('it is a plain array', function () {
+		it('returns a plain array', function () {
 			var records = col.all();
 			expect(records).to.be.an('array');
 			expect(Immutable.isImmutable(records)).not.to.be(true)
+		})
+
+		it('returns plain mutable js records', function () {
+			var records = col.all();
+			var record = records[0];
+			expect(record).to.eql({id: 10, label: 'Sam'});
+			record.label = 'Julia'
+			expect(record).to.eql({id: 10, label: 'Julia'});
 		})
 
 	})
