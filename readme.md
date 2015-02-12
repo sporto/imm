@@ -49,8 +49,3 @@ This will lint, test, minify and create documentation
 ```bash
 gulp
 ```
-
-Immutable.js
-----------------
-
-Initially this project used [immutable.js](https://github.com/facebook/immutable-js). But unfortunatelly Immutable.js does not create deep immutable object e.g. object inside an array are still mutable.
