@@ -185,7 +185,6 @@
 		}
 
 		function addOne(record) {
-			console.log('addOne', record)
 			var index = getRecordIndex(record);
 			var newCol;
 
