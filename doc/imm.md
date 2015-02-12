@@ -2,7 +2,7 @@
 
 <!-- Start src/imm.js -->
 
-## imm(Array, [key])
+## imm(records, [key])
 
 Returns an Imm collection
 Keys are always sorted in alphabetical order
@@ -19,14 +19,14 @@ collection = imm(records, '_id');
 
 ### Params:
 
-* **Array** *Array* of records
+* **Array** *records* Array of records
 * **String** *[key]* Optional name of id key e.g. _id
 
 ### Return:
 
 * **Imm** Imm collection
 
-## add(record)
+## add(oneOrMany)
 
 Adds one or more records.
 Adds a new record if record doesn't have an id or id not found.
@@ -41,7 +41,7 @@ collection = collection.add(array)
 
 ### Params:
 
-* **ObjectorArray** *record* or records
+* **Object|Array** *oneOrMany* Record or records to add
 
 ### Return:
 
@@ -61,13 +61,13 @@ var records = collection.all();
 
 * **Array** records
 
-## exist()
+## exist(idOrIds)
 
 Check if the given id or ids exists
 
 ### Params:
 
-* **NumberorStringorArray** ** 
+* **Number|String|Array** *idOrIds* Id or Ids to check
 
 ### Return:
 
@@ -85,7 +85,7 @@ count = collection.count();
 
 * **Number** count
 
-## filter(Filterer)
+## filter(filterer)
 
 Filters the collection based on a filtering function.
 
@@ -97,13 +97,13 @@ collection = collection.filter(function (record) {
 
 ### Params:
 
-* **Function** *Filterer* 
+* **Function** *filterer* Filterer function
 
 ### Return:
 
 * **Imm** Modified collection
 
-## find(Finder)
+## find(finder)
 
 Finds one record
 Returns a plain JS mutable object
@@ -116,7 +116,7 @@ var record = collection.find(function (record) {
 
 ### Params:
 
-* **Function** *Finder* 
+* **Function** *finder* Finder function
 
 ### Return:
 
@@ -134,7 +134,7 @@ Key is expected to be exactly as in the record, e.g. number or string
 
 ### Params:
 
-* **NumberorString** *id* 
+* **Number|String** *id* Id to get
 
 ### Return:
 
@@ -152,13 +152,13 @@ collection = collection.map(function (record) {
 
 ### Params:
 
-* **Function** *mapper* 
+* **Function** *mapper* Mapping function
 
 ### Return:
 
-* **Misc** 
+* **Misc** Anything depending on the mapper
 
-## remove(id)
+## remove(idOrIds)
 
 Removes one or many records based on the id.
 Throws if record/records not found.
@@ -170,13 +170,13 @@ collection = collection.remove(arrayOfIds);
 
 ### Params:
 
-* **NumberorStringorArray** *id* or ids
+* **Number|String|Array** *idOrIds* Id or ids to remove
 
 ### Return:
 
 * **Imm** modified collection
 
-## replace(record)
+## replace(recordOrRecords)
 
 Replaces one item or many. 
 This discards any previous data from the replaced items.
@@ -189,13 +189,13 @@ collection = collection.replace(array)
 
 ### Params:
 
-* **Object** *record* 
+* **Object** *recordOrRecords* Record or records to replace
 
 ### Return:
 
 * **Imm** modified collection
 
-## update(record)
+## update(recordOrRecords)
 
 Updates one record or many. 
 This merges the given data with the existing one.
@@ -208,7 +208,7 @@ collection = collection.update(array)
 
 ### Params:
 
-* **ObjectorArray** *record* / records
+* **Object|Array** *recordOrRecords* Record or records to update
 
 ### Return:
 

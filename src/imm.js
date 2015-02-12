@@ -85,7 +85,7 @@
 	* collection = imm(records, '_id');
 	* ```
 	* 
-	* @param {Array} Array of records
+	* @param {Array} records Array of records
 	* @param {String} [key] Optional name of id key e.g. _id
 	* @return {Imm} Imm collection
 	* @api public
@@ -137,7 +137,7 @@
 		* collection = collection.add(array)
 		* ```
 		*
-		* @param {Object or Array} record or records
+		* @param {Object|Array} oneOrMany Record or records to add
 		* @return {Imm} modified collection
 		* @api public
 		*/
@@ -188,7 +188,7 @@
 		/**
 		* Check if the given id or ids exists
 		*
-		* @param {Number or String or Array}
+		* @param {Number|String|Array} idOrIds Id or Ids to check
 		* @return {Booelan}
 		*/
 		function exist(idOrIds) {
@@ -223,7 +223,7 @@
 		* });
 		* ```
 		*
-		* @param {Function} Filterer
+		* @param {Function} filterer Filterer function
 		* @return {Imm} Modified collection
 		* @api public
 		*/
@@ -243,7 +243,7 @@
 		* });
 		* ```
 		*
-		* @param {Function} Finder
+		* @param {Function} finder Finder function
 		* @return {Object} Record or undefined
 		* @api public
 		*/
@@ -267,7 +267,7 @@
 		* ```
 		* Key is expected to be exactly as in the record, e.g. number or string
 		*
-		* @param {Number or String} id
+		* @param {Number|String} id Id to get
 		* @return {Object} record
 		* @api public
 		*/
@@ -286,8 +286,8 @@
 		* });
 		* ```
 		*
-		* @param {Function} mapper 
-		* @return {Misc} 
+		* @param {Function} mapper Mapping function
+		* @return {Misc} Anything depending on the mapper
 		* @api public
 		*/
 		function map(mapper) {
@@ -304,7 +304,7 @@
 		* collection = collection.remove(arrayOfIds);
 		* ```
 		*
-		* @param {Number or String or Array} id or ids
+		* @param {Number|String|Array} idOrIds Id or ids to remove
 		* @return {Imm} modified collection
 		* @api public
 		*/
@@ -330,7 +330,7 @@
 		* collection = collection.replace(array)
 		* ```
 		*
-		* @param {Object} record
+		* @param {Object} recordOrRecords Record or records to replace
 		* @return {Imm} modified collection
 		* @api public
 		*/
@@ -369,7 +369,7 @@
 		* collection = collection.update(array)
 		* ```
 		*
-		* @param {Object or Array} record / records
+		* @param {Object|Array} recordOrRecords Record or records to update
 		* @return {Imm} modified collection
 		* @api public
 		*/
