@@ -145,7 +145,7 @@
 		*
 		* @param {Object|Array} recordOrRecords Record or records to add
 		* @param {Object} [args] Optional arguments
-		*   @param {Boolean} [args.strict] Throw if record already exists
+		* @param {Boolean} [args.strict] Throw if record already exists
 		* @return {Imm} modified collection
 		* @api public
 		*/

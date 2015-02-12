@@ -26,7 +26,7 @@ collection = imm(records, '_id');
 
 * **Imm** Imm collection
 
-## add(recordOrRecords, [args])
+## add(recordOrRecords, [args], [args.strict])
 
 Adds one or more records.
 If record already exists then it gets replaced.
@@ -42,7 +42,8 @@ collection = collection.add(array)
 ### Params: 
 
 * **Object|Array** *recordOrRecords* Record or records to add
-* **Object** *[args]* Optional arguments   @param {Boolean} [args.strict] Throw if record already exists
+* **Object** *[args]* Optional arguments
+* **Boolean** *[args.strict]* Throw if record already exists
 
 ### Return:
 
