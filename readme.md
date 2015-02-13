@@ -40,7 +40,7 @@ Returns an Imm collection Keys are always sorted in alphabetical order
 * **{String}**: args.key=id Optional name of id key e.g. _id    
 * `returns` **{Imm}**: Imm collection  
 
-**Example usage**
+**Example**
 
 ```js
 var records = [{id: 1, label: 'Sam'}, {...}];
@@ -72,54 +72,66 @@ collection = collection.add(record)
 collection = collection.add(array)
 ```
 
-### [allExist](src/imm.js#L227)
+### [allExist](src/imm.js#L233)
+
+Check if the given ID or all given IDs exist.
+
+* **{Number|String|Array}**: idOrIds ID or IDs to check    
+* `returns`: {Boolean}  
+
+**Example**
+
+```js
+var exist = allExist(21);
+var exist = allExist([11, 21]);
+```
+
+### [anyExist](src/imm.js#L256)
+
+Check if the given ID or any given IDs exist
 
 * **{Number|String|Array}**: idOrIds Id or Ids to check    
 * `returns`: {Boolean}  
 
-Check if the given id or all given ids exist
-Return true if all record exist
+**Example**
 
-### [anyExist](src/imm.js#L244)
+```js
+var exist = anyExist(21);
+var exist = anyExist([11, 21]);
+```
 
-* **{Number|String|Array}**: idOrIds Id or Ids to check    
-* `returns`: {Boolean}  
+### [array](src/imm.js#L278)
 
-Check if the given id or any given ids exist
-Return true if any ids exist
+Get all records. Records in the array are plain mutable JS objects.
 
-### [array](src/imm.js#L266)
+* `returns` **{Array}**: records Plain array with records  
 
-Get all records as a plain JavaScript array Records in the array are plain mutable JS objects
-
-* `returns` **{Array}**: records  
-
-**Example usage**
+**Example**
 
 ```js
 var records = collection.array();
 ```
 
-### [count](src/imm.js#L288)
+### [count](src/imm.js#L300)
 
-Returns the records count
+Records count.
 
 * `returns` **{Number}**: count  
 
-**Example usage**
+**Example**
 
 ```js
 count = collection.count();
 ```
 
-### [filter](src/imm.js#L307)
+### [filter](src/imm.js#L319)
 
 Filters the collection based on a filtering function.
 
-* **{Function}**: filterer Filterer function    
+* **{Function}**: filterer Filtering function    
 * `returns` **{Imm}**: Modified collection  
 
-**Example usage**
+**Example**
 
 ```js
 collection = collection.filter(function (record) {
@@ -127,14 +139,14 @@ collection = collection.filter(function (record) {
 });
 ```
 
-### [find](src/imm.js#L329)
+### [find](src/imm.js#L341)
 
-Finds one record Returns a plain JS mutable object
+Finds one record. Returns a plain JS mutable object.
 
 * **{Function}**: finder Finder function    
-* `returns` **{Object}**: Record or undefined  
+* `returns` **{Object}**: record Record or undefined  
 
-**Example usage**
+**Example**
 
 ```js
 var record = collection.find(function (record) {
@@ -142,29 +154,28 @@ var record = collection.find(function (record) {
 });
 ```
 
-### [get](src/imm.js#L355)
+### [get](src/imm.js#L367)
 
-Get a record Returned record is a plain JS mutable object
+Get a record. Returned record is a plain JS mutable object.
 
-* **{Number|String}**: id Id to get    
+* **{Number|String}**: id Id to fetch    
 * `returns` **{Object}**: record  
 
-**Example usage**
+**Example**
 
 ```js
 var record = collection.get(11)
+var record = collection.get('11') // same as 11
 ```
 
-Key is expected to be exactly as in the record, e.g. number or string
-
-### [map](src/imm.js#L376)
+### [map](src/imm.js#L388)
 
 Map the collection through a given function
 
 * **{Function}**: mapper Mapping function    
-* `returns` **{Misc}**: Anything depending on the mapper  
+* `returns` **{Array}**: array  
 
-**Example usage**
+**Example**
 
 ```js
 collection = collection.map(function (record) {
@@ -172,49 +183,49 @@ collection = collection.map(function (record) {
 });
 ```
 
-### [remove](src/imm.js#L398)
+### [remove](src/imm.js#L410)
 
 Removes one or many records based on the id. If record is not found then it just gets skipped.
 
 * **{Number|String|Array}**: idOrIds Id or ids to remove    
 * **{Object}**: args Optional arguments    
-* **{Boolean}**: args.strict Throw if record(s) doesn't exists    
-* `returns` **{Imm}**: modified collection  
+* **{Boolean}**: args.strict=false Throw if record(s) doesn't exists    
+* `returns` **{Imm}**: Modified collection  
 
-**Example usage**
+**Example**
 
 ```js
 collection = collection.remove(id);
 collection = collection.remove(arrayOfIds);
 ```
 
-### [replace](src/imm.js#L432)
+### [replace](src/imm.js#L444)
 
-Replaces one item or many. This discards any previous data from the replaced items. If records doesn't exist then it just gets added This throws if a record doesn't have an key
+Replaces one item or many. This discards any previous data from the replaced items. If records doesn't exist then it just gets added. This throws if a record doesn't have an key.
 
 * **{Object}**: recordOrRecords Record or records to replace    
 * **{Object}**: args Optional arguments    
 * **{Boolean}**: args.strict=false Throws if record exist    
 * **{Boolean}**: args.requireKey=true Throws if record doesn't have a key    
-* `returns` **{Imm}**: modified collection  
+* `returns` **{Imm}**: Modified Imm collection  
 
-**Example usage**
+**Example**
 
 ```js
 collection = collection.replace(record)
 collection = collection.replace(array)
 ```
 
-### [update](src/imm.js#L511)
+### [update](src/imm.js#L502)
 
 Updates one record or many. This merges the given data with the existing one. If a record is not found then it gets added. This throws if a record doesn't have an key
 
 * **{Object|Array}**: recordOrRecords Record or records to update    
 * **{Object}**: args Optional arguments    
 * **{Boolean}**: args.strict=false Throws if record exist    
-* `returns` **{Imm}**: modified collection  
+* `returns` **{Imm}**: Modified collection  
 
-**Example usage**
+**Example**
 
 ```js
 collection = collection.update(record)

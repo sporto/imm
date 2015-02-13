@@ -114,7 +114,7 @@
 	* Returns an Imm collection
 	* Keys are always sorted in alphabetical order
 	* 
-	* **Example usage**
+	* **Example**
 	*
 	* ```js
 	* var records = [{id: 1, label: 'Sam'}, {...}];
@@ -123,7 +123,7 @@
 	* imm assumes that the id key is called `id`. You can provide an optional argument:
 	*
 	* ```js
-	* collection = imm(records, '_id');
+	* collection = imm(records, {key: '_id'});
 	* ```
 	* 
 	* @param {Array} records Array of records
@@ -216,10 +216,16 @@
 		}
 
 		/**
-		* Check if the given id or all given ids exist
-		* Return true if all record exist
+		* Check if the given ID or all given IDs exist.
+		* 
+		* **Example**
 		*
-		* @param {Number|String|Array} idOrIds Id or Ids to check
+		* ```js
+		* var exist = allExist(21);
+		* var exist = allExist([11, 21]);
+		* ```
+		*
+		* @param {Number|String|Array} idOrIds ID or IDs to check
 		* @return {Boolean}
 		* @api public
 		*/
@@ -233,8 +239,14 @@
 		}
 
 		/**
-		* Check if the given id or any given ids exist
-		* Return true if any ids exist
+		* Check if the given ID or any given IDs exist
+		*
+		* **Example**
+		*
+		* ```js
+		* var exist = anyExist(21);
+		* var exist = anyExist([11, 21]);
+		* ```
 		*
 		* @param {Number|String|Array} idOrIds Id or Ids to check
 		* @return {Boolean}
@@ -250,16 +262,16 @@
 		}
 
 		/**
-		* Get all records as a plain JavaScript array
-		* Records in the array are plain mutable JS objects
+		* Get all records.
+		* Records in the array are plain mutable JS objects.
 		* 
-		* **Example usage**
+		* **Example**
 		*
 		* ```js
 		* var records = collection.array();
 		* ```
 		*
-		* @return {Array} records
+		* @return {Array} records Plain array with records
 		* @api public
 		*/
 		function array() {
@@ -273,9 +285,9 @@
 		}
 
 		/**
-		* Returns the records count
+		* Records count.
 		*
-		* **Example usage**
+		* **Example**
 		* 
 		* ```js
 		* count = collection.count();
@@ -291,7 +303,7 @@
 		/**
 		* Filters the collection based on a filtering function.
 		* 
-		* **Example usage**
+		* **Example**
 		*
 		* ```js
 		* collection = collection.filter(function (record) { 
@@ -299,7 +311,7 @@
 		* });
 		* ```
 		*
-		* @param {Function} filterer Filterer function
+		* @param {Function} filterer Filtering function
 		* @return {Imm} Modified collection
 		* @api public
 		*/
@@ -310,10 +322,10 @@
 		}
 
 		/**
-		* Finds one record
-		* Returns a plain JS mutable object
+		* Finds one record.
+		* Returns a plain JS mutable object.
 		* 
-		* **Example usage**
+		* **Example**
 		*
 		* ```js
 		* var record = collection.find(function (record) { 
@@ -322,7 +334,7 @@
 		* ```
 		*
 		* @param {Function} finder Finder function
-		* @return {Object} Record or undefined
+		* @return {Object} record Record or undefined
 		* @api public
 		*/
 		function find(finder) {
@@ -337,17 +349,17 @@
 		}
 
 		/**
-		* Get a record
-		* Returned record is a plain JS mutable object
+		* Get a record.
+		* Returned record is a plain JS mutable object.
 		*
-		* **Example usage**
+		* **Example**
 		*
 		* ```js
 		* var record = collection.get(11)
+		* var record = collection.get('11') // same as 11
 		* ```
-		* Key is expected to be exactly as in the record, e.g. number or string
 		*
-		* @param {Number|String} id Id to get
+		* @param {Number|String} id Id to fetch
 		* @return {Object} record
 		* @api public
 		*/
@@ -360,7 +372,7 @@
 		/**
 		* Map the collection through a given function
 		* 
-		* **Example usage**
+		* **Example**
 		*
 		* ```js
 		* collection = collection.map(function (record) { 
@@ -369,7 +381,7 @@
 		* ```
 		*
 		* @param {Function} mapper Mapping function
-		* @return {Misc} Anything depending on the mapper
+		* @return {Array} array
 		* @api public
 		*/
 		function map(mapper) {
@@ -381,7 +393,7 @@
 		* Removes one or many records based on the id.
 		* If record is not found then it just gets skipped.
 		* 
-		* **Example usage**
+		* **Example**
 		*
 		* ```js
 		* collection = collection.remove(id);
@@ -390,8 +402,8 @@
 		*
 		* @param {Number|String|Array} idOrIds Id or ids to remove
 		* @param {Object} args Optional arguments
-		* @param {Boolean} args.strict Throw if record(s) doesn't exists
-		* @return {Imm} modified collection
+		* @param {Boolean} args.strict=false Throw if record(s) doesn't exists
+		* @return {Imm} Modified collection
 		* @api public
 		*/
 		function remove(idOrIds, args) {
@@ -411,10 +423,10 @@
 		/**
 		* Replaces one item or many. 
 		* This discards any previous data from the replaced items.
-		* If records doesn't exist then it just gets added
-		* This throws if a record doesn't have an key
+		* If records doesn't exist then it just gets added.
+		* This throws if a record doesn't have an key.
 		* 
-		* **Example usage**
+		* **Example**
 		*
 		* ```js
 		* collection = collection.replace(record)
@@ -425,7 +437,7 @@
 		* @param {Object} args Optional arguments
 		* @param {Boolean} args.strict=false Throws if record exist
 		* @param {Boolean} args.requireKey=true Throws if record doesn't have a key
-		* @return {Imm} modified collection
+		* @return {Imm} Modified Imm collection
 		* @api public
 		*/
 		function replace(recordOrRecords, args) {
@@ -463,27 +475,6 @@
 			return _wrapImmutableCollectionWithArgs(newCol);
 		}
 
-		function replaceThrow(recordOrRecords) {
-			var record, id, existing;
-			var records = _wrapAsArray(recordOrRecords);
-			var ids = _idsFromRecords(records, globalArgs.key);
-			ids = _idsAsStrings(ids);
-			var newCol = immutableCollection.without(ids);
-			var merges = {};
-
-			for (var a = 0; a < records.length; a++) {
-				record = records[a];
-				id = record[globalArgs.key];
-				existing = get(id);
-				if (!existing) throw new Error('Record ' + id + ' does not exists');
-				merges[id] = record;
-			}
-
-			newCol = newCol.merge(merges);
-
-			return _wrapImmutableCollectionWithArgs(newCol);
-		}
-
 		function toImmutable() {
 			return immutableCollection;
 		}
@@ -494,7 +485,7 @@
 		* If a record is not found then it gets added.
 		* This throws if a record doesn't have an key
 		* 
-		* **Example usage**
+		* **Example**
 		*
 		* ```js
 		* collection = collection.update(record)
@@ -504,7 +495,7 @@
 		* @param {Object|Array} recordOrRecords Record or records to update
 		* @param {Object} args Optional arguments
 		* @param {Boolean} args.strict=false Throws if record exist
-		* @return {Imm} modified collection
+		* @return {Imm} Modified collection
 		* @api public
 		*/
 		function update(recordOrRecords, args) {
@@ -539,31 +530,6 @@
 
 				toMerge = {};
 				toMerge[givenId] = mergedRecord;
-
-				newCol = newCol.merge(toMerge);
-			}
-
-			return _wrapImmutableCollectionWithArgs(newCol);
-		}
-
-		function updateThrow(recordOrRecords) {
-			var givenId, givenRecord, toMerge, existing;
-			var givenRecords = _wrapAsArray(recordOrRecords);
-			var newCol = immutableCollection;
-
-			for (var a = 0; a < givenRecords.length; a++) {
-				givenRecord = givenRecords[a];
-				givenId = givenRecord[globalArgs.key];
-				// throw if no givenId
-				if (!givenId) throw new Error('Record must have .' + globalArgs.key);
-
-				existing = immutableCollection[givenId];
-				if (!existing) throw new Error('Record not found ' + givenId);
-
-				existing = existing.merge(givenRecord);
-
-				toMerge = {};
-				toMerge[givenId] = existing;
 
 				newCol = newCol.merge(toMerge);
 			}
