@@ -2,7 +2,7 @@
 
 <!-- Start src/imm.js -->
 
-## imm(records, [key])
+## imm(records, [args], [args.key=id])
 
 Returns an Imm collection
 Keys are always sorted in alphabetical order
@@ -20,7 +20,8 @@ collection = imm(records, '_id');
 ### Params:
 
 * **Array** *records* Array of records
-* **String** *[key]* Optional name of id key e.g. _id
+* **Object** *[args]* 
+* **String** *[args.key=id]* Optional name of id key e.g. _id
 
 ### Return:
 

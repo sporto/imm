@@ -9,7 +9,6 @@ describe('.remove', function () {
 	describe('id', function () {
 		beforeEach(function () {
 			col = imm(records());
-			col2 = imm(recordWithAltId(), '_id');
 		})
 
 		describe('one', function () {
@@ -61,14 +60,14 @@ describe('.remove', function () {
 
 	describe('_id', function () {
 		beforeEach(function () {
-			col = imm(recordWithAltId(), '_id');
+			col = imm(recordWithAltId(), {key: '_id'});
 		})
 
 		describe('one', function () {
 			it('removes the record', function () {
-				expect(col2.count()).to.be(2);
-				col2 = col2.remove('abc');
-				expect(col2.count()).to.be(1);
+				expect(col.count()).to.be(2);
+				col = col.remove('abc');
+				expect(col.count()).to.be(1);
 			})
 
 		})

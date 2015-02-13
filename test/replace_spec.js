@@ -74,7 +74,7 @@ describe('.replace', function () {
 	describe('_id', function () {
 
 		beforeEach(function () {
-			col = imm(recordWithAltId(), '_id');
+			col = imm(recordWithAltId(), {key: '_id'});
 		})
 
 		describe('one', function () {

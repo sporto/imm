@@ -66,15 +66,25 @@
 		return Immutable.isImmutable(object);
 	}
 
-	function _checkIsImmutable(object) {
+	function isObject(obj) {
+		var type = typeof obj;
+    return type === 'function' || type === 'object' && !!obj;
+	}
+
+	function _assertIsImmutable(object) {
 		var is = _isImmutable(object);
 		if (!is) throw new Error("Not an immutable object");
 	}
 
-	function _checkIsPlainArray(array) {
+	function _assertIsPlainArray(array) {
 		var one = !_isArray(array);
 		var two = _isImmutable(array);
 		if (one || two) throw new Error("You must provide an array");
+	}
+
+	function _assertIsObject(object, msg) {
+		if (!msg) msg = 'Not an object';
+		if (!isObject(object)) throw new Error(msg);
 	}
 
 	function _generateUID() {
@@ -85,7 +95,7 @@
 			return (c=='x' ? r : (r&0x3|0x8)).toString(16);
 		});
 		return uuid;
-	};
+	}
 
 	// Fill in a given object with default properties.
 	// http://underscorejs.org/#defaults
@@ -98,7 +108,7 @@
 			}
 		}
 		return obj;
-	};
+	}
 
 	/**
 	* Returns an Imm collection
@@ -115,52 +125,55 @@
 	* ```
 	* 
 	* @param {Array} records Array of records
-	* @param {String} [key] Optional name of id key e.g. _id
+	* @param {Object} [args]
+	* @param {String} [args.key=id] Optional name of id key e.g. _id
 	* @return {Imm} Imm collection
 	* @api public
 	*/
-	function imm(records, key) {
-		return _wrapPlainArray(records, key);
+	function imm(records, args) {
+		return _wrapPlainArray(records, args);
 	}
 
 	// @param {Array}
 	// @return {Imm}
-	function _wrapPlainArray(array, key) {
+	function _wrapPlainArray(array, args) {
 		var id, mergable;
+		if (args) _assertIsObject(args, 'You must provide an object for arguments');
 
-		_checkIsPlainArray(array);
+		var defaults = {
+			key: DEFAULT_KEY
+		};
+		args = _defaults(args, defaults);
 
-		key = key || DEFAULT_KEY;
+		_assertIsPlainArray(array);
 
 		// return a immutable object
 		var col = Immutable(array).asObject(function (record) {
-			id = record[key];
+			id = record[args.key];
 			if (!id) {
 				id = _generateUID();
 				mergable = {};
-				mergable[key] = id;
+				mergable[args.key] = id;
 				record = record.merge(mergable);
 			}
 			return [id, record];
 		});
 
-		return _wrapImmutableCollection(col, key);
+		return _wrapImmutableCollection(col, args);
 	}
 
 	// @param {Immutable}
 	// @return {Imm}
-	function _wrapImmutableCollection(immutableCollection, key) {
+	function _wrapImmutableCollection(immutableCollection, globalArgs) {
 
-		_checkIsImmutable(immutableCollection);
-
-		key = key || DEFAULT_KEY;
+		_assertIsImmutable(immutableCollection);
 
 		function _wrapPlainArrayWithArgs(array) {
-			return _wrapPlainArray(array, key);
+			return _wrapPlainArray(array, globalArgs);
 		}
 
 		function _wrapImmutableCollectionWithArgs(immutableCollection) {
-			return _wrapImmutableCollection(immutableCollection, key);
+			return _wrapImmutableCollection(immutableCollection, globalArgs);
 		}
 
 		/**
@@ -191,7 +204,7 @@
 			if (args.strict) {
 				// throw if any record exists
 				var records = _wrapAsArray(recordOrRecords);
-				var ids     = _idsFromRecords(records, key);
+				var ids     = _idsFromRecords(records, globalArgs.key);
 				if (anyExist(ids)) throw new Error('Some records already exist');
 			}
 			args.requireKey = false;
@@ -398,32 +411,30 @@
 		function replace(recordOrRecords, args) {
 			var record, id;
 			var records = _wrapAsArray(recordOrRecords);
-			var ids = _idsFromRecords(records, key);
+			var ids = _idsFromRecords(records, globalArgs.key);
 			ids = _idsAsStrings(ids);
 			var newCol = immutableCollection.without(ids);
 			var merges = {};
 			var defaults = {
 				strict: false,
 				requireKey: true
-			}
+			};
 			args = _defaults(args, defaults);
 
 			if (args.strict) {
 				// throw if any record exists
-				var records = _wrapAsArray(recordOrRecords);
-				var ids     = _idsFromRecords(records, key);
 				if (anyExist(ids)) throw new Error('Some records already exist');
 			}
 
 			for (var a = 0; a < records.length; a++) {
 				record = records[a];
-				id = record[key];
+				id = record[globalArgs.key];
 				if (!id) {
-					if (args.requireKey) throw new Error("Record must have ." + key);
+					if (args.requireKey) throw new Error("Record must have ." + globalArgs.key);
 					id = _generateUID();
-					record[key] = id;
+					record[globalArgs.key] = id;
 				}
-				if (!id) throw new Error("Record must have ." + key);
+				if (!id) throw new Error("Record must have ." + globalArgs.key);
 				merges[id] = record;
 			}
 
@@ -435,14 +446,14 @@
 		function replaceThrow(recordOrRecords) {
 			var record, id, existing;
 			var records = _wrapAsArray(recordOrRecords);
-			var ids = _idsFromRecords(records, key);
+			var ids = _idsFromRecords(records, globalArgs.key);
 			ids = _idsAsStrings(ids);
 			var newCol = immutableCollection.without(ids);
 			var merges = {};
 
 			for (var a = 0; a < records.length; a++) {
 				record = records[a];
-				id = record[key];
+				id = record[globalArgs.key];
 				existing = get(id);
 				if (!existing) throw new Error('Record ' + id + ' does not exists');
 				merges[id] = record;
@@ -477,7 +488,7 @@
 		function update(recordOrRecords, args) {
 			var defaults = {
 				strict: false
-			}
+			};
 			args = _defaults(args, defaults);
 
 			var givenId, givenRecord, toMerge, existing, mergedRecord;
@@ -487,15 +498,15 @@
 			if (args.strict) {
 				// throw if any record exists
 				var records = _wrapAsArray(recordOrRecords);
-				var ids     = _idsFromRecords(records, key);
+				var ids     = _idsFromRecords(records, globalArgs.key);
 				if (anyExist(ids)) throw new Error('Some records already exist');
 			}
 
 			for (var a = 0; a < givenRecords.length; a++) {
 				givenRecord = givenRecords[a];
-				givenId = givenRecord[key];
+				givenId = givenRecord[globalArgs.key];
 				// throw if no givenId
-				if (!givenId) throw new Error('Record must have .' + key);
+				if (!givenId) throw new Error('Record must have .' + globalArgs.key);
 
 				existing = immutableCollection[givenId];
 				if (existing) {
@@ -520,9 +531,9 @@
 
 			for (var a = 0; a < givenRecords.length; a++) {
 				givenRecord = givenRecords[a];
-				givenId = givenRecord[key];
+				givenId = givenRecord[globalArgs.key];
 				// throw if no givenId
-				if (!givenId) throw new Error('Record must have .' + key);
+				if (!givenId) throw new Error('Record must have .' + globalArgs.key);
 
 				existing = immutableCollection[givenId];
 				if (!existing) throw new Error('Record not found ' + givenId);

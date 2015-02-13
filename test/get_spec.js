@@ -36,7 +36,7 @@ describe('.get', function () {
 
 	describe('_id', function () {
 		beforeEach(function () {
-			col = imm(recordWithAltId(), '_id');
+			col = imm(recordWithAltId(), {key: '_id'});
 		})
 
 		it('returns the record by _id', function (){

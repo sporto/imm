@@ -52,7 +52,7 @@ describe('imm', function(){
 				_id: 'xyz',
 				label: 'Tess'
 			}
-			col = imm(recordWithAltId(), '_id');
+			col = imm(recordWithAltId(), {key: '_id'});
 			expect(col.get('xyz')).to.eql(record);
 		})
 	})
