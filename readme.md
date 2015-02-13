@@ -28,6 +28,8 @@ npm install imm
 
 Download `dist/imm.js` or `dist/imm.min.js`
 
+This library requires [seamless-immutable](https://github.com/rtfeldman/seamless-immutable) to be loaded.
+
 API
 -----------------
 
