@@ -8,6 +8,7 @@ var jshint  = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var mocha   = require('gulp-mocha');
 var header  = require('gulp-header');
+var run     = require('gulp-run');
 
 var DEST = 'dist/';
 
@@ -32,11 +33,8 @@ gulp.task('min', function() {
 	.pipe(gulp.dest(DEST));
 });
 
-gulp.task("doc", function(){
-	gulp.src("./src/*.js")
-		.pipe(markdox())
-		.pipe(rename({ extname: '.md' }))
-		.pipe(gulp.dest("./doc"));
-});
+gulp.task('doc', function () {
+  run('verb').exec();
+})
 
 gulp.task('default', ['test', 'lint', 'min', 'doc']);
