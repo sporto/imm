@@ -30,8 +30,7 @@
     "gulp-uglify": "^1.0.1",
     "jshint-stylish": "^1.0.0",
     "markdox": "^0.1.5",
-    "mocha": "^1.21.4",
-    "verb": "^0.3.9"
+    "mocha": "^1.21.4"
   },
   "dependencies": {
     "immutable": "^2.0.17",

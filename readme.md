@@ -50,7 +50,7 @@ collection = imm(records);
 imm assumes that the id key is called `id`. You can provide an optional argument:
 
 ```js
-collection = imm(records, '_id');
+collection = imm(records, {key: '_id'});
 ```
 
 ### [add](src/imm.js#L203)
