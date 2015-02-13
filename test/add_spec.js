@@ -18,10 +18,17 @@ describe('.add', function () {
 				expect(newCol.count()).to.be(3);
 			})
 
-			it('throws when there is no id', function () {
-				expect(function () {
-					col.add({label: 'Not ID'});
-				}).to.throwError();
+			it('adds when there is no id', function () {
+				expect(col.count()).to.be(2);
+				var newCol = col.add({label: 'Julia'});
+				expect(newCol.count()).to.be(3);
+			})
+
+			it('assigns an id if not there', function () {
+				col = imm([]);
+				var newCol = col.add({label: 'Julia'});
+				var records = newCol.array();
+				expect(records[0].id).not.to.be(undefined);
 			})
 
 			it('replaces an existing record', function () {

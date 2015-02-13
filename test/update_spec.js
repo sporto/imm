@@ -27,7 +27,7 @@ describe('.update', function () {
 
 			it('doesnt throw if there is no existing record', function () {
 				expect(function () {
-					col.remove({id: 20});
+					col.update({id: 20});
 				}).not.to.throwError();
 			})
 
@@ -36,6 +36,13 @@ describe('.update', function () {
 				var newCol = col.update(record);
 				expect(newCol.count()).to.be(3);
 				expect(newCol.get(20)).to.eql(record);
+			})
+
+			it('throws if record doesnt have an id', function () {
+				var record = {label: 'Will'};
+				expect(function () {
+					col.update(record);
+				}).to.throwError(/must have/);
 			})
 		})
 
@@ -61,6 +68,17 @@ describe('.update', function () {
 				var newCol = col.update(records);
 				expect(newCol.count()).to.be(3);
 				expect(newCol.get(20)).to.eql(record2);
+			})
+		})
+
+		describe('strict', function () {
+			it('throws if records exist', function () {
+				var record = {id: 10, label: 'Will'};
+				expect(col.allExist(10)).to.be(true);
+
+				expect(function () {
+					col.update(record, {strict: true});
+				}).to.throwError(/already exist/);
 			})
 		})
 

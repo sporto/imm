@@ -27,6 +27,13 @@ describe('.replace', function () {
 				var newCol = col.replace(record);
 				expect(newCol.count()).to.be(3);
 			})
+
+			it('throws if record doesnt have an id', function () {
+				var record = {label: 'Will'};
+				expect(function () {
+					col.replace(record);
+				}).to.throwError(/must have/);
+			})
 		})
 
 		describe('many', function () {
@@ -48,6 +55,17 @@ describe('.replace', function () {
 
 				var newCol = col.replace(records);
 				expect(newCol.count()).to.be(3);
+			})
+		})
+
+		describe('strict', function () {
+			it('throws if records exist', function () {
+				var record = {id: 10, label: 'Will'};
+				expect(col.allExist(10)).to.be(true);
+
+				expect(function () {
+					col.replace(record, {strict: true});
+				}).to.throwError(/already exist/);
 			})
 		})
 

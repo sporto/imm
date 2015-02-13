@@ -37,6 +37,13 @@ describe('imm', function(){
 			}).to.throwError();
 		})
 
+		it('accepts records without id', function () {
+			var records = [{label: 'Julia'}, {label: 'Sam'}];
+			var newCol = imm(records);
+			expect(newCol.count()).to.be(2);
+			expect(newCol.array()[0].id).not.to.be(undefined);
+		})
+
 	})
 
 	describe('_id', function () {
