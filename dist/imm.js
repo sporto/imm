@@ -12,7 +12,7 @@
 (function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		// AMD. Register as an anonymous module.
-		define(['Immutable'], function (Immutable) {
+		define(['seamless-immutable'], function (Immutable) {
 			return (root.imm = factory(Immutable));
 		});
 	} else if (typeof exports === 'object') {
