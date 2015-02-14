@@ -18,6 +18,11 @@ describe('imm', function(){
 			expect(col.count()).to.be(2)
 		})
 
+		it('creates a collection without args', function () {
+			col = imm();
+			expect(col.count()).to.be(0)
+		})
+
 		it('is immutable', function () {
 			var items = records();
 			col = imm(items);

@@ -140,6 +140,8 @@
 	// @return {Imm}
 	function _wrapPlainArray(array, args) {
 		var id, mergable;
+		if (!array) array = [];
+
 		if (args) _assertIsObject(args, 'You must provide an object for arguments');
 
 		var defaults = {
@@ -280,7 +282,7 @@
 
 		function asPlainArray() {
 			return Object.keys(immutableCollection).map(function (key) {
-				return immutableCollection[key].asMutable();
+				return immutableCollection[key].asMutable({deep: true});
 			});
 		}
 
@@ -366,7 +368,7 @@
 		function get(id) {
 			var record = immutableCollection[id];
 			if (!record) return void(0);
-			return record.asMutable();
+			return record.asMutable({deep: true});
 		}
 
 		/**

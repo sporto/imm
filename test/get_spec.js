@@ -28,6 +28,17 @@ describe('.get', function () {
 			expect(record).to.eql({id: 11, label: 'Julia'});
 		})
 
+		it('returns a deep plain mutable js record', function () {
+			var record = {id: 11, label: 'Sam', numbers: [1, 2]};
+			col = imm([record]);
+
+			var returned = col.get(11);
+			expect(returned).to.eql(record);
+
+			returned.numbers.push(3);
+			expect(returned).to.eql({id: 11, label: 'Sam', numbers: [1, 2, 3]});
+		})
+
 		it('returns undefined if not found', function () {
 			var record = col.get(20);
 			expect(record).to.be(undefined);

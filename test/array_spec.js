@@ -31,6 +31,18 @@ describe('.array', function () {
 			expect(record).to.eql({id: 10, label: 'Julia'});
 		})
 
+		it('returns a deep plain mutable js record', function () {
+			var record = {id: 11, label: 'Sam', numbers: [1, 2]};
+			col = imm([record]);
+
+			var returned = col.array();
+			expect(returned[0]).to.eql(record);
+
+			returned[0].numbers.push(3);
+			expect(returned[0]).to.eql({id: 11, label: 'Sam', numbers: [1, 2, 3]});
+		})
+
+
 	})
 
 
