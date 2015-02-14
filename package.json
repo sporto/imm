@@ -2,7 +2,7 @@
   "name": "imm",
   "version": "0.5.1",
   "description": "Immutable collections built on top of immutable.js",
-  "main": "index.js",
+  "main": "dist/imm.js",
   "directories": {
     "test": "test"
   },
