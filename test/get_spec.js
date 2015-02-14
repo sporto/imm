@@ -34,6 +34,7 @@ describe('.get', function () {
 
 			var returned = col.get(11);
 			expect(returned).to.eql(record);
+			expect(returned.numbers.asMutable).to.be(undefined);
 
 			returned.numbers.push(3);
 			expect(returned).to.eql({id: 11, label: 'Sam', numbers: [1, 2, 3]});
