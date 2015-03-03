@@ -3,6 +3,8 @@ IMM.js
 
 [ ![Codeship Status for sporto/imm](https://www.codeship.io/projects/c6ea6970-2eac-0132-d151-0605b547a2e8/status)](https://www.codeship.io/projects/39398)
 
+[![NPM](https://nodei.co/npm/imm.png?downloads=true&stars=true)](https://nodei.co/npm/imm/)
+
 __Immutable__ data collections build on top of [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)
 
 Seemless-immutable.js is great, but it doesn't have an API that feels right for CRUD applications. 
