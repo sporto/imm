@@ -1,4 +1,5 @@
-var imm              = require('../src/imm');
+// var imm              = require('../src/imm');
+var imm              = require('../dist/imm');
 var expect           = require('expect.js');
 var records          = require('./fixtures/records');
 var recordWithAltId  = require('./fixtures/records_with_alt_id');
