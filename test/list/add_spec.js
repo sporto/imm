@@ -1,14 +1,14 @@
-var imm              = require('../src/imm');
+var imm              = require('../../src/imm');
 var expect           = require('expect.js');
-var records          = require('./fixtures/records');
-var recordWithAltId  = require('./fixtures/records_with_alt_id');
+var records          = require('../fixtures/records');
+var recordWithAltId  = require('../fixtures/records_with_alt_id');
 var col;
 
 describe('.add', function () {
 
 	describe('id', function () {
 		beforeEach(function () {
-			col = imm(records());
+			col = imm.list(records());
 		})
 
 		describe('one', function () {
@@ -25,7 +25,7 @@ describe('.add', function () {
 			})
 
 			it('assigns an id if not there', function () {
-				col = imm([]);
+				col = imm.list([]);
 				var newCol = col.add({label: 'Julia'});
 				var records = newCol.array();
 				expect(records[0].id).not.to.be(undefined);
@@ -82,7 +82,7 @@ describe('.add', function () {
 
 	describe('_id', function () {
 		beforeEach(function () {
-			col = imm(recordWithAltId(), {key: '_id'});
+			col = imm.list(recordWithAltId(), {key: '_id'});
 		})
 
 		describe('one', function () {

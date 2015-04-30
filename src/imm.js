@@ -111,28 +111,28 @@
 	}
 
 	/**
-	* Returns an Imm collection
+	* Returns an Imm list
 	* Keys are always sorted in alphabetical order
 	* 
 	* **Example**
 	*
 	* ```js
 	* var records = [{id: 1, label: 'Sam'}, {...}];
-	* collection = imm(records);
+	* collection = imm.list(records);
 	* ```
 	* imm assumes that the id key is called `id`. You can provide an optional argument:
 	*
 	* ```js
-	* collection = imm(records, {key: '_id'});
+	* collection = imm.list(records, {key: '_id'});
 	* ```
 	* 
 	* @param {Array} records Array of records
 	* @param {Object} args Optional arguments
 	* @param {String} args.key=id Optional name of id key e.g. _id
-	* @return {Imm} Imm collection
+	* @return {Imm} Imm list
 	* @api public
 	*/
-	function imm(records, args) {
+	function list(records, args) {
 		return _wrapPlainArray(records, args);
 	}
 
@@ -557,6 +557,8 @@
 		};
 	}
 
-	return imm;
+	return {
+		list: list
+	};
 
 }));

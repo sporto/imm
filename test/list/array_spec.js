@@ -1,15 +1,15 @@
-var imm              = require('../src/imm');
+var imm              = require('../../src/imm');
 var Immutable        = require('seamless-immutable');
 var expect           = require('expect.js');
-var records          = require('./fixtures/records');
-var recordWithAltId  = require('./fixtures/records_with_alt_id');
+var records          = require('../fixtures/records');
+var recordWithAltId  = require('../fixtures/records_with_alt_id');
 var col;
 
 describe('.array', function () {
 
 	describe('id', function () {
 		beforeEach(function () {
-			col = imm(records());
+			col = imm.list(records());
 		})
 
 		it('returns the records', function () {
@@ -33,7 +33,7 @@ describe('.array', function () {
 
 		it('returns a deep plain mutable js record', function () {
 			var record = {id: 11, label: 'Sam', numbers: [1, 2]};
-			col = imm([record]);
+			col = imm.list([record]);
 
 			var returned = col.array();
 			expect(returned[0]).to.eql(record);

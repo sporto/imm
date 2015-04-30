@@ -1,7 +1,7 @@
-var imm              = require('../src/imm');
+var imm              = require('../../src/imm');
 var expect           = require('expect.js');
-var records          = require('./fixtures/records');
-var recordWithAltId  = require('./fixtures/records_with_alt_id');
+var records          = require('../fixtures/records');
+var recordWithAltId  = require('../fixtures/records_with_alt_id');
 var col;
 
 
@@ -10,7 +10,7 @@ describe('.filter', function () {
 	describe('id', function () {
 
 		beforeEach(function () {
-			col = imm(records());
+			col = imm.list(records());
 		})
 
 		it('filters', function() {

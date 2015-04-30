@@ -1,14 +1,14 @@
-var imm              = require('../src/imm');
+var imm              = require('../../src/imm');
 var expect           = require('expect.js');
-var records          = require('./fixtures/records');
-var recordWithAltId  = require('./fixtures/records_with_alt_id');
+var records          = require('../fixtures/records');
+var recordWithAltId  = require('../fixtures/records_with_alt_id');
 var col;
 
 describe('.remove', function () {
 
 	describe('id', function () {
 		beforeEach(function () {
-			col = imm(records());
+			col = imm.list(records());
 		})
 
 		describe('one', function () {
@@ -60,7 +60,7 @@ describe('.remove', function () {
 
 	describe('_id', function () {
 		beforeEach(function () {
-			col = imm(recordWithAltId(), {key: '_id'});
+			col = imm.list(recordWithAltId(), {key: '_id'});
 		})
 
 		describe('one', function () {

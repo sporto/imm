@@ -1,14 +1,14 @@
-var imm              = require('../src/imm');
+var imm              = require('../../src/imm');
 var expect           = require('expect.js');
-var records          = require('./fixtures/records');
-var recordWithAltId  = require('./fixtures/records_with_alt_id');
+var records          = require('../fixtures/records');
+var recordWithAltId  = require('../fixtures/records_with_alt_id');
 var col;
 
 describe('.get', function () {
 
 	describe('id', function () {
 		beforeEach(function () {
-			col = imm(records());
+			col = imm.list(records());
 		})
 
 		it('returns the record by id', function (){
@@ -30,7 +30,7 @@ describe('.get', function () {
 
 		it('returns a deep plain mutable js record', function () {
 			var record = {id: 11, label: 'Sam', numbers: [1, 2]};
-			col = imm([record]);
+			col = imm.list([record]);
 
 			var returned = col.get(11);
 			expect(returned).to.eql(record);
@@ -48,7 +48,7 @@ describe('.get', function () {
 
 	describe('_id', function () {
 		beforeEach(function () {
-			col = imm(recordWithAltId(), {key: '_id'});
+			col = imm.list(recordWithAltId(), {key: '_id'});
 		})
 
 		it('returns the record by _id', function (){

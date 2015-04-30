@@ -1,12 +1,12 @@
-var imm              = require('../src/imm');
+var imm              = require('../../src/imm');
 var expect           = require('expect.js');
-var records          = require('./fixtures/records')();
+var records          = require('../fixtures/records')();
 var col;
 
 describe('.find', function () {
 
 	beforeEach(function () {
-		col = imm(records);
+		col = imm.list(records);
 	});
 
 	it('finds a record using a function', function () {
