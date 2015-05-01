@@ -26,7 +26,7 @@ describe('.filter', function () {
 			col = col.filter(function(record) {
 				return record.label == 'Tess';
 			});
-			expect(col.isImm).to.eq(true);
+			expect(col.isImmList).to.eq(true);
 		})
 	})
 });

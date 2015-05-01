@@ -1,5 +1,5 @@
-// var imm              = require('../src/imm');
-var imm              = require('../dist/imm');
+var imm              = require('../src/imm');
+// var imm              = require('../dist/imm');
 var chai             = require('chai');
 var expect           = chai.expect;
 var records          = require('./fixtures/records');
@@ -12,7 +12,7 @@ describe('imm.list', function(){
 
 		it('creates an Imm list', function () {
 			col = imm.list(records());
-			expect(col.isImm).to.eq(true)
+			expect(col.isImmList).to.eq(true)
 		})
 
 		it('creates a collection', function () {

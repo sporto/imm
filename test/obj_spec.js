@@ -3,10 +3,11 @@ var imm              = require('../src/imm');
 var chai             = require('chai');
 var expect           = chai.expect;
 
-describe('imm', function() {
+describe('imm.obj', function(){
 
-	// it('shows a deprecation messages', function() {
-	// 	imm([]);
-	// });
+	it('creates an immutable object', function() {
+		var obj = imm.obj({})
+		expect(obj.isImmObject).to.eq(true)
+	});
 
 });

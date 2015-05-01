@@ -31,7 +31,7 @@ function makeList(Immutable) {
 	* @param {Array} records Array of records
 	* @param {Object} args Optional arguments
 	* @param {String} args.key=id Optional name of id key e.g. _id
-	* @return {Imm} Imm list
+	* @return {Imm.list} Imm list
 	* @api public
 	*/
 	function list(records, args) {
@@ -446,7 +446,7 @@ function makeList(Immutable) {
 		}
 
 		return {
-			isImm:       true,
+			isImmList:   true,
 			add:         add,
 			allExist:    allExist,
 			anyExist:    anyExist,
