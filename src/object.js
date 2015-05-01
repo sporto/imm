@@ -3,7 +3,7 @@
 var isObject = require('./utils/isObject');
 var isArray = require('./utils/isArray.js');
 
-function makeObj(Immutable) {
+function makeObj(Immutable: any): any {
 
 	/**
 	* Returns an Seamless Immutable object

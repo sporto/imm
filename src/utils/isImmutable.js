@@ -1,5 +1,7 @@
-function isImmutable(Immutable, object): boolean {
-	return Immutable.isImmutable(object);
+/* @flow */
+
+function isImmutable(Immutable: any, object: any): boolean {
+	return object.isImmutable != null;
 }
 
 module.exports = isImmutable;

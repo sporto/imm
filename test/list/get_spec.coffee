@@ -19,17 +19,35 @@ describe '.get', ->
 			record = col.get('11')
 			expect(record).to.eql({id: 11, label: 'Tess'})
 
-		it 'returns plain mutable js record', ->
+		it 'returns an immutable record', ->
 			record = col.get(11)
+			expect(record).to.eql({id: 11, label: 'Tess'})
+			record.label = 'Julia'
+			expect(record).to.eql({id: 11, label: 'Tess'})
+
+		it 'can be made mutable', ->
+			record = col.get(11).asMutable()
 			expect(record).to.eql({id: 11, label: 'Tess'})
 			record.label = 'Julia'
 			expect(record).to.eql({id: 11, label: 'Julia'})
 
-		it 'returns a deep plain mutable js record', ->
+		it 'returns a deep plain immutable record', ->
 			record = {id: 11, label: 'Sam', numbers: [1, 2]}
 			col = imm.list([record])
 
 			returned = col.get(11)
+			expect(returned).to.eql(record)
+			# expect(returned.numbers.asMutable).to.eq(undefined)
+
+			fn = ->
+				returned.numbers.push(3)
+			expect(fn).to.throw()
+
+		it 'can be made deep mutable', ->
+			record = {id: 11, label: 'Sam', numbers: [1, 2]}
+			col = imm.list([record])
+
+			returned = col.get(11).asMutable({deep: true})
 			expect(returned).to.eql(record)
 			expect(returned.numbers.asMutable).to.eq(undefined)
 

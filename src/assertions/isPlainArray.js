@@ -1,9 +1,9 @@
-var isArray            = require('../utils/isArray.js');
-var isImmutable        = require('../utils/isImmutable.js');
+var isArray                   = require('../utils/isArray.js');
+var isImmutableInstance       = require('../utils/isImmutableInstance.js');
 
 function assertIsPlainArray(Immutable, array) {
 	var one = !isArray(array);
-	var two = isImmutable(Immutable, array);
+	var two = isImmutableInstance(Immutable, array);
 	if (one || two) throw new Error('You must provide an array');
 }
 
