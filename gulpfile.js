@@ -21,12 +21,12 @@ gulp.task('lint', function() {
 });
 
 gulp.task('test', function () {
-	return gulp.src("./test/**/*.js", {read: false})
+	return gulp.src("./test/**/*.coffee", {read: false})
 		.pipe(mocha({reporter: 'nyan'}));
 });
 
 gulp.task('test-watch', function() {
-    gulp.watch(['src/**', 'test/**'], ['test']);
+	gulp.watch(['src/**', 'test/**'], ['test']);
 });
 
 gulp.task("webpack", function() {
@@ -43,7 +43,7 @@ gulp.task('min', ['webpack'], function() {
 });
 
 gulp.task('doc', function () {
-  run('verb').exec();
+	run('verb').exec();
 })
 
 gulp.task('default', ['test', 'lint', 'min', 'doc']);

@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function() {
 	return [
 		{
 			_id: 'abc',
@@ -8,5 +8,5 @@ module.exports = function () {
 			_id: 'xyz',
 			label: 'Tess'
 		}
-	];
+	]
 }

@@ -1,4 +1,4 @@
-module.exports = function () {
+module.exports = function() {
 	return [
 		{
 			id: 10,
@@ -8,5 +8,5 @@ module.exports = function () {
 			id: 11,
 			label: 'Tess'
 		}
-	];
+	]
 }
