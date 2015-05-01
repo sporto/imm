@@ -1,7 +1,7 @@
 imm              = require('../../src/imm.ts')
 chai             = require('chai')
 expect           = chai.expect
-records          = require('../fixtures/records')
+makeRecords      = require('../fixtures/records')
 recordWithAltId  = require('../fixtures/records_with_alt_id')
 col = null
 
@@ -11,8 +11,7 @@ describe '.replace', ->
 	describe 'id', ->
 
 		beforeEach ->
-			col = imm.list(records())
-		
+			col = imm.list(makeRecords())
 
 		describe 'one', ->
 			it 'replaces an existing record', ->
@@ -31,11 +30,9 @@ describe '.replace', ->
 
 			it 'throws if record doesnt have an id', ->
 				record = {label: 'Will'}
-				expect(->
+				test = ->
 					col.replace(record)
-				.to.throw(/must have/)
-			
-		
+				expect(test).to.throw(/must have/)
 
 		describe 'many', ->
 			it 'replaces many existing records', ->
@@ -56,27 +53,19 @@ describe '.replace', ->
 
 				newCol = col.replace(records)
 				expect(newCol.count()).to.eq(3)
-			
-		
 
 		describe 'strict', ->
 			it 'throws if records exist', ->
 				record = {id: 10, label: 'Will'}
 				expect(col.allExist(10)).to.eq(true)
+				test = ->
+					col.replace(record, {strict: true})
+				expect(test).to.throw(/already exist/)
 
-				expect(->
-					col.replace(record, {strict: true
-				.to.throw(/already exist/)
-			
-		
-
-	
-
-	describe '_id', ->
+	describe 'with _id', ->
 
 		beforeEach ->
-			col = imm.list(recordWithAltId(), {key: '_id'
-		
+			col = imm.list(recordWithAltId(), {key: '_id'})
 
 		describe 'one', ->
 			it 'replaces an existing record (_id)', ->
@@ -85,8 +74,3 @@ describe '.replace', ->
 				col = col.replace(record)
 				expect(col.count()).to.eq(2)
 				expect(col.get('xyz')).to.eql(record)
-			
-
-		
-	
-
