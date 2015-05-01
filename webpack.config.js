@@ -18,7 +18,13 @@ module.exports = {
 		/^[a-z\-0-9]+$/,
 	],
 	module: {
-		loaders: []
+		loaders: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: 'babel-loader'
+			}
+		]
 	},
 	resolve: {
 		alias: {

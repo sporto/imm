@@ -32,7 +32,6 @@ This library requires [seamless-immutable](https://github.com/rtfeldman/seamless
 
 ## API
 
-
 ### Things to note
 
 - Methods that return collections (e.g. filter) return an instance of Imm

@@ -1,3 +1,5 @@
+/* @flow */
+
 //! Imm
 //! Immutable collections
 //! (c) 2015 Sebastian Porto
@@ -12,7 +14,7 @@ function imm() {
 	console.warn('Using imm directly is deprecated, use imm.list instead')
 }
 
-imm.list   = require('./list.ts')(Immutable);
-imm.obj    = require('./object.ts')(Immutable);
+imm.list   = require('./list.js')(Immutable);
+imm.obj    = require('./object.js')(Immutable);
 
 module.exports = imm;

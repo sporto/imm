@@ -1,4 +1,4 @@
-imm                   = require('../../src/imm.ts')
+imm                   = require('../../src/imm.js')
 chai                  = require('chai')
 expect                = chai.expect
 makeRecords           = require('../fixtures/records')

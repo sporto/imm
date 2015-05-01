@@ -1,0 +1,9 @@
+{
+  "esprima": "esprima-fb",
+  "fileExtensions": [".js"],
+  "preset": "airbnb",
+  "disallowMixedSpacesAndTabs": "smart",
+  "validateIndentation": "\t",
+  "requirePaddingNewLinesBeforeLineComments": null,
+  "requirePaddingNewLinesAfterBlocks": null
+}

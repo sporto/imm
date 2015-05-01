@@ -1,6 +1,6 @@
-function idsAsStrings(array) {
-	return array.map(function (v) {
-		return "" + v;
+function idsAsStrings(array: Array<any>): Array<string> {
+	return array.map(function(v) {
+		return '' + v;
 	});
 }
 

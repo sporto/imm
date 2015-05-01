@@ -1,4 +1,4 @@
-function isImmutable(Immutable, object) {
+function isImmutable(Immutable, object): boolean {
 	return Immutable.isImmutable(object);
 }
 

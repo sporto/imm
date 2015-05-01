@@ -1,5 +1,7 @@
-var isArray = require('./isArray');
+var isArray = require('./isArray.js');
 
-module.exports = function(recordOrRecords) {
+function wrapAsArray(recordOrRecords): Array<any> {
 	return isArray(recordOrRecords) ? recordOrRecords : [recordOrRecords];
 };
+
+module.exports = wrapAsArray;
