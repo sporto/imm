@@ -1,5 +1,6 @@
 var imm              = require('../../src/imm');
-var expect           = require('expect.js');
+var chai             = require('chai');
+var expect           = chai.expect;
 var records          = require('../fixtures/records');
 var recordWithAltId  = require('../fixtures/records_with_alt_id');
 var col;
@@ -34,7 +35,7 @@ describe('.get', function () {
 
 			var returned = col.get(11);
 			expect(returned).to.eql(record);
-			expect(returned.numbers.asMutable).to.be(undefined);
+			expect(returned.numbers.asMutable).to.eq(undefined);
 
 			returned.numbers.push(3);
 			expect(returned).to.eql({id: 11, label: 'Sam', numbers: [1, 2, 3]});
@@ -42,7 +43,7 @@ describe('.get', function () {
 
 		it('returns undefined if not found', function () {
 			var record = col.get(20);
-			expect(record).to.be(undefined);
+			expect(record).to.eq(undefined);
 		})
 	})
 

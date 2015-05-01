@@ -1,5 +1,6 @@
 var imm              = require('../../src/imm');
-var expect           = require('expect.js');
+var chai             = require('chai');
+var expect           = chai.expect;
 var records          = require('../fixtures/records');
 var recordWithAltId  = require('../fixtures/records_with_alt_id');
 var col;
@@ -14,7 +15,7 @@ describe('.count', function () {
 
 	it('returns the count', function (){
 			var res = col.count();
-			expect(res).to.be(2);
+			expect(res).to.eq(2);
 		});
 	})
 
@@ -25,7 +26,7 @@ describe('.count', function () {
 
 		it('returns the count', function (){
 			var res = col.count();
-			expect(res).to.be(2);
+			expect(res).to.eq(2);
 		});
 	})
 

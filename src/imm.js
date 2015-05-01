@@ -8,6 +8,10 @@ var Immutable = require('seamless-immutable');
 
 if (Immutable == null) throw new Error('Immutable is null');
 
-module.exports = {
-	list: require('./list')(Immutable)
-};
+function imm() {
+	console.warn('Using imm directly is deprecated, use imm.list instead')
+}
+
+imm.list = require('./list')(Immutable);
+
+module.exports = imm;

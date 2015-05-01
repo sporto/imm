@@ -1,6 +1,7 @@
 var imm              = require('../../src/imm');
 var Immutable        = require('seamless-immutable');
-var expect           = require('expect.js');
+var chai             = require('chai');
+var expect           = chai.expect;
 var records          = require('../fixtures/records');
 var recordWithAltId  = require('../fixtures/records_with_alt_id');
 var col;
@@ -14,13 +15,13 @@ describe('.array', function () {
 
 		it('returns the records', function () {
 			var records = col.array();
-			expect(records.length).to.be(2)
+			expect(records.length).to.eq(2)
 		})
 
 		it('returns a plain array', function () {
 			var records = col.array();
 			expect(records).to.be.an('array');
-			expect(Immutable.isImmutable(records)).not.to.be(true)
+			expect(Immutable.isImmutable(records)).not.to.eq(true)
 		})
 
 		it('returns plain mutable js records', function () {

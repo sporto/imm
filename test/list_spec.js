@@ -1,6 +1,7 @@
 // var imm              = require('../src/imm');
 var imm              = require('../dist/imm');
-var expect           = require('expect.js');
+var chai             = require('chai');
+var expect           = chai.expect;
 var records          = require('./fixtures/records');
 var recordWithAltId  = require('./fixtures/records_with_alt_id');
 var col;
@@ -11,17 +12,17 @@ describe('imm.list', function(){
 
 		it('creates an Imm list', function () {
 			col = imm.list(records());
-			expect(col.isImm).to.be(true)
+			expect(col.isImm).to.eq(true)
 		})
 
 		it('creates a collection', function () {
 			col = imm.list(records());
-			expect(col.count()).to.be(2)
+			expect(col.count()).to.eq(2)
 		})
 
 		it('creates a collection without args', function () {
 			col = imm.list();
-			expect(col.count()).to.be(0)
+			expect(col.count()).to.eq(0)
 		})
 
 		it('is immutable', function () {
@@ -40,14 +41,14 @@ describe('imm.list', function(){
 		it('throws if not given an array', function () {
 			expect(function () {
 				imm.list('A String');
-			}).to.throwError();
+			}).to.throw();
 		})
 
 		it('accepts records without id', function () {
 			var records = [{label: 'Julia'}, {label: 'Sam'}];
 			var newCol = imm.list(records);
-			expect(newCol.count()).to.be(2);
-			expect(newCol.array()[0].id).not.to.be(undefined);
+			expect(newCol.count()).to.eq(2);
+			expect(newCol.array()[0].id).not.to.eq(undefined);
 		})
 
 	})
