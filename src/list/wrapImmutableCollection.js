@@ -3,30 +3,13 @@
 var assertIsImmutable           = require('../assertions/isImmutable.js');
 var assertIsImmutableInstance   = require('../assertions/isImmutableInstance.js');
 
-var add          = require('./add.js');
-var asPlainArray = require('./asPlainArray.js');
-var allExist     = require('./allExist.js');
-var anyExist     = require('./anyExist.js');
-var count        = require('./count.js');
-var filter       = require('./filter.js');
-var find         = require('./find.js');
-var get          = require('./get.js');
-var map          = require('./map.js');
-var remove       = require('./remove.js');
-var replace      = require('./replace.js');
-var update       = require('./update.js');
-
-// var isArray             = require('../utils/isArray.js');
-// var wrapAsArray         = require('../utils/wrapAsArray.js');
-
-
-
-
 /*
 * @param {Immutable}
 * @return {Imm}
 */
-function wrapImmutableCollection(Immutable: any, globalArgs: Object, immutableCollection: any): Object {
+function wrapImmutableCollection(Immutable: any,
+	globalArgs: Object,
+	immutableCollection: any): Object {
 
 	assertIsImmutable(Immutable, Immutable);
 	assertIsImmutableInstance(Immutable, immutableCollection);
@@ -51,6 +34,19 @@ function wrapImmutableCollection(Immutable: any, globalArgs: Object, immutableCo
 	function toImmutable() {
 		return immutableCollection;
 	}
+
+	var add          = require('./add.js');
+	var asPlainArray = require('./asPlainArray.js');
+	var allExist     = require('./allExist.js');
+	var anyExist     = require('./anyExist.js');
+	var count        = require('./count.js');
+	var filter       = require('./filter.js');
+	var find         = require('./find.js');
+	var get          = require('./get.js');
+	var map          = require('./map.js');
+	var remove       = require('./remove.js');
+	var replace      = require('./replace.js');
+	var update       = require('./update.js');
 
 	return {
 		isImmList:   true,

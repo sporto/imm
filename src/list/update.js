@@ -4,7 +4,7 @@ var idsFromRecords          = require('../utils/idsFromRecords.js');
 var wrapAsArray             = require('../utils/wrapAsArray.js');
 var mergeDefaults           = require('../utils/defaults.js');
 var anyExist                = require('./anyExist.js');
-var wrapImmutableCollection = require('./wrapImmutableCollection');
+var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 
 /**
 * Updates one record or many.
@@ -25,10 +25,10 @@ var wrapImmutableCollection = require('./wrapImmutableCollection');
 * @return {Imm} Modified collection
 * @api public
 */
-function update(Immutable: any, 
-	globalArgs: Object, 
-	immutableCollection: any, 
-	recordOrRecords: Object | Array<Object>, 
+function update(Immutable: any,
+	globalArgs: Object,
+	immutableCollection: any,
+	recordOrRecords: Object | Array<Object>,
 	args: Object
 	) {
 
@@ -49,7 +49,8 @@ function update(Immutable: any,
 		// throw if any record exists
 		var records = wrapAsArray(recordOrRecords);
 		var ids     = idsFromRecords(records, globalArgs.key);
-		if (anyExist(ids)) throw new Error('Some records already exist');
+		var exists  = anyExist(Immutable, globalArgs, immutableCollection, ids);
+		if (exists) throw new Error('Some records already exist');
 	}
 
 	for (var a = 0; a < givenRecords.length; a++) {

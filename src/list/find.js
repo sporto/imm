@@ -1,7 +1,6 @@
 /* @flow */
 var asPlainArray      = require('./asPlainArray.js');
 
-
 /**
 * Finds one record.
 * Returns a plain JS mutable object.
@@ -23,7 +22,8 @@ function find(Immutable: any,
 	immutableCollection: any,
 	finder: Function) {
 
-	var records = asPlainArray();
+	var records = asPlainArray(Immutable, globalArgs, immutableCollection);
+
 	for (var a = 0; a < records.length; a++) {
 		var record = records[a];
 		if (finder(record)) {

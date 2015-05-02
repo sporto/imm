@@ -42,11 +42,12 @@ function add(Immutable: any,
 		// throw if any record exists
 		var records = wrapAsArray(recordOrRecords);
 		var ids     = idsFromRecords(records, globalArgs.key);
-		if (anyExist(ids)) throw new Error('Some records already exist');
+		var exists = anyExist(Immutable, globalArgs, immutableCollection, ids);
+		if (exists) throw new Error('Some records already exist');
 	}
 	args.requireKey = false;
 
-	return replace(globalArgs, immutableCollection, recordOrRecords, args);
+	return replace(Immutable, globalArgs, immutableCollection, recordOrRecords, args);
 }
 
 

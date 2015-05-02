@@ -14,6 +14,10 @@ function transform(path) {
 		return coffeeTransformer.transform(content);
 	}
 
+	if (!babel.canCompile(path)) {
+		return '';
+	}
+
 	return babel.transform(content).code;
 }
 

@@ -28,11 +28,12 @@ function remove(Immutable: any, globalArgs: Object, immutableCollection: any, id
 	ids = idsAsStrings(ids);
 
 	if (args && args.strict) {
-		if (!allExist(ids)) throw new Error('Some records do not exist');
+		var exists = allExist(Immutable, globalArgs, immutableCollection, ids);
+		if (!exists) throw new Error('Some records do not exist');
 	}
 
 	var newCol = immutableCollection.without(ids);
-	return wrapImmutableCollection(globalArgs, newCol);
+	return wrapImmutableCollection(Immutable, globalArgs, newCol);
 }
 
 module.exports = remove;

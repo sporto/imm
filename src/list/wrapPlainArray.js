@@ -1,8 +1,8 @@
 /* @flow */
 
+var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 var generateUID             = require('../utils/generateUID.js');
 var mergeDefaults           = require('../utils/defaults.js');
-var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 var assertIsObject          = require('../assertions/isObject.js');
 var assertIsPlainArray      = require('../assertions/isPlainArray.js');
 
@@ -12,7 +12,11 @@ var DEFAULT_KEY = 'id';
 * @param {Array}
 * @return {Immutable List}
 */
-function wrapPlainArray(Immutable: any, args: Object, array: Array<Object>): any {
+function wrapPlainArray(Immutable: any,
+	args: Object,
+	array: Array<Object>
+	): any {
+
 	var id;
 	var mergable;
 	if (!array) array = [];

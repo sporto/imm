@@ -20,9 +20,10 @@ var asPlainArray      = require('./asPlainArray.js');
 */
 function map(Immutable: any,
 	globalArgs: Object,
-	immutableCollection: any, 
-	mapper: Function) {
-	var newCol = asPlainArray();
+	immutableCollection: any,
+	mapper: Function):Array<any> {
+
+	var newCol = asPlainArray(Immutable, globalArgs, immutableCollection);
 	return newCol.map(mapper);
 }
 

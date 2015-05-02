@@ -20,11 +20,11 @@ var wrapPlainArray    = require('./wrapPlainArray.js');
 function filter(Immutable: any,
 	globalArgs: Object,
 	immutableCollection: any, 
-	filterer: Function) {
+	filterer: Function): any {
 
-	var newCol = asPlainArray();
+	var newCol = asPlainArray(Immutable, globalArgs, immutableCollection);
 	newCol = newCol.filter(filterer);
-	return wrapPlainArray(globalArgs, newCol);
+	return wrapPlainArray(Immutable, globalArgs, newCol);
 }
 
 module.exports = filter;

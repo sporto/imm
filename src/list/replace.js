@@ -27,7 +27,12 @@ var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 * @return {Imm} Modified Imm collection
 * @api public
 */
-function replace(Immutable: any, globalArgs: Object, immutableCollection: any, recordOrRecords: any, args: Object) {
+function replace(Immutable: any,
+	globalArgs: Object, 
+	immutableCollection: any, 
+	recordOrRecords: any, 
+	args: Object) {
+
 	var record;
 	var id;
 	var records = wrapAsArray(recordOrRecords);
