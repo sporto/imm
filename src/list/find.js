@@ -29,7 +29,7 @@ function find(Immutable: any,
 	for (var a = 0; a < records.length; a++) {
 		var record = records[a];
 		if (finder(record)) {
-			return record;
+			return Immutable(record);
 		}
 	}
 	return void(0);

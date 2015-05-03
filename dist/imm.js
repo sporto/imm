@@ -264,8 +264,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var assertIsImmutable = __webpack_require__(12);
-	var assertIsImmutableInstance = __webpack_require__(13);
+	var assertIsImmutable = __webpack_require__(13);
+	var assertIsImmutableInstance = __webpack_require__(14);
 
 	/*
 	* @param {Immutable}
@@ -311,18 +311,18 @@ return /******/ (function(modules) { // webpackBootstrap
 			return immutableCollection;
 		}
 
-		var add = __webpack_require__(14);
-		var asPlainArray = __webpack_require__(15);
-		var allExist = __webpack_require__(16);
-		var anyExist = __webpack_require__(17);
-		var count = __webpack_require__(18);
-		var filter = __webpack_require__(19);
-		var find = __webpack_require__(20);
-		var get = __webpack_require__(21);
-		var map = __webpack_require__(22);
-		var remove = __webpack_require__(23);
-		var replace = __webpack_require__(24);
-		var update = __webpack_require__(25);
+		var add = __webpack_require__(15);
+		var asPlainArray = __webpack_require__(16);
+		var allExist = __webpack_require__(17);
+		var anyExist = __webpack_require__(18);
+		var count = __webpack_require__(19);
+		var filter = __webpack_require__(20);
+		var find = __webpack_require__(21);
+		var get = __webpack_require__(22);
+		var map = __webpack_require__(23);
+		var remove = __webpack_require__(24);
+		var replace = __webpack_require__(25);
+		var update = __webpack_require__(26);
 
 		return {
 			isImmList: true,
@@ -406,7 +406,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var isArray = __webpack_require__(6);
-	var isImmutableInstance = __webpack_require__(26);
+	var isImmutableInstance = __webpack_require__(12);
 
 	function assertIsPlainArray(Immutable, array) {
 		var one = !isArray(array);
@@ -418,6 +418,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* @flow */
+
+	"use strict";
+
+	function isImmutableInstance(Immutable, object) {
+		return Immutable.isImmutable(object);
+	}
+
+	module.exports = isImmutableInstance;
+
+/***/ },
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -432,12 +446,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = assertIsImmutable;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isImmutableInstance = __webpack_require__(26);
+	var isImmutableInstance = __webpack_require__(12);
 
 	function assertIsImmutableInstance(Immutable, object) {
 		var is = isImmutableInstance(Immutable, object);
@@ -447,7 +461,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = assertIsImmutableInstance;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -457,8 +471,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var replace = __webpack_require__(24);
-	var anyExist = __webpack_require__(17);
+	var replace = __webpack_require__(25);
+	var anyExist = __webpack_require__(18);
 	var idsFromRecords = __webpack_require__(28);
 	var wrapAsArray = __webpack_require__(29);
 	var mergeDefaults = __webpack_require__(9);
@@ -504,7 +518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = add;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -521,7 +535,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = asPlainArray;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -550,9 +564,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		var ids = wrapAsArray(idOrIds);
 		for (var a = 0; a < ids.length; a++) {
 			var id = ids[a];
-			if (!immutableCollection[id]) {
-				return false;
-			}
+			if (!immutableCollection[id]) return false;
 		}
 		return true;
 	}
@@ -560,7 +572,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = allExist;
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -589,9 +601,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		var ids = wrapAsArray(idOrIds);
 		for (var a = 0; a < ids.length; a++) {
 			var id = ids[a];
-			if (immutableCollection[id]) {
-				return true;
-			}
+			if (immutableCollection[id]) return true;
 		}
 		return false;
 	}
@@ -599,7 +609,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = anyExist;
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -624,7 +634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = count;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -634,7 +644,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var asPlainArray = __webpack_require__(15);
+	var asPlainArray = __webpack_require__(16);
 	var wrapPlainArray = __webpack_require__(4);
 
 	/**
@@ -661,7 +671,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = filter;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -671,7 +681,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var asPlainArray = __webpack_require__(15);
+	var asPlainArray = __webpack_require__(16);
 
 	/**
 	* Finds one record.
@@ -694,7 +704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		for (var a = 0; a < records.length; a++) {
 			var record = records[a];
 			if (finder(record)) {
-				return record;
+				return Immutable(record);
 			}
 		}
 		return void 0;
@@ -703,7 +713,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = find;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -733,15 +743,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	function get(Immutable, globalArgs, immutableCollection, id) {
 		var record = immutableCollection[id];
-		if (!record) {
-			return void 0;
-		}return record;
+		if (!record) return void 0;
+		return record;
 	}
 
 	module.exports = get;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -751,7 +760,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var asPlainArray = __webpack_require__(15);
+	var asPlainArray = __webpack_require__(16);
 
 	/**
 	* Map the collection through a given function
@@ -775,7 +784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = map;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -786,7 +795,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var idsAsStrings = __webpack_require__(30);
-	var allExist = __webpack_require__(16);
+	var allExist = __webpack_require__(17);
 	var wrapAsArray = __webpack_require__(29);
 	var wrapImmutableCollection = __webpack_require__(7);
 
@@ -823,7 +832,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = remove;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -838,7 +847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var mergeDefaults = __webpack_require__(9);
 	var wrapAsArray = __webpack_require__(29);
 	var generateUID = __webpack_require__(8);
-	var anyExist = __webpack_require__(17);
+	var anyExist = __webpack_require__(18);
 	var wrapImmutableCollection = __webpack_require__(7);
 
 	/**
@@ -900,7 +909,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = replace;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -913,7 +922,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var idsFromRecords = __webpack_require__(28);
 	var wrapAsArray = __webpack_require__(29);
 	var mergeDefaults = __webpack_require__(9);
-	var anyExist = __webpack_require__(17);
+	var anyExist = __webpack_require__(18);
 	var wrapImmutableCollection = __webpack_require__(7);
 
 	/**
@@ -979,20 +988,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = update;
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* @flow */
-
-	"use strict";
-
-	function isImmutableInstance(Immutable, object) {
-		return Immutable.isImmutable(object);
-	}
-
-	module.exports = isImmutableInstance;
 
 /***/ },
 /* 27 */

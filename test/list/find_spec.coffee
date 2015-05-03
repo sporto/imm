@@ -1,3 +1,4 @@
+Immutable        = require('seamless-immutable')
 imm              = require('../../src/imm.js')
 chai             = require('chai')
 expect           = chai.expect
@@ -15,10 +16,16 @@ describe '.find', ->
 		record = col.find(finder)
 		expect(record).to.eql({id: 11, label: 'Tess'})
 
-	it 'returns a mutable object', ->
+	it 'returns an immutable object', ->
 		finder = (r)->
 			true
 		record = col.find(finder)
 		expect(record).to.eql({id: 10, label: 'Sam'})
 		record.label = 'Julia'
-		expect(record).to.eql({id: 10, label: 'Julia'})
+		expect(record).to.eql({id: 10, label: 'Sam'})
+
+	it 'returns a Seamless immutable instance', ->
+		finder = (r)->
+			true
+		record = col.find(finder)
+		expect(Immutable.isImmutable(record)).to.eq(true)
