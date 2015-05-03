@@ -1,5 +1,8 @@
 /* @flow */
 
+/*!
+ * Module dependencies.
+ */
 var idsFromRecords          = require('../utils/idsFromRecords.js');
 var wrapAsArray             = require('../utils/wrapAsArray.js');
 var mergeDefaults           = require('../utils/defaults.js');
@@ -12,12 +15,10 @@ var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 * If a record is not found then it gets added.
 * This throws if a record doesn't have an key
 *
-* **Example**
+* ### Examples:
 *
-* ```js
-* collection = collection.update(record)
-* collection = collection.update(array)
-* ```
+* 	collection = collection.update(record)
+* 	collection = collection.update(array)
 *
 * @param {Object|Array} recordOrRecords Record or records to update
 * @param {Object} args Optional arguments

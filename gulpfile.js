@@ -55,36 +55,16 @@ gulp.task('doc-imm', function() {
 	gulp.src('./src/*.js')
 		.pipe(markdox())
 		.pipe(concat('imm.md'))
-		.pipe(gulp.dest('./tmp/doc'));
+		.pipe(gulp.dest('./docs'));
 });
 
-// gulp.task('api-doc-list', function() {
-// 	gulp.src('./src/*.js')
-// 		.pipe(markdox())
-// 		.pipe(concat('api-list.md'))
-// 		.pipe(gulp.dest('./tmp/doc'));
-// });
-
-// gulp.task('api-doc', ['api-doc-main', 'api-doc-list'], function() {
-// 	gulp.src('./tmp/doc/*.md')
-// 		.pipe(concat('api.md'))
-// 		.pipe(gulp.dest('./tmp/doc2'));
-// });
-
-gulp.task('doc', function() {
-	// var args = {
-	// 	helpers: [verbApiDocs],
-	// 	dest:   'readme.md'
-	// };
-	// gulp.src(['.verbrc.md'])
-	// 	// dest filename is defined in options,
-	// 	// otherwise gulp will overwrite .verbrc.md
-	// 	.pipe(verbG(args))
-	// 	.pipe(gulp.dest('./'));
-
-		// verb.src(['.verb*.md', 'docs/_verb/**/*.md'])
-		// .on('error', gutil.log)
-		// .pipe(verb.dest('./'));
+gulp.task('doc-list', function() {
+	gulp.src('./src/list/*.js')
+		.pipe(markdox())
+		.pipe(concat('list.md'))
+		.pipe(gulp.dest('./docs'));
 });
+
+gulp.task('doc', ['doc-imm', 'doc-list']);
 
 gulp.task('default', ['test', 'lint', 'min', 'doc']);

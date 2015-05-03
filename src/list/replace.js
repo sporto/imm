@@ -1,4 +1,8 @@
 /* @flow */
+
+/*!
+ * Module dependencies.
+ */
 var idsAsStrings            = require('../utils/idsAsStrings.js');
 var idsFromRecords          = require('../utils/idsFromRecords.js');
 var mergeDefaults           = require('../utils/defaults.js');
@@ -13,12 +17,10 @@ var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 * If records doesn't exist then it just gets added.
 * This throws if a record doesn't have an key.
 *
-* **Example**
+* ### Examples:
 *
-* ```js
-* collection = collection.replace(record)
-* collection = collection.replace(array)
-* ```
+* 	collection = collection.replace(record)
+* 	collection = collection.replace(array)
 *
 * @param {Object} recordOrRecords Record or records to replace
 * @param {Object} args Optional arguments

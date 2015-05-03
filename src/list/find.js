@@ -1,20 +1,22 @@
 /* @flow */
+
+/*!
+ * Module dependencies.
+ */
 var asPlainArray      = require('./asPlainArray.js');
 
 /**
 * Finds one record.
 * Returns a plain JS mutable object.
 *
-* **Example**
+* ### Example:
 *
-* ```js
-* var record = collection.find(function (record) {
-*   return record.age === 18;
-* });
-* ```
+* 	var record = collection.find(function (record) {
+* 		return record.age === 18;
+* 	});
 *
 * @param {Function} finder Finder function
-* @return {Immutable object} record Record or undefined
+* @return {SeamlessImmutable.Object} record Record or undefined
 * @api public
 */
 function find(Immutable: any,

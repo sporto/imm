@@ -1,16 +1,17 @@
 /* @flow */
 
+/*!
+ * Module dependencies.
+ */
 var wrapAsArray         = require('../utils/wrapAsArray.js');
 
 /**
 * Check if the given ID or all given IDs exist.
 *
-* **Example**
+* ### Examples:
 *
-* ```js
-* var exist = allExist(21);
-* var exist = allExist([11, 21]);
-* ```
+* 	var exist = allExist(21);
+* 	var exist = allExist([11, 21]);
 *
 * @param {Number|String|Array} idOrIds ID or IDs to check
 * @return {Boolean}

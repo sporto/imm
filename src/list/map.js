@@ -1,18 +1,19 @@
 /* @flow */
 
+/*!
+ * Module dependencies.
+ */
 var asPlainArray      = require('./asPlainArray.js');
 
 
 /**
 * Map the collection through a given function
 *
-* **Example**
+* ### Examples:
 *
-* ```js
-* collection = collection.map(function (record) {
-*   return {foo: record.id};
-* });
-* ```
+* 	collection = collection.map(function (record) {
+* 		return {foo: record.id};
+* 	});
 *
 * @param {Function} mapper Mapping function
 * @return {Array} array

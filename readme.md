@@ -14,6 +14,7 @@ collection.get(id);
 collection.update(record);
 ...
 ```
+
 ## Install
 
 ### Using NPM
@@ -27,7 +28,11 @@ npm install imm
 Download `dist/imm.js` or `dist/imm.min.js`
 
 This library requires [seamless-immutable](https://github.com/rtfeldman/seamless-immutable) to be loaded.
+
 ## API
+
+./docs/imm.md
+./docs/list.md
 
 ### Things to note
 

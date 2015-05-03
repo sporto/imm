@@ -1,5 +1,8 @@
 /* @flow */
 
+/*!
+ * Module dependencies.
+ */
 var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 var generateUID             = require('../utils/generateUID.js');
 var mergeDefaults           = require('../utils/defaults.js');
@@ -11,6 +14,7 @@ var DEFAULT_KEY = 'id';
 /**
 * @param {Array}
 * @return {Immutable List}
+* @api private
 */
 function wrapPlainArray(Immutable: any,
 	args: Object,

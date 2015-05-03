@@ -6,7 +6,7 @@ makeRecords           = require('../fixtures/records')
 makeRecordsWithAltId  = require('../fixtures/records_with_alt_id')
 col = null
 
-describe '.toImmutable', ->
+describe '.unwrap', ->
 
 	describe 'with id', ->
 
@@ -14,5 +14,5 @@ describe '.toImmutable', ->
 			col = imm.list(makeRecords())
 
 		it 'returns a Seamless Immutable list', ->
-			result = col.toImmutable()
+			result = col.unwrap()
 			expect(Immutable.isImmutable(result)).to.eql(true)

@@ -1,11 +1,15 @@
 /* @flow */
 
+/*!
+ * Module dependencies.
+ */
 var assertIsImmutable           = require('../assertions/isImmutable.js');
 var assertIsImmutableInstance   = require('../assertions/isImmutableInstance.js');
 
 /*
 * @param {Immutable}
 * @return {Imm}
+* @api privates
 */
 function wrapImmutableCollection(Immutable: any,
 	globalArgs: Object,
@@ -18,11 +22,9 @@ function wrapImmutableCollection(Immutable: any,
 	* Convert Imm.List to plain JS array.
 	* Records in the array are plain mutable JS objects.
 	*
-	* ### Examples:
+	* ### Example:
 	*
-	* ```js
-	* var list = collection.asMutable();
-	* ```
+	* 	var list = collection.asMutable();
 	*
 	* @return {Array}
 	* @api public
@@ -41,14 +43,12 @@ function wrapImmutableCollection(Immutable: any,
 	*
 	* ### Examples:
 	*
-	* ```js
-	* var list = collection.toImmutable();
-	* ```
+	* 	var list = collection.unwrap();
 	*
 	* @return {SeamlessImmutable.Array}
 	* @api public
 	*/
-	function toImmutable() {
+	function unwrap() {
 		return immutableCollection;
 	}
 
@@ -79,7 +79,7 @@ function wrapImmutableCollection(Immutable: any,
 		replace:     replace.bind(null, Immutable, globalArgs, immutableCollection),
 		map:         map.bind(null, Immutable, globalArgs, immutableCollection),
 		remove:      remove.bind(null, Immutable, globalArgs, immutableCollection),
-		toImmutable: toImmutable,
+		unwrap:      unwrap,
 		update:      update.bind(null, Immutable, globalArgs, immutableCollection)
 	};
 }

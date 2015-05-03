@@ -7,21 +7,17 @@
 * Returns a Seamless Immutable object
 * See https://github.com/rtfeldman/seamless-immutable#immutable-object
 *
-* **Example**
+* ### Examples:
 *
-* ```js
-* var record = collection.get(11)
-* var record = collection.get('11') // same as 11
-* ```
+* 	var record = collection.get(11)
+* 	var record = collection.get('11') // same as 11
 *
 * To make object mutable use `asMutable()`
 *
-* ```js
-* var record = collection.get(11)
-* record = record.asMutable()
-* // or
-* record = record.asMutable({deep: true})
-* ```
+* 	var record = collection.get(11)
+* 	record = record.asMutable()
+* 	// or
+* 	record = record.asMutable({deep: true})
 *
 * @param {Number|String} id Id to fetch
 * @return {Immutale Object} record

@@ -3,11 +3,9 @@
 /**
 * Records count.
 *
-* **Example**
+* ### Example:
 *
-* ```js
-* count = collection.count();
-* ```
+* 	count = collection.count();
 *
 * @return {Number} count
 * @api public
