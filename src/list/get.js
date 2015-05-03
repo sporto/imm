@@ -1,7 +1,5 @@
 /* @flow */
 
-
-
 /**
 * Get a record by id.
 * Returns a Seamless Immutable object

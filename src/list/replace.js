@@ -30,9 +30,9 @@ var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 * @api public
 */
 function replace(Immutable: any,
-	globalArgs: Object, 
-	immutableCollection: any, 
-	recordOrRecords: any, 
+	globalArgs: Object,
+	immutableCollection: any,
+	recordOrRecords: any,
 	args: Object) {
 
 	var record;
@@ -63,12 +63,12 @@ function replace(Immutable: any,
 			record[globalArgs.key] = id;
 		}
 		if (!id) throw new Error('Record must have .' + globalArgs.key);
-			merges[id] = record;
-		}
-
-		newCol = newCol.merge(merges);
-
-		return wrapImmutableCollection(Immutable, globalArgs, newCol);
+		merges[id] = record;
 	}
+
+	newCol = newCol.merge(merges);
+
+	return wrapImmutableCollection(Immutable, globalArgs, newCol);
+}
 
 module.exports = replace;

@@ -17,7 +17,7 @@ var wrapAsArray         = require('../utils/wrapAsArray.js');
 * @return {Boolean}
 * @api public
 */
-function anyExist(Immutable: any, 
+function anyExist(Immutable: any,
 	globalArgs: Object,
 	immutableCollection: any,
 	idOrIds: string | Array<string>): boolean {

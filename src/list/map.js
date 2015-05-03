@@ -5,7 +5,6 @@
  */
 var asPlainArray      = require('./asPlainArray.js');
 
-
 /**
 * Map the collection through a given function
 *

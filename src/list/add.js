@@ -9,7 +9,6 @@ var idsFromRecords = require('../utils/idsFromRecords');
 var wrapAsArray = require('../utils/wrapAsArray');
 var mergeDefaults = require('../utils/defaults');
 
-
 /**
 * Adds one or more records.
 * If record already exists then it gets replaced.
@@ -51,6 +50,5 @@ function add(Immutable: any,
 
 	return replace(Immutable, globalArgs, immutableCollection, recordOrRecords, args);
 }
-
 
 module.exports = add;
