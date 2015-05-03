@@ -11,9 +11,6 @@ var run     = require('gulp-run');
 var concat  = require('gulp-concat');
 var webpack = require('gulp-webpack-build');
 var path    = require('path');
-// var verb    = require('verb');
-var verbG   = require('gulp-verb');
-var verbApiDocs = require('helper-apidocs');
 var markdox = require('gulp-markdox');
 
 // register verb helpers
@@ -28,10 +25,9 @@ gulp.task('lint', function() {
 		.pipe(jscs());
 });
 
-gulp.task('test', function () {
+gulp.task('test', function() {
 	var mochaOptions = {
-		reporter: 'nyan',
-		// compilers: '.:test/support/compiler.js'
+		reporter: 'nyan'
 	}
 	return gulp.src('./test/**/*.coffee', {read: false})
 		.pipe(mocha(mochaOptions));
@@ -55,23 +51,40 @@ gulp.task('min', ['bundle'], function() {
 });
 
 // this doesnt work as expected
-gulp.task('api-doc', function() {
-	gulp.src('./src/**/*.js')
+gulp.task('doc-imm', function() {
+	gulp.src('./src/*.js')
 		.pipe(markdox())
-		.pipe(concat('api.md'))
+		.pipe(concat('imm.md'))
 		.pipe(gulp.dest('./tmp/doc'));
 });
 
+// gulp.task('api-doc-list', function() {
+// 	gulp.src('./src/*.js')
+// 		.pipe(markdox())
+// 		.pipe(concat('api-list.md'))
+// 		.pipe(gulp.dest('./tmp/doc'));
+// });
+
+// gulp.task('api-doc', ['api-doc-main', 'api-doc-list'], function() {
+// 	gulp.src('./tmp/doc/*.md')
+// 		.pipe(concat('api.md'))
+// 		.pipe(gulp.dest('./tmp/doc2'));
+// });
+
 gulp.task('doc', function() {
-	var args = {
-		helpers: [verbApiDocs],
-		dest:   'readme.md'
-	};
-	gulp.src(['.verbrc.md'])
-		// dest filename is defined in options,
-		// otherwise gulp will overwrite .verbrc.md
-		.pipe(verbG(args))
-		.pipe(gulp.dest('./'));
+	// var args = {
+	// 	helpers: [verbApiDocs],
+	// 	dest:   'readme.md'
+	// };
+	// gulp.src(['.verbrc.md'])
+	// 	// dest filename is defined in options,
+	// 	// otherwise gulp will overwrite .verbrc.md
+	// 	.pipe(verbG(args))
+	// 	.pipe(gulp.dest('./'));
+
+		// verb.src(['.verb*.md', 'docs/_verb/**/*.md'])
+		// .on('error', gutil.log)
+		// .pipe(verb.dest('./'));
 });
 
 gulp.task('default', ['test', 'lint', 'min', 'doc']);

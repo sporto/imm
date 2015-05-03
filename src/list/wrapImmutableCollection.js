@@ -18,7 +18,7 @@ function wrapImmutableCollection(Immutable: any,
 	* Convert Imm.List to plain JS array.
 	* Records in the array are plain mutable JS objects.
 	*
-	* **Example**
+	* ### Examples:
 	*
 	* ```js
 	* var list = collection.asMutable();
@@ -39,7 +39,7 @@ function wrapImmutableCollection(Immutable: any,
 	* Convert Imm list to Seamless Immutable array
 	* See https://github.com/rtfeldman/seamless-immutable#immutable-array
 	*
-	* **Example**
+	* ### Examples:
 	*
 	* ```js
 	* var list = collection.toImmutable();

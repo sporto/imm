@@ -1,5 +1,8 @@
 /* @flow */
 
+/*!
+ * Module dependencies.
+ */
 var wrapPlainArray      = require('./list/wrapPlainArray.js');
 
 function makeList(Immutable: any): Function {
@@ -8,17 +11,14 @@ function makeList(Immutable: any): Function {
 	* Returns an Imm list
 	* Keys are always sorted in alphabetical order
 	*
-	* **Example**
+	* ### Examples:
 	*
-	* ```js
-	* var records = [{id: 1, label: 'Sam'}, {...}];
-	* collection = imm.list(records);
-	* ```
-	* imm assumes that the id key is called `id`. You can provide an optional argument:
+	* 	var records = [{id: 1, label: 'Sam'}, {...}];
+	* 	collection = Imm.list(records);
 	*
-	* ```js
-	* collection = imm.list(records, {key: '_id'});
-	* ```
+	* Imm assumes that the id key is called `id`. You can provide an optional argument:
+	*
+	* 	collection = Imm.list(records, {key: '_id'});
 	*
 	* @param {Array} records Array of records
 	* @param {Object} args Optional arguments

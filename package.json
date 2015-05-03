@@ -35,16 +35,11 @@
     "gulp-rename": "^1.2.0",
     "gulp-run": "^1.6.6",
     "gulp-uglify": "^1.0.1",
-    "gulp-verb": "^0.3.0",
     "gulp-webpack-build": "^0.7.1",
     "helper-apidocs": "^0.4.1",
     "jshint-stylish": "^1.0.0",
     "markdox": "^0.1.5",
     "mocha": "^1.21.4",
-    "typescript": "^1.5.0-beta",
-    "typescript-loader": "^1.1.3",
-    "typescript-require": "^0.2.8",
-    "verb": "^0.7.4",
     "webpack": "^1.8.11"
   },
   "dependencies": {

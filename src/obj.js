@@ -1,5 +1,8 @@
 /* @flow */
 
+/*!
+ * Module dependencies.
+ */
 var isObject = require('./utils/isObject');
 var isArray = require('./utils/isArray.js');
 
@@ -9,20 +12,16 @@ function makeObj(Immutable: any): any {
 	* Returns an Seamless Immutable object
 	* See https://github.com/rtfeldman/seamless-immutable#immutable-object
 	*
-	* **Example**
+	* ### Examples:
 	*
-	* ```js
-	* var data = {id: 1, label: 'Sam'};
-	* var record = imm.obj(data);
-	* ```
+	* 	var data = {id: 1, label: 'Sam'};
+	* 	var record = Imm.obj(data);
 	*
 	* To get back a mutable JS object use `asMutable`:
 	*
-	* ```js
-	* var data = {id: 1, label: 'Sam'};
-	* var immutableRecord = imm.obj(data);
-	* mutableRecord = immutableRecord.asMutable();
-	* ```
+	* 	var data = {id: 1, label: 'Sam'};
+	* 	var immutableRecord = Imm.obj(data);
+	* 	mutableRecord = immutableRecord.asMutable();
 	*
 	* @param {Object} data A JS object
 	* @return {SeamlessImmutable.Object} Seamless Immutable object
