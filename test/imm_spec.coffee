@@ -4,6 +4,8 @@ expect           = chai.expect
 
 describe 'imm', ->
 
-	# // it 'shows a deprecation messages', function() {
-	# // 	imm([])
-	# // 
+	it 'shows a deprecation messages', ->
+		fn = ->
+			imm([])
+
+		expect(fn).to.throw() 

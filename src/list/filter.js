@@ -4,22 +4,23 @@ var wrapPlainArray    = require('./wrapPlainArray.js');
 
 /**
 * Filters the collection based on a filtering function.
+* Returns a new Imm modified collection
 *
 * **Example**
 *
 * ```js
-* collection = collection.filter(function (record) {
+* collection = collection.filter(function(record) {
 *   return record.age > 18;
 * });
 * ```
 *
 * @param {Function} filterer Filtering function
-* @return {Imm} Modified collection
+* @return {Imm} Modified Imm collection
 * @api public
 */
 function filter(Immutable: any,
 	globalArgs: Object,
-	immutableCollection: any, 
+	immutableCollection: any,
 	filterer: Function): any {
 
 	var newCol = asPlainArray(Immutable, globalArgs, immutableCollection);

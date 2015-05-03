@@ -1,3 +1,4 @@
+Immutable        = require('seamless-immutable')
 imm              = require('../../src/imm.js')
 chai             = require('chai')
 expect           = chai.expect
@@ -18,6 +19,10 @@ describe '.get', ->
 		it 'returns the record by id as string', ->
 			record = col.get('11')
 			expect(record).to.eql({id: 11, label: 'Tess'})
+
+		it 'returns an Seamless immutable instance', ->
+			record = col.get 11
+			expect(Immutable.isImmutable(record)).to.eql(true)
 
 		it 'returns an immutable record', ->
 			record = col.get(11)

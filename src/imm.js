@@ -11,7 +11,7 @@ var Immutable = require('seamless-immutable');
 if (Immutable == null) throw new Error('Immutable is null');
 
 function imm() {
-	console.warn('Using imm directly is deprecated, use imm.list instead')
+	throw new Error('Using imm directly is deprecated, use imm.list instead');
 }
 
 imm.list   = require('./list.js')(Immutable);

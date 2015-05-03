@@ -3,14 +3,21 @@
 var gulp    = require('gulp');
 var rename  = require('gulp-rename');
 var uglify  = require('gulp-uglify');
-var markdox = require("gulp-markdox");
 var jscs    = require('gulp-jscs');
 var stylish = require('jshint-stylish');
 var mocha   = require('gulp-mocha');
 var header  = require('gulp-header');
 var run     = require('gulp-run');
+var concat  = require('gulp-concat');
 var webpack = require('gulp-webpack-build');
 var path    = require('path');
+// var verb    = require('verb');
+var verbG   = require('gulp-verb');
+var verbApiDocs = require('helper-apidocs');
+var markdox = require('gulp-markdox');
+
+// register verb helpers
+// verb.helper('apidocs', verbApiDocs);
 
 require('babel/register');
 
@@ -26,7 +33,7 @@ gulp.task('test', function () {
 		reporter: 'nyan',
 		// compilers: '.:test/support/compiler.js'
 	}
-	return gulp.src("./test/**/*.coffee", {read: false})
+	return gulp.src('./test/**/*.coffee', {read: false})
 		.pipe(mocha(mochaOptions));
 });
 
@@ -43,12 +50,28 @@ gulp.task('bundle', function() {
 gulp.task('min', ['bundle'], function() {
 	return gulp.src('dist/imm.js')
 		.pipe(uglify({preserveComments: 'some'}))
-		.pipe(rename({ extname: '.min.js' }))
+		.pipe(rename({extname: '.min.js'}))
 		.pipe(gulp.dest(DEST));
 });
 
-gulp.task('doc', function () {
-	run('verb').exec();
-})
+// this doesnt work as expected
+gulp.task('api-doc', function() {
+	gulp.src('./src/**/*.js')
+		.pipe(markdox())
+		.pipe(concat('api.md'))
+		.pipe(gulp.dest('./tmp/doc'));
+});
+
+gulp.task('doc', function() {
+	var args = {
+		helpers: [verbApiDocs],
+		dest:   'readme.md'
+	};
+	gulp.src(['.verbrc.md'])
+		// dest filename is defined in options,
+		// otherwise gulp will overwrite .verbrc.md
+		.pipe(verbG(args))
+		.pipe(gulp.dest('./'));
+});
 
 gulp.task('default', ['test', 'lint', 'min', 'doc']);

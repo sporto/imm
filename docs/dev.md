@@ -3,7 +3,7 @@
 To generate documentation `verb` needs to be installed:
 
 ```
-npm install verb -g
+npm i -g verb-cli
 ```
 
 ### Testing
