@@ -31,8 +31,8 @@ This library requires [seamless-immutable](https://github.com/rtfeldman/seamless
 
 ## API
 
-./docs/imm.md
-./docs/list.md
+[Imm](docs/imm.md)
+[Imm.List](/docs/list.md)
 
 ### Things to note
 
