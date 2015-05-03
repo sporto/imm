@@ -7,6 +7,7 @@ function makeObj(Immutable: any): any {
 
 	/**
 	* Returns an Seamless Immutable object
+	* See https://github.com/rtfeldman/seamless-immutable#immutable-object
 	*
 	* **Example**
 	*
@@ -14,9 +15,9 @@ function makeObj(Immutable: any): any {
 	* var data = {id: 1, label: 'Sam'};
 	* var record = imm.obj(data);
 	* ```
-	* 
+	*
 	* To get back a mutable JS object use `asMutable`:
-	* 
+	*
 	* ```js
 	* var data = {id: 1, label: 'Sam'};
 	* var immutableRecord = imm.obj(data);
@@ -24,7 +25,7 @@ function makeObj(Immutable: any): any {
 	* ```
 	*
 	* @param {Object} data A JS object
-	* @return {SeamlessImmutable.object} Seamless Immutable object
+	* @return {SeamlessImmutable.Object} Seamless Immutable object
 	* @api public
 	*/
 	function obj(data) {

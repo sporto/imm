@@ -15,22 +15,39 @@ function wrapImmutableCollection(Immutable: any,
 	assertIsImmutableInstance(Immutable, immutableCollection);
 
 	/**
-	* Get all records.
+	* Convert Imm.List to plain JS array.
 	* Records in the array are plain mutable JS objects.
 	*
 	* **Example**
 	*
 	* ```js
-	* var records = collection.array();
+	* var list = collection.asMutable();
 	* ```
 	*
-	* @return {Array} records Plain array with records
+	* @return {Array}
 	* @api public
 	*/
-	function array(): Array<any> {
+	function asMutable(): Array<any> {
 		return asPlainArray(Immutable, globalArgs, immutableCollection);
 	}
 
+	function array() {
+		throw new Error('.array is deprecated, use .asMutable instead');
+	}
+
+	/**
+	* Convert Imm list to Seamless Immutable array
+	* See https://github.com/rtfeldman/seamless-immutable#immutable-array
+	*
+	* **Example**
+	*
+	* ```js
+	* var list = collection.toImmutable();
+	* ```
+	*
+	* @return {SeamlessImmutable.Array}
+	* @api public
+	*/
 	function toImmutable() {
 		return immutableCollection;
 	}
@@ -53,6 +70,7 @@ function wrapImmutableCollection(Immutable: any,
 		add:         add.bind(null, Immutable, globalArgs, immutableCollection),
 		allExist:    allExist.bind(null, Immutable, globalArgs, immutableCollection),
 		anyExist:    anyExist.bind(null, Immutable, globalArgs, immutableCollection),
+		asMutable:   asMutable,
 		array:       array,
 		count:       count.bind(null, Immutable, globalArgs, immutableCollection),
 		filter:      filter.bind(null, Immutable, globalArgs, immutableCollection),

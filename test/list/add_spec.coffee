@@ -26,7 +26,7 @@ describe '.add', ->
 			it 'assigns an id if not there', ->
 				col = imm.list([])
 				newCol = col.add({label: 'Julia'})
-				records = newCol.array()
+				records = newCol.asMutable()
 				expect(records[0].id).not.to.eq(undefined)
 
 			it 'replaces an existing record', ->

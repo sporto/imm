@@ -3,8 +3,9 @@
 
 
 /**
-* Get a record.
-* Returned immutable record
+* Get a record by id.
+* Returns a Seamless Immutable object
+* See https://github.com/rtfeldman/seamless-immutable#immutable-object
 *
 * **Example**
 *

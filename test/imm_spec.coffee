@@ -8,4 +8,4 @@ describe 'imm', ->
 		fn = ->
 			imm([])
 
-		expect(fn).to.throw() 
+		expect(fn).to.throw(/deprecated/)

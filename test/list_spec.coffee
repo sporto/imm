@@ -42,7 +42,7 @@ describe 'imm.list', ->
 			records = [{label: 'Julia'}, {label: 'Sam'}]
 			newCol = imm.list(records)
 			expect(newCol.count()).to.eq(2)
-			expect(newCol.array()[0].id).not.to.eq(undefined)
+			expect(newCol.asMutable()[0].id).not.to.eq(undefined)
 
 	describe '_id', ->
 		it 'takes an optional second args for the id', ->
