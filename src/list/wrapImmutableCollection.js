@@ -6,11 +6,13 @@
 var assertIsImmutable           = require('../assertions/isImmutable.js');
 var assertIsImmutableInstance   = require('../assertions/isImmutableInstance.js');
 
-/*
-* @param {Immutable}
-* @return {Imm}
-* @api privates
-*/
+/*!
+ * Private
+ *
+ * param {Immutable}
+ * return {Imm.List}
+ * @api private
+ */
 function wrapImmutableCollection(Immutable: any,
 	globalArgs: Object,
 	immutableCollection: any): Object {
@@ -24,7 +26,7 @@ function wrapImmutableCollection(Immutable: any,
 	*
 	* ### Example:
 	*
-	* 	var list = collection.asMutable();
+	* 	var list = list.asMutable();
 	*
 	* @return {Array}
 	* @api public
@@ -43,7 +45,7 @@ function wrapImmutableCollection(Immutable: any,
 	*
 	* ### Examples:
 	*
-	* 	var list = collection.unwrap();
+	* 	var list = list.unwrap();
 	*
 	* @return {SeamlessImmutable.Array}
 	* @api public

@@ -12,11 +12,13 @@ var assertIsPlainArray      = require('../assertions/isPlainArray.js');
 
 var DEFAULT_KEY = 'id';
 
-/**
-* @param {Array}
-* @return {Immutable List}
-* @api private
-*/
+/*!
+ * Private
+ *
+ * @param {Array}
+ * @return {Imm.List}
+ * @api private
+ */
 function wrapPlainArray(Immutable: any,
 	globalArgs: Object,
 	array: Array<Object>

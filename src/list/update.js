@@ -17,13 +17,13 @@ var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 *
 * ### Examples:
 *
-* 	collection = collection.update(record)
-* 	collection = collection.update(array)
+* 	list = list.update(record)
+* 	list = list.update(array)
 *
 * @param {Object|Array} recordOrRecords Record or records to update
 * @param {Object} args Optional arguments
 * @param {Boolean} args.strict=false Throws if record exist
-* @return {Imm} Modified collection
+* @return {Imm.List} Modified Imm list
 * @api public
 */
 function update(Immutable: any,

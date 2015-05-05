@@ -9,7 +9,7 @@
 
 <!-- Start src/list.js -->
 
-## list(records, args, args.key=id)
+## List(records, args, args.key=id)
 
 Returns an Imm list
 Keys are always sorted in alphabetical order
@@ -40,7 +40,7 @@ Imm assumes that the id key is called `id`. You can provide an optional argument
 
 <!-- Start src/obj.js -->
 
-## obj(data)
+## Obj(data)
 
 Returns an Seamless Immutable object
 See https://github.com/rtfeldman/seamless-immutable#immutable-object

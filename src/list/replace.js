@@ -19,14 +19,14 @@ var wrapImmutableCollection  = require('./wrapImmutableCollection.js');
 *
 * ### Examples:
 *
-* 	collection = collection.replace(record)
-* 	collection = collection.replace(array)
+* 	list = list.replace(record)
+* 	list = list.replace(array)
 *
 * @param {Object} recordOrRecords Record or records to replace
 * @param {Object} args Optional arguments
 * @param {Boolean} args.strict=false Throws if record exist
 * @param {Boolean} args.requireKey=true Throws if record doesn't have a key
-* @return {Imm} Modified Imm collection
+* @return {Imm.List} Modified Imm list
 * @api public
 */
 function replace(Immutable: any,

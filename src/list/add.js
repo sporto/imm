@@ -17,15 +17,15 @@ var mergeDefaults = require('../utils/defaults');
 * ### Examples:
 *
 * 	// add one
-* 	collection = collection.add(record)
+* 	list = list.add(record)
 *
 * 	// add many records
-* 	collection = collection.add(array)
+* 	list = list.add(array)
 *
 * @param {Object|Array} recordOrRecords Record or records to add
 * @param {Object} args Optional arguments
 * @param {Boolean} args.strict=false Throw if record already exists
-* @return {Imm} modified collection
+* @return {Imm.List} modified list
 * @api public
 */
 function add(Immutable: any,

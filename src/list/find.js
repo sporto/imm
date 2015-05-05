@@ -7,11 +7,11 @@ var asPlainArray      = require('./asPlainArray.js');
 
 /**
 * Finds one record.
-* Returns a plain JS mutable object.
+* Returns a Seamless Immutable Object
 *
 * ### Example:
 *
-* 	var record = collection.find(function (record) {
+* 	var record = list.find(function (record) {
 * 		return record.age === 18;
 * 	});
 *

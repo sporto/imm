@@ -6,11 +6,11 @@
 var asPlainArray      = require('./asPlainArray.js');
 
 /**
-* Map the collection through a given function
+* Maps the list through a given function
 *
 * ### Examples:
 *
-* 	collection = collection.map(function (record) {
+* 	list = list.map(function (record) {
 * 		return {foo: record.id};
 * 	});
 *

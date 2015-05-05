@@ -14,13 +14,13 @@ var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 *
 * ### Examples:
 *
-* 	collection = collection.remove(id);
-* 	collection = collection.remove(arrayOfIds);
+* 	list = list.remove(id);
+* 	list = list.remove(arrayOfIds);
 *
 * @param {Number|String|Array} idOrIds Id or ids to remove
 * @param {Object} args Optional arguments
 * @param {Boolean} args.strict=false Throw if record(s) doesn't exists
-* @return {Imm} Modified collection
+* @return {Imm.List} Modified Imm list
 * @api public
 */
 function remove(Immutable: any, globalArgs: Object, immutableCollection: any, idOrIds: string | Array<string>, args: Object) {

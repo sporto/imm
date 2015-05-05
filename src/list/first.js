@@ -8,16 +8,16 @@
 *
 * ### Examples:
 *
-* 	var record = collection.first()
+* 	var record = list.first()
 *
 * To make object mutable use `asMutable()`
 *
-* 	var record = collection.first()
+* 	var record = list.first()
 * 	record = record.asMutable()
 * 	// or
 * 	record = record.asMutable({deep: true})
 *
-* @return {Immutale Object} record
+* @return {SeamlessImmutale.Object} record
 * @api public
 */
 function first(Immutable: any,

@@ -10,8 +10,8 @@ var wrapAsArray         = require('../utils/wrapAsArray.js');
 *
 * ### Examples:
 *
-* 	var exist = anyExist(21);
-* 	var exist = anyExist([11, 21]);
+* 	var exist = list.anyExist(21);
+* 	var exist = list.anyExist([11, 21]);
 *
 * @param {Number|String|Array} idOrIds Id or Ids to check
 * @return {Boolean}

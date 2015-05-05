@@ -7,17 +7,17 @@ var asPlainArray      = require('./asPlainArray.js');
 var wrapPlainArray    = require('./wrapPlainArray.js');
 
 /**
-* Filters the collection based on a filtering function.
-* Returns a new Imm modified collection
+* Filters the list based on a filtering function.
+* Returns a new Imm modified list
 *
 * ### Example:
 *
-* 	collection = collection.filter(function(record) {
+* 	list = list.filter(function(record) {
 * 		return record.age > 18;
 * 	});
 *
 * @param {Function} filterer Filtering function
-* @return {Imm} Modified Imm collection
+* @return {Imm.List} Modified Imm collection
 * @api public
 */
 function filter(Immutable: any,

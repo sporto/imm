@@ -5,7 +5,7 @@
 *
 * ### Example:
 *
-* 	count = collection.count();
+* 	count = list.count();
 *
 * @return {Number} count
 * @api public

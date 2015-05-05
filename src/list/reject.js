@@ -9,16 +9,16 @@ var negate            = require('../utils/negate.js');
 
 /**
 * Rejects records based on a function.
-* Returns a new Imm modified collection without those records.
+* Returns a new Imm modified list without those records.
 *
 * ### Example:
 *
-* 	collection = collection.reject(function(record) {
+* 	list = list.reject(function(record) {
 * 		return record.age < 18;
 * 	});
 *
 * @param {Function} filterer Filtering function
-* @return {Imm} Modified Imm collection
+* @return {Imm.List} Modified Imm list
 * @api public
 */
 function reject(Immutable: any,

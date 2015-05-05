@@ -1,17 +1,19 @@
 'use strict';
 
-var gulp    = require('gulp');
-var rename  = require('gulp-rename');
-var uglify  = require('gulp-uglify');
-var jscs    = require('gulp-jscs');
-var stylish = require('jshint-stylish');
-var mocha   = require('gulp-mocha');
-var header  = require('gulp-header');
-var run     = require('gulp-run');
-var concat  = require('gulp-concat');
-var webpack = require('gulp-webpack-build');
-var path    = require('path');
-var markdox = require('gulp-markdox');
+var gulp     = require('gulp');
+var data     = require('gulp-data');
+var fs       = require("fs");
+var rename   = require('gulp-rename');
+var uglify   = require('gulp-uglify');
+var jscs     = require('gulp-jscs');
+var mocha    = require('gulp-mocha');
+var header   = require('gulp-header');
+var run      = require('gulp-run');
+var concat   = require('gulp-concat');
+var webpack  = require('gulp-webpack-build');
+var path     = require('path');
+var markdox  = require('gulp-markdox');
+var template = require('gulp-template');
 
 // register verb helpers
 // verb.helper('apidocs', verbApiDocs);
@@ -65,6 +67,16 @@ gulp.task('doc-list', function() {
 		.pipe(gulp.dest('./docs'));
 });
 
-gulp.task('doc', ['doc-imm', 'doc-list']);
+gulp.task('doc', ['doc-imm', 'doc-list'], function() {
+	 return gulp.src('./docs/readme.md')
+		.pipe(data(function() {
+			return {
+				docImm: fs.readFileSync('./docs/imm.md', 'utf8'),
+				docImmList: fs.readFileSync('./docs/list.md', 'utf8')
+			};
+		}))
+		.pipe(template())
+		.pipe(gulp.dest('./'));
+});
 
 gulp.task('default', ['test', 'lint', 'min', 'doc']);
