@@ -1,4 +1,4 @@
-imm              = require('../../src/imm.js')
+Imm              = require('../../src/imm.js')
 chai             = require('chai')
 expect           = chai.expect
 makeRecords      = require('../fixtures/records')
@@ -9,7 +9,7 @@ describe '.remove', ->
 
 	describe 'with id', ->
 		beforeEach ->
-			col = imm.list(makeRecords())
+			col = Imm.List(makeRecords())
 
 		describe 'one', ->
 			it 'removes the record', ->
@@ -48,7 +48,7 @@ describe '.remove', ->
 
 	describe 'with _id', ->
 		beforeEach ->
-			col = imm.list(recordWithAltId(), {key: '_id'})
+			col = Imm.List(recordWithAltId(), {key: '_id'})
 
 		describe 'one', ->
 			it 'removes the record', ->

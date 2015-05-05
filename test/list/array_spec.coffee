@@ -1,4 +1,4 @@
-imm                   = require('../../src/imm.js')
+Imm                   = require('../../src/imm.js')
 Immutable             = require('seamless-immutable')
 chai                  = require('chai')
 expect                = chai.expect
@@ -10,7 +10,7 @@ describe '.asMutable', ->
 
 	describe 'id', ->
 		beforeEach ->
-			col = imm.list(makeRecords())
+			col = Imm.List(makeRecords())
 
 		it 'returns the records', ->
 			fn = ->

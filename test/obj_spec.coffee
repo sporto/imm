@@ -1,22 +1,22 @@
 Immutable        = require 'seamless-immutable'
-imm              = require '../src/imm.js'
+Imm              = require '../src/imm.js'
 chai             = require 'chai'
 expect           = chai.expect
 
-describe 'imm.obj', ->
+describe 'Imm.Obj', ->
 
 	it 'returns an Seamless immutable instance', ->
 		data =
 			foo: 1
 		# When I create an imm obj
-		record = imm.obj(data)
+		record = Imm.Obj(data)
 		# Then it should be an Immutable instance
 		expect(Immutable.isImmutable(record)).to.eql(true)
 
 	it 'ignores changes on the original object', ->
 		original =
 			foo: 1
-		immutable = imm.obj(original)
+		immutable = Imm.Obj(original)
 		# When I change the original
 		original.foo = 2
 		# Then the immutable should be the same
@@ -25,7 +25,7 @@ describe 'imm.obj', ->
 	it 'ignores changes', ->
 		original =
 			foo: 1
-		immutable = imm.obj(original)
+		immutable = Imm.Obj(original)
 		# When I try to change it
 		immutable.foo = 2
 		# Then it should not be changed
@@ -34,7 +34,7 @@ describe 'imm.obj', ->
 	it 'doesnt change the original object', ->
 		original =
 			foo: 1
-		immutable = imm.obj(original)
+		immutable = Imm.Obj(original)
 		# When I try to change it
 		immutable.foo = 2
 		# Then the original should be the same
@@ -43,7 +43,7 @@ describe 'imm.obj', ->
 	it 'contains immutable arrays', ->
 		original =
 			foo: [1, 2]
-		obj = imm.obj(original)
+		obj = Imm.Obj(original)
 		fn = ->
 			obj.foo.push(3)
 		expect(fn).to.throw()
@@ -51,7 +51,7 @@ describe 'imm.obj', ->
 	it 'contains immutable objects', ->
 		original =
 			foo: {one: 1}
-		obj = imm.obj(original)
+		obj = Imm.Obj(original)
 		obj.foo.two = 2
 
 		expected = 
@@ -63,6 +63,6 @@ describe 'imm.obj', ->
 
 	it 'throws if given an array', ->
 		fn = ->
-			imm.obj([])
+			Imm.Obj([])
 
 		expect(fn).to.throw()

@@ -27,13 +27,13 @@ function makeObj(Immutable: any): any {
 	* @return {SeamlessImmutable.Object} Seamless Immutable object
 	* @api public
 	*/
-	function obj(data) {
+	function Obj(data) {
 		if (!isObject(data) || isArray(data)) throw new Error('You must provide an object');
 
 		return Immutable(data)
 	}
 
-	return obj;
+	return Obj;
 }
 
 module.exports = makeObj;

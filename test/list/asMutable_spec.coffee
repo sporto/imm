@@ -1,4 +1,4 @@
-imm                   = require('../../src/imm.js')
+Imm                   = require('../../src/imm.js')
 Immutable             = require('seamless-immutable')
 chai                  = require('chai')
 expect                = chai.expect
@@ -10,7 +10,7 @@ describe '.asMutable', ->
 
 	describe 'id', ->
 		beforeEach ->
-			col = imm.list(makeRecords())
+			col = Imm.List(makeRecords())
 
 		it 'returns the records', ->
 			records = col.asMutable()
@@ -30,7 +30,7 @@ describe '.asMutable', ->
 
 		it 'returns a deep plain mutable js record', ->
 			record = {id: 11, label: 'Sam', numbers: [1, 2]}
-			col = imm.list([record])
+			col = Imm.List([record])
 
 			returned = col.asMutable()
 			expect(returned[0]).to.eql(record)

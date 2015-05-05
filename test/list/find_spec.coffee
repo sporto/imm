@@ -1,5 +1,5 @@
 Immutable        = require('seamless-immutable')
-imm              = require('../../src/imm.js')
+Imm              = require('../../src/imm.js')
 chai             = require('chai')
 expect           = chai.expect
 makeRecords      = require('../fixtures/records')
@@ -8,7 +8,7 @@ col = null
 describe '.find', ->
 
 	beforeEach ->
-		col = imm.list(makeRecords())
+		col = Imm.List(makeRecords())
 
 	it 'finds a record using a function', ->
 		finder = (v)->

@@ -1,4 +1,4 @@
-imm                   = require '../../src/imm.js'
+Imm                   = require '../../src/imm.js'
 chai                  = require 'chai'
 expect                = chai.expect
 makeRecords           = require('../fixtures/records')
@@ -10,7 +10,7 @@ describe '.add', ->
 	describe 'id', ->
 
 		beforeEach ->
-			col = imm.list(makeRecords())
+			col = Imm.List(makeRecords())
 
 		describe 'one', ->
 			it 'adds a new record when it has an id', ->
@@ -24,14 +24,14 @@ describe '.add', ->
 				expect(newCol.count()).to.eq(3)
 
 			it 'doesnt add an id to records without id', ->
-				col = imm.list([])
+				col = Imm.List([])
 				col = col.add({label: 'Julia'})
 				records = col.asMutable()
 				record = records[0]
 				expect(record.id).to.eq(undefined)
 
 			it 'assigns an immId when there is no id', ->
-				col = imm.list([])
+				col = Imm.List([])
 				col = col.add({label: 'Julia'})
 				records = col.asMutable()
 				record = records[0]
@@ -80,7 +80,7 @@ describe '.add', ->
 	describe '_id', ->
 
 		beforeEach ->
-			col = imm.list(makeRecordsWithAltId(), {key: '_id'})
+			col = Imm.List(makeRecordsWithAltId(), {key: '_id'})
 
 		describe 'one', ->
 

@@ -1,4 +1,4 @@
-imm                   = require('../../src/imm.js')
+Imm                   = require('../../src/imm.js')
 chai                  = require('chai')
 expect                = chai.expect
 makeRecords           = require('../fixtures/records')
@@ -10,7 +10,7 @@ describe '.count', ->
 
 	describe 'id', ->
 		beforeEach ->
-			col = imm.list(makeRecords())
+			col = Imm.List(makeRecords())
 
 		it 'returns the count', ->
 			res = col.count()
@@ -18,7 +18,7 @@ describe '.count', ->
 
 	describe '_id', ->
 		beforeEach ->
-			col = imm.list(makeRecordsWithAltId(), {key: '_id'})
+			col = Imm.List(makeRecordsWithAltId(), {key: '_id'})
 
 		it 'returns the count', ->
 			res = col.count()

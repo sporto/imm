@@ -1,5 +1,5 @@
 Immutable        = require('seamless-immutable')
-imm              = require('../../src/imm.js')
+Imm              = require('../../src/imm.js')
 chai             = require('chai')
 expect           = chai.expect
 makeRecords      = require('../fixtures/records')
@@ -8,9 +8,9 @@ col = null
 
 describe '.get', ->
 
-	describe 'id', ->
+	describe 'when using id', ->
 		beforeEach ->
-			col = imm.list(makeRecords())
+			col = Imm.List(makeRecords())
 
 		it 'returns the record by id', ->
 			record = col.get(11)
@@ -38,11 +38,10 @@ describe '.get', ->
 
 		it 'returns a deep plain immutable record', ->
 			record = {id: 11, label: 'Sam', numbers: [1, 2]}
-			col = imm.list([record])
+			col = Imm.List([record])
 
 			returned = col.get(11)
 			expect(returned).to.eql(record)
-			# expect(returned.numbers.asMutable).to.eq(undefined)
 
 			fn = ->
 				returned.numbers.push(3)
@@ -50,7 +49,7 @@ describe '.get', ->
 
 		it 'can be made deep mutable', ->
 			record = {id: 11, label: 'Sam', numbers: [1, 2]}
-			col = imm.list([record])
+			col = Imm.List([record])
 
 			returned = col.get(11).asMutable({deep: true})
 			expect(returned).to.eql(record)
@@ -64,14 +63,21 @@ describe '.get', ->
 			expect(record).to.eq(undefined)
 
 		it 'can find a record with an auto generated id', ->
-			original = {label: 'Sam'}
-			col = imm.list([original])
+			record1 = {label: 'Sam'}
+			record2 = {id: 11, label: 'Julia'}
+			# when I create a list with records without an id
+			col = Imm.List([record1, record2])
+			# and I get the immId of the record
 			array = col.asMutable()
-			console.log(array)
+			record = array[1]
+			immId = record.immId
+			# then I should be able to find the record using the immId
+			immutableRecord = col.get(immId)
+			expect(immutableRecord).to.eql({label: 'Sam', immId: immId})
 
-	describe '_id', ->
+	describe 'when using _id', ->
 		beforeEach ->
-			col = imm.list(recordWithAltId(), {key: '_id'})
+			col = Imm.List(recordWithAltId(), {key: '_id'})
 
 		it 'returns the record by _id', ->
 			record = col.get('xyz')

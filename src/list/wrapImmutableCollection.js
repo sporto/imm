@@ -59,9 +59,11 @@ function wrapImmutableCollection(Immutable: any,
 	var count        = require('./count.js');
 	var filter       = require('./filter.js');
 	var find         = require('./find.js');
+	var first        = require('./first.js');
 	var get          = require('./get.js');
 	var map          = require('./map.js');
 	var remove       = require('./remove.js');
+	var reject       = require('./reject.js');
 	var replace      = require('./replace.js');
 	var update       = require('./update.js');
 
@@ -75,9 +77,11 @@ function wrapImmutableCollection(Immutable: any,
 		count:       count.bind(null, Immutable, globalArgs, immutableCollection),
 		filter:      filter.bind(null, Immutable, globalArgs, immutableCollection),
 		find:        find.bind(null, Immutable, globalArgs, immutableCollection),
+		first:       first.bind(null, Immutable, globalArgs, immutableCollection),
 		get:         get.bind(null, Immutable, globalArgs, immutableCollection),
 		replace:     replace.bind(null, Immutable, globalArgs, immutableCollection),
 		map:         map.bind(null, Immutable, globalArgs, immutableCollection),
+		reject:      reject.bind(null, Immutable, globalArgs, immutableCollection),
 		remove:      remove.bind(null, Immutable, globalArgs, immutableCollection),
 		unwrap:      unwrap,
 		update:      update.bind(null, Immutable, globalArgs, immutableCollection)

@@ -26,11 +26,11 @@ function makeList(Immutable: any): Function {
 	* @return {Imm.list} Imm List
 	* @api public
 	*/
-	function list(records: Array<any>, args): any {
+	function List(records: Array<any>, args): any {
 		return wrapPlainArray(Immutable, args, records);
 	}
 
-	return list;
+	return List;
 }
 
 module.exports = makeList;
