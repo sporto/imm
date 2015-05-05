@@ -45,7 +45,7 @@ gulp.task('bundle', function() {
 
 gulp.task('min', ['bundle'], function() {
 	return gulp.src('dist/imm.js')
-		.pipe(uglify({preserveComments: 'some'}))
+		.pipe(uglify({preserveComments: false}))
 		.pipe(rename({extname: '.min.js'}))
 		.pipe(gulp.dest(DEST));
 });
