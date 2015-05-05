@@ -21,10 +21,12 @@ var asPlainArray      = require('./asPlainArray.js');
 function map(Immutable: any,
 	globalArgs: Object,
 	immutableCollection: any,
-	mapper: Function):Array<any> {
+	mapper: Function): Array<any> {
 
-	var newCol = asPlainArray(Immutable, globalArgs, immutableCollection);
-	return newCol.map(mapper);
+	var keys = Object.keys(immutableCollection);
+	return keys.map(function(key) {
+		return mapper(immutableCollection[key])
+	});
 }
 
 module.exports = map;

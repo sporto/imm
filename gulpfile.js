@@ -1,26 +1,24 @@
 'use strict';
 
-var gulp     = require('gulp');
-var data     = require('gulp-data');
-var fs       = require("fs");
-var rename   = require('gulp-rename');
-var uglify   = require('gulp-uglify');
-var jscs     = require('gulp-jscs');
-var mocha    = require('gulp-mocha');
-var header   = require('gulp-header');
-var run      = require('gulp-run');
 var concat   = require('gulp-concat');
-var webpack  = require('gulp-webpack-build');
-var path     = require('path');
+var data     = require('gulp-data');
+var fs       = require('fs');
+var gulp     = require('gulp');
+var header   = require('gulp-header');
+var jscs     = require('gulp-jscs');
 var markdox  = require('gulp-markdox');
+var mocha    = require('gulp-mocha');
+var path     = require('path');
+var rename   = require('gulp-rename');
+var run      = require('gulp-run');
 var template = require('gulp-template');
-
-// register verb helpers
-// verb.helper('apidocs', verbApiDocs);
+var uglify   = require('gulp-uglify');
+var webpack  = require('gulp-webpack-build');
 
 require('babel/register');
 
 var DEST = 'dist/';
+var TEMP = './tmp/';
 
 gulp.task('lint', function() {
 	return gulp.src('./src/**/*.js')
@@ -56,27 +54,31 @@ gulp.task('min', ['bundle'], function() {
 gulp.task('doc-imm', function() {
 	gulp.src('./src/*.js')
 		.pipe(markdox())
-		.pipe(concat('imm.md'))
-		.pipe(gulp.dest('./docs'));
+		.pipe(concat('doc-imm.md'))
+		.pipe(gulp.dest(TEMP));
 });
 
 gulp.task('doc-list', function() {
 	gulp.src('./src/list/*.js')
 		.pipe(markdox())
-		.pipe(concat('list.md'))
-		.pipe(gulp.dest('./docs'));
+		.pipe(concat('doc-list.md'))
+		.pipe(gulp.dest(TEMP));
 });
 
 gulp.task('doc', ['doc-imm', 'doc-list'], function() {
-	 return gulp.src('./docs/readme.md')
+	var docImm     = fs.readFileSync(TEMP + 'doc-imm.md', 'utf8');
+	var docImmList = fs.readFileSync(TEMP + 'doc-list.md', 'utf8');
+
+	return gulp.src('./templates/api.md')
 		.pipe(data(function() {
 			return {
-				docImm: fs.readFileSync('./docs/imm.md', 'utf8'),
-				docImmList: fs.readFileSync('./docs/list.md', 'utf8')
+				docImm: docImm,
+				docImmList: docImmList
 			};
 		}))
 		.pipe(template())
-		.pipe(gulp.dest('./'));
+		.pipe(gulp.dest('./docs'));
 });
 
 gulp.task('default', ['test', 'lint', 'min', 'doc']);
+

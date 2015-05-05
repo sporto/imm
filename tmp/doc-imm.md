@@ -1,18 +1,19 @@
 
 
-<!-- Start src/imm.js -->
+<!-- Start src/Imm.js -->
 
-<!-- End src/imm.js -->
-
-
+<!-- End src/Imm.js -->
 
 
-<!-- Start src/list.js -->
+
+
+<!-- Start src/List.js -->
 
 ## List(records, args, args.key=id)
 
-Returns an Imm list
-Keys are always sorted in alphabetical order
+Returns an Imm list.
+Keys are always sorted in alphabetical order.
+This means that original order of array given is not respected.
 
 ### Examples:
 
@@ -33,7 +34,7 @@ Imm assumes that the id key is called `id`. You can provide an optional argument
 
 * **Imm.List** Imm List
 
-<!-- End src/list.js -->
+<!-- End src/List.js -->
 
 
 
@@ -42,7 +43,7 @@ Imm assumes that the id key is called `id`. You can provide an optional argument
 
 ## Obj(data)
 
-Returns an Seamless Immutable object
+Returns an Seamless Immutable object.
 See https://github.com/rtfeldman/seamless-immutable#immutable-object
 
 ### Examples:

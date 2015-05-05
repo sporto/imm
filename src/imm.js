@@ -14,7 +14,7 @@ function Imm() {
 	throw new Error('Using imm directly is deprecated, use imm.list instead');
 }
 
-Imm.List   = require('./list.js')(Immutable);
-Imm.Obj    = require('./obj.js')(Immutable);
+Imm.List   = require('./List.js')(Immutable);
+Imm.Obj    = require('./Obj.js')(Immutable);
 
 module.exports = Imm;

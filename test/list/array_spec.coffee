@@ -1,4 +1,4 @@
-Imm                   = require('../../src/imm.js')
+Imm                   = require('../../src/Imm.js')
 Immutable             = require('seamless-immutable')
 chai                  = require('chai')
 expect                = chai.expect

@@ -6,7 +6,7 @@ var ignoreP = new webpack.IgnorePlugin(/seamless-immutable/)
 module.exports = {
 	context: __dirname,
 	entry: {
-		imm: './src/imm.js'
+		imm: './src/Imm.js'
 	},
 	output: {
 		path: __dirname + "/dist",

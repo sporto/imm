@@ -94,27 +94,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var wrapPlainArray = __webpack_require__(6);
+	var wrapPlainArray = __webpack_require__(4);
 
 	function makeList(Immutable) {
 
 		/**
-	 * Returns an Imm list
-	 * Keys are always sorted in alphabetical order
+	 * Returns an Imm list.
+	 * Keys are always sorted in alphabetical order.
+	 * This means that original order of array given is not respected.
 	 *
 	 * ### Examples:
 	 *
 	 * 	var records = [{id: 1, label: 'Sam'}, {...}];
-	 * 	collection = Imm.list(records);
+	 * 	var list = Imm.List(records);
 	 *
 	 * Imm assumes that the id key is called `id`. You can provide an optional argument:
 	 *
-	 * 	collection = Imm.list(records, {key: '_id'});
+	 * 	var list = Imm.List(records, {key: '_id'});
 	 *
 	 * @param {Array} records Array of records
 	 * @param {Object} args Optional arguments
 	 * @param {String} args.key=id Optional name of id key e.g. _id
-	 * @return {Imm.list} Imm List
+	 * @return {Imm.List} Imm List
 	 * @api public
 	 */
 		function List(records, args) {
@@ -137,25 +138,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var isObject = __webpack_require__(4);
-	var isArray = __webpack_require__(5);
+	var isObject = __webpack_require__(5);
+	var isArray = __webpack_require__(6);
 
 	function makeObj(Immutable) {
 
 		/**
-	 * Returns an Seamless Immutable object
+	 * Returns an Seamless Immutable object.
 	 * See https://github.com/rtfeldman/seamless-immutable#immutable-object
 	 *
 	 * ### Examples:
 	 *
 	 * 	var data = {id: 1, label: 'Sam'};
-	 * 	var record = Imm.obj(data);
+	 * 	var record = Imm.Obj(data);
 	 *
 	 * To get back a mutable JS object use `asMutable`:
 	 *
 	 * 	var data = {id: 1, label: 'Sam'};
-	 * 	var immutableRecord = Imm.obj(data);
-	 * 	mutableRecord = immutableRecord.asMutable();
+	 * 	var immutableRecord = Imm.Obj(data);
+	 * 	var mutableRecord = immutableRecord.asMutable();
 	 *
 	 * @param {Object} data A JS object
 	 * @return {SeamlessImmutable.Object} Seamless Immutable object
@@ -174,31 +175,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 4 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	function isObject(obj) {
-		var type = typeof obj;
-		return type === 'function' || type === 'object' && !!obj;
-	}
-
-	module.exports = isObject;
-
-/***/ },
-/* 5 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* @flow */
-
-	'use strict';
-
-	module.exports = Array.isArray || function (obj) {
-		return toString.call(obj) === '[object Array]';
-	};
-
-/***/ },
-/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -254,6 +230,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = wrapPlainArray;
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	function isObject(obj) {
+		var type = typeof obj;
+		return type === 'function' || type === 'object' && !!obj;
+	}
+
+	module.exports = isObject;
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* @flow */
+
+	'use strict';
+
+	module.exports = Array.isArray || function (obj) {
+		return toString.call(obj) === '[object Array]';
+	};
 
 /***/ },
 /* 7 */
@@ -398,7 +399,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var isObject = __webpack_require__(4);
+	var isObject = __webpack_require__(5);
 
 	function assertIsObject(object, msg) {
 		if (!msg) msg = 'Not an object';
@@ -413,7 +414,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var isArray = __webpack_require__(5);
+	var isArray = __webpack_require__(6);
 	var isImmutableInstance = __webpack_require__(28);
 
 	function assertIsPlainArray(Immutable, array) {
@@ -517,6 +518,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* @flow */
 
+	/*!
+	 * Private
+	 *
+	 */
 	"use strict";
 
 	function asPlainArray(Immutable, globalArgs, immutableCollection) {
@@ -643,7 +648,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var asPlainArray = __webpack_require__(15);
-	var wrapPlainArray = __webpack_require__(6);
+	var wrapPlainArray = __webpack_require__(4);
 
 	/**
 	* Filters the list based on a filtering function.
@@ -814,8 +819,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	*/
 	function map(Immutable, globalArgs, immutableCollection, mapper) {
 
-		var newCol = asPlainArray(Immutable, globalArgs, immutableCollection);
-		return newCol.map(mapper);
+		var keys = Object.keys(immutableCollection);
+		return keys.map(function (key) {
+			return mapper(immutableCollection[key]);
+		});
 	}
 
 	module.exports = map;
@@ -880,7 +887,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	'use strict';
 
 	var asPlainArray = __webpack_require__(15);
-	var wrapPlainArray = __webpack_require__(6);
+	var wrapPlainArray = __webpack_require__(4);
 	var negate = __webpack_require__(34);
 
 	/**
@@ -1133,7 +1140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
-	var isArray = __webpack_require__(5);
+	var isArray = __webpack_require__(6);
 
 	function wrapAsArray(recordOrRecords) {
 		return isArray(recordOrRecords) ? recordOrRecords : [recordOrRecords];

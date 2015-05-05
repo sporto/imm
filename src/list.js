@@ -8,8 +8,9 @@ var wrapPlainArray      = require('./list/wrapPlainArray.js');
 function makeList(Immutable: any): Function {
 
 	/**
-	* Returns an Imm list
-	* Keys are always sorted in alphabetical order
+	* Returns an Imm list.
+	* Keys are always sorted in alphabetical order.
+	* This means that original order of array given is not respected.
 	*
 	* ### Examples:
 	*
@@ -34,3 +35,4 @@ function makeList(Immutable: any): Function {
 }
 
 module.exports = makeList;
+
