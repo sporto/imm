@@ -17,11 +17,11 @@ Keys are always sorted in alphabetical order
 ### Examples:
 
 	var records = [{id: 1, label: 'Sam'}, {...}];
-	collection = Imm.list(records);
+	collection = Imm.List(records);
 
 Imm assumes that the id key is called `id`. You can provide an optional argument:
 
-	collection = Imm.list(records, {key: '_id'});
+	collection = Imm.List(records, {key: '_id'});
 
 ### Params:
 
@@ -31,7 +31,7 @@ Imm assumes that the id key is called `id`. You can provide an optional argument
 
 ### Return:
 
-* **Imm.list** Imm List
+* **Imm.List** Imm List
 
 <!-- End src/list.js -->
 
