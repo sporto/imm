@@ -9,7 +9,7 @@ module.exports = {
 		imm: './src/Imm.js'
 	},
 	output: {
-		path: __dirname + "/dist",
+		path: __dirname + '/dist',
 		filename:      '[name].js',
 		libraryTarget: 'umd'
 	},
