@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 var wrapImmutableCollection = require('./wrapImmutableCollection.js');
-var generateUID             = require('../utils/generateUID.js');
+var getCollectionIdForRecord   = require('../utils/getCollectionIdForRecord.js');
+// var generateUID             = require('../utils/generateUID.js');
 var mergeDefaults           = require('../utils/defaults.js');
 var assertIsObject          = require('../assertions/isObject.js');
 var assertIsPlainArray      = require('../assertions/isPlainArray.js');
@@ -17,36 +18,35 @@ var DEFAULT_KEY = 'id';
 * @api private
 */
 function wrapPlainArray(Immutable: any,
-	args: Object,
+	globalArgs: Object,
 	array: Array<Object>
 	): any {
 
-	var id;
-	var mergable;
 	if (!array) array = [];
 
-	if (args) assertIsObject(args, 'You must provide an object for arguments');
+	if (globalArgs) assertIsObject(globalArgs, 'You must provide an object for arguments');
 
 	var defaults = {
 		key: DEFAULT_KEY
 	};
-	args = mergeDefaults(args, defaults);
+	globalArgs = mergeDefaults(globalArgs, defaults);
 
 	assertIsPlainArray(Immutable, array);
 
 	// return a immutable object
 	var col = Immutable(array).asObject(function(record) {
-		id = record[args.key];
+		var id = record[globalArgs.key];
+		var collectionId = getCollectionIdForRecord(record, globalArgs);
+
 		if (!id) {
-			id = generateUID();
-			mergable = {};
-			mergable[args.key] = id;
+			var mergable = {};
+			mergable.immId = collectionId;
 			record = record.merge(mergable);
 		}
-		return [id, record];
+		return [collectionId, record];
 	});
 
-	return wrapImmutableCollection(Immutable, args, col);
+	return wrapImmutableCollection(Immutable, globalArgs, col);
 }
 
 module.exports = wrapPlainArray;

@@ -63,6 +63,12 @@ describe '.get', ->
 			record = col.get(20)
 			expect(record).to.eq(undefined)
 
+		it 'can find a record with an auto generated id', ->
+			original = {label: 'Sam'}
+			col = imm.list([original])
+			array = col.asMutable()
+			console.log(array)
+
 	describe '_id', ->
 		beforeEach ->
 			col = imm.list(recordWithAltId(), {key: '_id'})

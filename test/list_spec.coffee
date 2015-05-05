@@ -42,7 +42,16 @@ describe 'imm.list', ->
 			records = [{label: 'Julia'}, {label: 'Sam'}]
 			newCol = imm.list(records)
 			expect(newCol.count()).to.eq(2)
-			expect(newCol.asMutable()[0].id).not.to.eq(undefined)
+
+		it 'doesnt add ids to records without id', ->
+			records = [{label: 'Julia'}, {label: 'Sam'}]
+			col = imm.list(records)
+			expect(col.asMutable()[0].id).to.eq(undefined)
+
+		it 'adds an immId to records without id', ->
+			records = [{label: 'Julia'}, {label: 'Sam'}]
+			col = imm.list(records)
+			expect(col.asMutable()[0].immId).not.eq(undefined)
 
 	describe '_id', ->
 		it 'takes an optional second args for the id', ->

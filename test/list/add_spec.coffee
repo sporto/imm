@@ -23,11 +23,20 @@ describe '.add', ->
 				newCol = col.add({label: 'Julia'})
 				expect(newCol.count()).to.eq(3)
 
-			it 'assigns an id if not there', ->
+			it 'doesnt add an id to records without id', ->
 				col = imm.list([])
-				newCol = col.add({label: 'Julia'})
-				records = newCol.asMutable()
-				expect(records[0].id).not.to.eq(undefined)
+				col = col.add({label: 'Julia'})
+				records = col.asMutable()
+				record = records[0]
+				expect(record.id).to.eq(undefined)
+
+			it 'assigns an immId when there is no id', ->
+				col = imm.list([])
+				col = col.add({label: 'Julia'})
+				records = col.asMutable()
+				record = records[0]
+				console.log(record.immId)
+				expect(record.immId).not.to.eq(undefined)
 
 			it 'replaces an existing record', ->
 				expect(col.count()).to.eq(2)

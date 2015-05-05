@@ -3,13 +3,13 @@
 /*!
  * Module dependencies.
  */
-var idsAsStrings            = require('../utils/idsAsStrings.js');
-var idsFromRecords          = require('../utils/idsFromRecords.js');
-var mergeDefaults           = require('../utils/defaults.js');
-var wrapAsArray             = require('../utils/wrapAsArray.js');
-var generateUID             = require('../utils/generateUID.js');
-var anyExist                = require('./anyExist.js');
-var wrapImmutableCollection = require('./wrapImmutableCollection.js');
+var idsAsStrings             = require('../utils/idsAsStrings.js');
+var idsFromRecords           = require('../utils/idsFromRecords.js');
+var getCollectionIdForRecord = require('../utils/getCollectionIdForRecord.js');
+var mergeDefaults            = require('../utils/defaults.js');
+var wrapAsArray              = require('../utils/wrapAsArray.js');
+var anyExist                 = require('./anyExist.js');
+var wrapImmutableCollection  = require('./wrapImmutableCollection.js');
 
 /**
 * Replaces one item or many.
@@ -35,8 +35,6 @@ function replace(Immutable: any,
 	recordOrRecords: any,
 	args: Object) {
 
-	var record;
-	var id;
 	var records = wrapAsArray(recordOrRecords);
 	var ids = idsFromRecords(records, globalArgs.key);
 	ids = idsAsStrings(ids);
@@ -55,15 +53,17 @@ function replace(Immutable: any,
 	}
 
 	for (var a = 0; a < records.length; a++) {
-		record = records[a];
-		id = record[globalArgs.key];
+		var record = records[a];
+		var id = record[globalArgs.key];
+		if (args.requireKey && !id) throw new Error('Record must have .' + globalArgs.key);
+
+		var collectionId = getCollectionIdForRecord(record, globalArgs);
+
 		if (!id) {
-			if (args.requireKey) throw new Error('Record must have .' + globalArgs.key);
-			id = generateUID();
-			record[globalArgs.key] = id;
+			record.immId = collectionId;
 		}
-		if (!id) throw new Error('Record must have .' + globalArgs.key);
-		merges[id] = record;
+
+		merges[collectionId] = record;
 	}
 
 	newCol = newCol.merge(merges);
