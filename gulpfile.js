@@ -27,9 +27,9 @@ gulp.task('lint', function() {
 
 gulp.task('test', function() {
 	var mochaOptions = {
-		reporter: 'nyan'
+		reporter: 'nyan',
 	}
-	return gulp.src('./test/**/*.coffee', {read: false})
+	return gulp.src('./test/**/*_spec.*', {read: false})
 		.pipe(mocha(mochaOptions));
 });
 
