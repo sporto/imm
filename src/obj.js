@@ -15,13 +15,13 @@ function makeObj(Immutable: any): any {
 	* ### Examples:
 	*
 	* 	var data = {id: 1, label: 'Sam'};
-	* 	var record = Imm.obj(data);
+	* 	var record = Imm.Obj(data);
 	*
 	* To get back a mutable JS object use `asMutable`:
 	*
 	* 	var data = {id: 1, label: 'Sam'};
-	* 	var immutableRecord = Imm.obj(data);
-	* 	mutableRecord = immutableRecord.asMutable();
+	* 	var immutableRecord = Imm.Obj(data);
+	* 	var mutableRecord = immutableRecord.asMutable();
 	*
 	* @param {Object} data A JS object
 	* @return {SeamlessImmutable.Object} Seamless Immutable object

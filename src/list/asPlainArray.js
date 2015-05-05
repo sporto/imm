@@ -1,5 +1,9 @@
 /* @flow */
 
+/*!
+ * Private
+ *
+ */
 function asPlainArray(Immutable: any,
 	globalArgs: Object,
 	immutableCollection:any

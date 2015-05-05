@@ -81,8 +81,6 @@ Check if the given ID or any given IDs exist
 
 <!-- Start src/list/asPlainArray.js -->
 
-## asPlainArray()
-
 <!-- End src/list/asPlainArray.js -->
 
 

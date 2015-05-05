@@ -50,11 +50,11 @@ Keys are always sorted in alphabetical order
 ### Examples:
 
 	var records = [{id: 1, label: 'Sam'}, {...}];
-	collection = Imm.List(records);
+	var list = Imm.List(records);
 
 Imm assumes that the id key is called `id`. You can provide an optional argument:
 
-	collection = Imm.List(records, {key: '_id'});
+	var list = Imm.List(records, {key: '_id'});
 
 ### Params:
 
@@ -81,13 +81,13 @@ See https://github.com/rtfeldman/seamless-immutable#immutable-object
 ### Examples:
 
 	var data = {id: 1, label: 'Sam'};
-	var record = Imm.obj(data);
+	var record = Imm.Obj(data);
 
 To get back a mutable JS object use `asMutable`:
 
 	var data = {id: 1, label: 'Sam'};
-	var immutableRecord = Imm.obj(data);
-	mutableRecord = immutableRecord.asMutable();
+	var immutableRecord = Imm.Obj(data);
+	var mutableRecord = immutableRecord.asMutable();
 
 ### Params:
 
@@ -182,8 +182,6 @@ Check if the given ID or any given IDs exist
 
 
 <!-- Start src/list/asPlainArray.js -->
-
-## asPlainArray()
 
 <!-- End src/list/asPlainArray.js -->
 

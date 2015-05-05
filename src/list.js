@@ -14,11 +14,11 @@ function makeList(Immutable: any): Function {
 	* ### Examples:
 	*
 	* 	var records = [{id: 1, label: 'Sam'}, {...}];
-	* 	collection = Imm.List(records);
+	* 	var list = Imm.List(records);
 	*
 	* Imm assumes that the id key is called `id`. You can provide an optional argument:
 	*
-	* 	collection = Imm.List(records, {key: '_id'});
+	* 	var list = Imm.List(records, {key: '_id'});
 	*
 	* @param {Array} records Array of records
 	* @param {Object} args Optional arguments
