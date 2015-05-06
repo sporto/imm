@@ -16,6 +16,7 @@ var uglify   = require('gulp-uglify');
 var webpack  = require('gulp-webpack-build');
 
 require('babel/register');
+require('coffee-script/register');
 
 var DEST = 'dist/';
 var TEMP = './tmp/';
