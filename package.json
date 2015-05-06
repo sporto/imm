@@ -32,7 +32,7 @@
     "gulp-header": "^1.1.1",
     "gulp-jscs": "^1.6.0",
     "gulp-markdox": "^0.1.1",
-    "gulp-mocha": "^1.1.1",
+    "gulp-mocha": "^2.0.1",
     "gulp-rename": "^1.2.0",
     "gulp-run": "^1.6.6",
     "gulp-template": "^3.0.0",
