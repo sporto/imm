@@ -20,6 +20,7 @@ require('coffee-script/register');
 
 var DEST = 'dist/';
 var TEMP = './tmp/';
+var TEMPLATES = './templates/';
 
 gulp.task('lint', function() {
 	return gulp.src('./src/**/*.js')
@@ -39,15 +40,19 @@ gulp.task('test-watch', function() {
 });
 
 gulp.task('bundle', function() {
+	var banner = fs.readFileSync(TEMPLATES + 'banner.js', 'utf8');
 	return gulp.src('webpack.config.js')
 		.pipe(webpack.compile())
+		.pipe(header(banner))
 		.pipe(gulp.dest('./'));
 });
 
 gulp.task('min', ['bundle'], function() {
+	var banner = fs.readFileSync(TEMPLATES + 'banner.js', 'utf8');
 	return gulp.src('dist/imm.js')
 		.pipe(uglify({preserveComments: false}))
 		.pipe(rename({extname: '.min.js'}))
+		.pipe(header(banner))
 		.pipe(gulp.dest(DEST));
 });
 

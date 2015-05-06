@@ -1,3 +1,10 @@
+/**
+* Imm
+* Immutable collections
+* (c) 2015 Sebastian Porto
+* MIT license.
+* https://github.com/sporto/imm
+*/
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("seamless-immutable"));
@@ -55,12 +62,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
-
-	//! Imm
-	//! Immutable collections
-	//! (c) 2015 Sebastian Porto
-	//! MIT license.
-	//! https://github.com/sporto/imm
 
 	'use strict';
 
@@ -838,7 +839,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var idsAsStrings = __webpack_require__(34);
+	var idsAsStrings = __webpack_require__(33);
 	var allExist = __webpack_require__(16);
 	var wrapAsArray = __webpack_require__(32);
 	var wrapImmutableCollection = __webpack_require__(7);
@@ -888,7 +889,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var asPlainArray = __webpack_require__(15);
 	var wrapPlainArray = __webpack_require__(4);
-	var negate = __webpack_require__(33);
+	var negate = __webpack_require__(34);
 
 	/**
 	* Rejects records based on a function.
@@ -924,7 +925,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var idsAsStrings = __webpack_require__(34);
+	var idsAsStrings = __webpack_require__(33);
 	var idsFromRecords = __webpack_require__(31);
 	var getCollectionIdForRecord = __webpack_require__(8);
 	var mergeDefaults = __webpack_require__(9);
@@ -1152,20 +1153,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-
-	function negate(fn) {
-		return function () {
-			return !fn.apply(this, arguments);
-		};
-	}
-
-	module.exports = negate;
-
-/***/ },
-/* 34 */
-/***/ function(module, exports, __webpack_require__) {
-
 	'use strict';
 
 	function idsAsStrings(array) {
@@ -1175,6 +1162,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = idsAsStrings;
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	function negate(fn) {
+		return function () {
+			return !fn.apply(this, arguments);
+		};
+	}
+
+	module.exports = negate;
 
 /***/ }
 /******/ ])

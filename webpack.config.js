@@ -1,7 +1,12 @@
 var path = require('path');
 var webpack = require('webpack');
 
-var ignoreP = new webpack.IgnorePlugin(/seamless-immutable/)
+// var ignoreP = new webpack.IgnorePlugin(/seamless-immutable/)
+// var defineP = new webpack.DefinePlugin({
+// 	"process.env": {
+// 		NODE_ENV: JSON.stringify('production')
+// 	}
+// });
 
 module.exports = {
 	context: __dirname,
@@ -15,7 +20,7 @@ module.exports = {
 	},
 	externals: [
 		// Every non-relative module is external
-		/^[a-z\-0-9]+$/,
+		/^[a-z\-0-9]+$/
 	],
 	module: {
 		loaders: [
