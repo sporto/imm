@@ -1,5 +1,5 @@
-imm              = require('../src/Imm.js')
-chai             = require('chai')
+imm              = require '../src/Imm.js'
+chai             = require 'chai'
 expect           = chai.expect
 
 describe 'imm', ->
