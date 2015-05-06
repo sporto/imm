@@ -1,5 +1,8 @@
 /* @flow */
 
+/*!
+ * Module dependencies.
+ */
 var Immutable = require('seamless-immutable');
 
 if (Immutable == null) throw new Error('Immutable is null');

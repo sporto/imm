@@ -9,7 +9,7 @@ var isArray = require('./utils/isArray.js');
 function makeObj(Immutable: any): any {
 
 	/**
-	* Returns an Seamless Immutable object.
+	* Returns an __Seamless Immutable__ object.
 	* See https://github.com/rtfeldman/seamless-immutable#immutable-object
 	*
 	* ### Examples:
@@ -23,6 +23,7 @@ function makeObj(Immutable: any): any {
 	* 	var immutableRecord = Imm.Obj(data);
 	* 	var mutableRecord = immutableRecord.asMutable();
 	*
+	* @function Imm.Obj
 	* @param {Object} data A JS object
 	* @return {SeamlessImmutable.Object} Seamless Immutable object
 	* @api public

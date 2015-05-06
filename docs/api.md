@@ -1,5 +1,4 @@
-API
-========
+# API
 
 
 
@@ -12,7 +11,7 @@ API
 
 <!-- Start src/List.js -->
 
-## List(records, args, args.key=id)
+## Imm.List(records, args, args.key=id)
 
 Returns an Imm list.
 Keys are always sorted in alphabetical order.
@@ -42,11 +41,11 @@ Imm assumes that the id key is called `id`. You can provide an optional argument
 
 
 
-<!-- Start src/obj.js -->
+<!-- Start src/Obj.js -->
 
-## Obj(data)
+## Imm.Obj(data)
 
-Returns an Seamless Immutable object.
+Returns an __Seamless Immutable__ object.
 See https://github.com/rtfeldman/seamless-immutable#immutable-object
 
 ### Examples:
@@ -68,9 +67,15 @@ To get back a mutable JS object use `asMutable`:
 
 * **SeamlessImmutable.Object** Seamless Immutable object
 
-<!-- End src/obj.js -->
+<!-- End src/Obj.js -->
 
 
+
+<br />
+
+## Imm.List
+
+---------------
 
 
 
