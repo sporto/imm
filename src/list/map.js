@@ -1,5 +1,7 @@
 /* @flow */
 
+/** @module List */
+
 /*!
  * Module dependencies.
  */
@@ -8,12 +10,13 @@ var asPlainArray      = require('./asPlainArray.js');
 /**
 * Maps the list through a given function
 *
-* ### Examples:
+* @example
 *
 * 	list = list.map(function (record) {
 * 		return {foo: record.id};
 * 	});
 *
+* @function map
 * @param {Function} mapper Mapping function
 * @return {Array} array
 * @api public

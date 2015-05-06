@@ -1,5 +1,7 @@
 /* @flow */
 
+/** @module List */
+
 /*!
  * Module dependencies.
  */
@@ -17,11 +19,12 @@ var wrapImmutableCollection  = require('./wrapImmutableCollection.js');
 * If records doesn't exist then it just gets added.
 * This throws if a record doesn't have an key.
 *
-* ### Examples:
+* @example
 *
 * 	list = list.replace(record)
 * 	list = list.replace(array)
 *
+* @function replace
 * @param {Object} recordOrRecords Record or records to replace
 * @param {Object} args Optional arguments
 * @param {Boolean} args.strict=false Throws if record exist

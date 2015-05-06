@@ -1,12 +1,14 @@
 /* @flow */
 
+/** @module List */
+
 /**
 * Get the first record.
 * Order of records in Imm.List is not necessary the order of the records given initially.
 * Returns a Seamless Immutable object.
 * See https://github.com/rtfeldman/seamless-immutable#immutable-object
 *
-* ### Examples:
+* @example
 *
 * 	var record = list.first()
 *
@@ -17,6 +19,7 @@
 * 	// or
 * 	record = record.asMutable({deep: true})
 *
+* @function first
 * @return {SeamlessImmutale.Object} record
 * @api public
 */

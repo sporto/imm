@@ -1,5 +1,7 @@
 /* @flow */
 
+/** @module Imm */
+
 /*!
  * Module dependencies.
  */
@@ -12,17 +14,18 @@ function makeObj(Immutable: any): any {
 	* Returns an Seamless Immutable object.
 	* See https://github.com/rtfeldman/seamless-immutable#immutable-object
 	*
-	* ### Examples:
+	* @example
 	*
-	* 	var data = {id: 1, label: 'Sam'};
-	* 	var record = Imm.Obj(data);
+	* var data = {id: 1, label: 'Sam'};
+	* var record = Imm.Obj(data);
 	*
 	* To get back a mutable JS object use `asMutable`:
 	*
-	* 	var data = {id: 1, label: 'Sam'};
-	* 	var immutableRecord = Imm.Obj(data);
-	* 	var mutableRecord = immutableRecord.asMutable();
+	* var data = {id: 1, label: 'Sam'};
+	* var immutableRecord = Imm.Obj(data);
+	* var mutableRecord = immutableRecord.asMutable();
 	*
+	* @function Obj
 	* @param {Object} data A JS object
 	* @return {SeamlessImmutable.Object} Seamless Immutable object
 	* @api public

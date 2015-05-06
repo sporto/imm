@@ -1,5 +1,7 @@
 /* @flow */
 
+/** @module List */
+
 /*!
  * Private
  *

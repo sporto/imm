@@ -1,11 +1,13 @@
 /* @flow */
 
+/** @module List */
+
 /**
 * Get a record by id.
 * Returns a Seamless Immutable object
 * See https://github.com/rtfeldman/seamless-immutable#immutable-object
 *
-* ### Examples:
+* @example
 *
 * 	var record = list.get(11)
 * 	var record = list.get('11') // same as 11
@@ -17,6 +19,7 @@
 * 	// or
 * 	record = record.asMutable({deep: true})
 *
+* @function get
 * @param {Number|String} id Id to fetch
 * @return {SeamlessImmutale.Object} record
 * @api public

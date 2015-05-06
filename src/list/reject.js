@@ -1,5 +1,7 @@
 /* @flow */
 
+/** @module List */
+
 /*!
  * Module dependencies.
  */
@@ -11,12 +13,13 @@ var negate            = require('../utils/negate.js');
 * Rejects records based on a function.
 * Returns a new Imm modified list without those records.
 *
-* ### Example:
+* @example
 *
 * 	list = list.reject(function(record) {
 * 		return record.age < 18;
 * 	});
 *
+* @function reject
 * @param {Function} filterer Filtering function
 * @return {Imm.List} Modified Imm list
 * @api public

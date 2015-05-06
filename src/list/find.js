@@ -1,5 +1,7 @@
 /* @flow */
 
+/** @module List */
+
 /*!
  * Module dependencies.
  */
@@ -9,12 +11,13 @@ var asPlainArray      = require('./asPlainArray.js');
 * Finds one record.
 * Returns a Seamless Immutable Object
 *
-* ### Example:
+* @example
 *
 * 	var record = list.find(function (record) {
 * 		return record.age === 18;
 * 	});
 *
+* @function find
 * @param {Function} finder Finder function
 * @return {SeamlessImmutable.Object} record Record or undefined
 * @api public

@@ -1,12 +1,15 @@
 /* @flow */
 
+/** @module List */
+
 /**
 * Records count.
 *
-* ### Example:
+* @example
 *
 * 	count = list.count();
 *
+* @function count
 * @return {Number} count
 * @api public
 */

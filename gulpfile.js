@@ -11,6 +11,7 @@ var mocha    = require('gulp-mocha');
 var path     = require('path');
 var rename   = require('gulp-rename');
 var run      = require('gulp-run');
+var shell    = require('gulp-shell');
 var template = require('gulp-template');
 var uglify   = require('gulp-uglify');
 var webpack  = require('gulp-webpack-build');
@@ -71,20 +72,9 @@ gulp.task('doc-list', function() {
 		.pipe(gulp.dest(TEMP));
 });
 
-gulp.task('doc', ['doc-imm', 'doc-list'], function() {
-	var docImm     = fs.readFileSync(TEMP + 'doc-imm.md', 'utf8');
-	var docImmList = fs.readFileSync(TEMP + 'doc-list.md', 'utf8');
-
-	return gulp.src('./templates/api.md')
-		.pipe(data(function() {
-			return {
-				docImm: docImm,
-				docImmList: docImmList
-			};
-		}))
-		.pipe(template())
-		.pipe(gulp.dest('./docs'));
-});
+gulp.task('doc', shell.task([
+	'./node_modules/.bin/jsdoc -c jsdoc.json --readme ./readme.md -d ./site -r src/*'
+]));
 
 gulp.task('default', ['test', 'lint', 'min', 'doc']);
 

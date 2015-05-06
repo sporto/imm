@@ -1,5 +1,7 @@
 /* @flow */
 
+/** @module List */
+
 /*!
  * Module dependencies.
  */
@@ -12,11 +14,12 @@ var wrapImmutableCollection = require('./wrapImmutableCollection.js');
 * Removes one or many records based on the id.
 * If record is not found then it just gets skipped.
 *
-* ### Examples:
+* @example
 *
 * 	list = list.remove(id);
 * 	list = list.remove(arrayOfIds);
 *
+* @function remove
 * @param {Number|String|Array} idOrIds Id or ids to remove
 * @param {Object} args Optional arguments
 * @param {Boolean} args.strict=false Throw if record(s) doesn't exists
