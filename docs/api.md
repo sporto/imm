@@ -435,8 +435,9 @@ This throws if a record doesn't have an key.
 
 ## unwrap()
 
-Convert Imm list to Seamless Immutable array
-See https://github.com/rtfeldman/seamless-immutable#immutable-array
+Convert Imm list to Seamless Immutable Object.
+The ids of the records are used as the keys for the returned object.
+See https://github.com/rtfeldman/seamless-immutable#immutable-object.
 
 ### Examples:
 
