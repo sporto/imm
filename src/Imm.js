@@ -12,6 +12,7 @@ function Imm() {
 }
 
 Imm.List   = require('./List.js')(Immutable);
+Imm.Array  = require('./Array.js')(Immutable);
 Imm.Obj    = require('./Obj.js')(Immutable);
 
 module.exports = Imm;

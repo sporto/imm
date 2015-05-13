@@ -8,6 +8,7 @@ var idsFromRecords           = require('../utils/idsFromRecords.js');
 var getCollectionIdForRecord = require('../utils/getCollectionIdForRecord.js');
 var mergeDefaults            = require('../utils/defaults.js');
 var wrapAsArray              = require('../utils/wrapAsArray.js');
+var isImmutableInstance      = require('../utils/isImmutableInstance.js');
 var anyExist                 = require('./anyExist.js');
 var wrapImmutableCollection  = require('./wrapImmutableCollection.js');
 
@@ -54,6 +55,12 @@ function replace(Immutable: any,
 
 	for (var a = 0; a < records.length; a++) {
 		var record = records[a];
+		var im = isImmutableInstance(Immutable, record);
+
+		if (im) {
+			record = record.asMutable({deep: true});
+		}
+
 		var id = record[globalArgs.key];
 		if (args.requireKey && !id) throw new Error('Record must have .' + globalArgs.key);
 

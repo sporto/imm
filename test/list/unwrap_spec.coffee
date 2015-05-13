@@ -13,6 +13,9 @@ describe '.unwrap', ->
 		beforeEach ->
 			col = Imm.List(makeRecords())
 
-		it 'returns a Seamless Immutable list', ->
+		it 'returns a Seamless Immutable Object', ->
 			result = col.unwrap()
 			expect(Immutable.isImmutable(result)).to.eql(true)
+
+			keys = Object.keys(result)
+			expect(keys).to.eql(['10', '11']);

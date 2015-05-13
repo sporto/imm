@@ -20,13 +20,18 @@ describe '.replace', ->
 				newCol = col.replace(record)
 				expect(newCol.count()).to.eq(2)
 				expect(newCol.get(11)).to.eql(record)
-			
+
+			it 'takes an immutable', ->
+				expect(col.count()).to.eq(2)
+				record = {id: 11, label: 'New Tess'}
+				record = Imm.Obj(record)
+				col = col.replace(record)
+				expect(col.count()).to.eq(2)
 
 			it 'adds a no existing record', ->
 				record = {id: 20, label: 'Will'}
 				newCol = col.replace(record)
 				expect(newCol.count()).to.eq(3)
-			
 
 			it 'throws if record doesnt have an id', ->
 				record = {label: 'Will'}
@@ -44,7 +49,6 @@ describe '.replace', ->
 				newCol = col.replace(records)
 				expect(newCol.get(10)).to.eql(record1)
 				expect(newCol.get(11)).to.eql(record2)
-			
 
 			it 'adds non existing records', ->
 				record1 = {id: 10, label: 'New Tess'}
@@ -53,6 +57,28 @@ describe '.replace', ->
 
 				newCol = col.replace(records)
 				expect(newCol.count()).to.eq(3)
+
+			it 'takes immutables', ->
+				expect(col.count()).to.eq(2)
+				record1 = {id: 10, label: 'New Tess'}
+				record2 = {id: 20, label: 'Will'}
+				records = [record1, record2]
+				records = Imm.Array(records)
+
+				col = col.replace(records)
+
+				expect(col.count()).to.eq(3)
+
+			it 'takes an Imm.List', ->
+				expect(col.count()).to.eq(2)
+				record1 = {id: 10, label: 'New Tess'}
+				record2 = {id: 20, label: 'Will'}
+				records = [record1, record2]
+				records = Imm.List(records)
+
+				col = col.add(records)
+
+				expect(col.count()).to.eq(3)
 
 		describe 'strict', ->
 			it 'throws if records exist', ->

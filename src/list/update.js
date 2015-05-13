@@ -8,6 +8,7 @@ var wrapAsArray             = require('../utils/wrapAsArray.js');
 var mergeDefaults           = require('../utils/defaults.js');
 var anyExist                = require('./anyExist.js');
 var wrapImmutableCollection = require('./wrapImmutableCollection.js');
+var toArrayIfImmList        = require('../utils/toArrayIfImmList');
 
 /**
 * Updates one record or many.
@@ -43,8 +44,10 @@ function update(Immutable: any,
 	var toMerge;
 	var existing;
 	var mergedRecord;
-	var givenRecords = wrapAsArray(recordOrRecords);
 	var newCol = immutableCollection;
+
+	var givenRecords = toArrayIfImmList(recordOrRecords);
+	givenRecords     = wrapAsArray(givenRecords);
 
 	if (args.strict) {
 		// throw if any record exists

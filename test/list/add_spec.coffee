@@ -7,7 +7,7 @@ col = null
 
 describe '.add', ->
 
-	describe 'id', ->
+	describe 'when using id', ->
 
 		beforeEach ->
 			col = Imm.List(makeRecords())
@@ -35,7 +35,6 @@ describe '.add', ->
 				col = col.add({label: 'Julia'})
 				records = col.asMutable()
 				record = records[0]
-				console.log(record.immId)
 				expect(record.immId).not.to.eq(undefined)
 
 			it 'replaces an existing record', ->
@@ -50,6 +49,12 @@ describe '.add', ->
 				expect(col.count()).to.eq(2)
 				col.add({id: 20, label: 'Sam'})
 				expect(col.count()).to.eq(2)
+
+			it 'handles adding an immutable', ->
+				expect(col.count()).to.eq(2)
+				record = Imm.Obj({label: 'Julia'})
+				col = col.add(record)
+				expect(col.count()).to.eq(3)
 
 		describe 'many', ->
 			it 'adds new records', ->
@@ -67,6 +72,20 @@ describe '.add', ->
 			it 'returns the same when given an empty array', ->
 				newCol = col.add([])
 				expect(newCol.count()).to.eq(2)
+
+			it 'takes immutables', ->
+				expect(col.count()).to.eq(2)
+				records = [{id: 20, label: 'Sam'}, {id: 21, label: 'Sul'}]
+				records = Imm.Array(records)
+				col = col.add(records)
+				expect(col.count()).to.eq(4)
+
+			it 'takes an Imm.List', ->
+				expect(col.count()).to.eq(2)
+				records = [{id: 20, label: 'Sam'}, {id: 21, label: 'Sul'}]
+				records = Imm.List(records)
+				col = col.add(records)
+				expect(col.count()).to.eq(4)
 
 		describe 'strict', ->
 			it 'throws if record already exists', ->

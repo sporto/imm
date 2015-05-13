@@ -3,11 +3,12 @@
 /*!
  * Module dependencies.
  */
-var replace        = require('./replace');
-var anyExist = require('./anyExist');
-var idsFromRecords = require('../utils/idsFromRecords');
-var wrapAsArray = require('../utils/wrapAsArray');
-var mergeDefaults = require('../utils/defaults');
+var replace             = require('./replace');
+var anyExist            = require('./anyExist');
+var idsFromRecords      = require('../utils/idsFromRecords');
+var wrapAsArray         = require('../utils/wrapAsArray');
+var mergeDefaults       = require('../utils/defaults');
+var toArrayIfImmList    = require('../utils/toArrayIfImmList');
 
 /**
 * Adds one or more records.
@@ -34,21 +35,24 @@ function add(Immutable: any,
 	recordOrRecords: Object | Array<Object>,
 	args: Object) {
 
+	var records = toArrayIfImmList(recordOrRecords);
+	records = wrapAsArray(records);
+
 	var defaults = {
 		strict: false
 	};
+
 	args = mergeDefaults(args, defaults);
 
 	if (args.strict) {
 		// throw if any record exists
-		var records = wrapAsArray(recordOrRecords);
 		var ids     = idsFromRecords(records, globalArgs.key);
 		var exists = anyExist(Immutable, globalArgs, immutableCollection, ids);
 		if (exists) throw new Error('Some records already exist');
 	}
 	args.requireKey = false;
 
-	return replace(Immutable, globalArgs, immutableCollection, recordOrRecords, args);
+	return replace(Immutable, globalArgs, immutableCollection, records, args);
 }
 
 module.exports = add;

@@ -6,7 +6,7 @@
  */
 function asPlainArray(Immutable: any,
 	globalArgs: Object,
-	immutableCollection:any
+	immutableCollection: any
 	): Array<any> {
 
 	return Object.keys(immutableCollection).map(function(key) {

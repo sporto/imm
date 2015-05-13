@@ -15,9 +15,23 @@ describe '.update', ->
 		describe 'one', ->
 			it 'patches an existing record', ->
 				expect(col.count()).to.eq(2)
-				newCol = col.update({id: 11, name: 'Maria'})
-				expect(newCol.count()).to.eq(2)
-				expect(newCol.get(11)).to.eql({id: 11, label: 'Tess', name: 'Maria'})
+				record = {id: 11, name: 'Maria'}
+
+				col = col.update(record)
+
+				expect(col.count()).to.eq(2)
+				expected = {id: 11, label: 'Tess', name: 'Maria'}
+				expect(col.get(11)).to.eql(expected)
+
+			it 'takes an immutable', ->
+				expect(col.count()).to.eq(2)
+				record = {id: 11, name: 'Maria'}
+				record = Imm.Obj(record)
+
+				col = col.update(record)
+
+				expected = {id: 11, label: 'Tess', name: 'Maria'}
+				expect(col.get(11)).to.eql(expected)
 
 			it 'doesnt update the original collection', ->
 				newCol = col.update({id: 11, name: 'Maria'})
@@ -30,9 +44,11 @@ describe '.update', ->
 
 			it 'adds a non existing record', ->
 				record = {id: 20, name: 'Maria'}
-				newCol = col.update(record)
-				expect(newCol.count()).to.eq(3)
-				expect(newCol.get(20)).to.eql(record)
+
+				col = col.update(record)
+
+				expect(col.count()).to.eq(3)
+				expect(col.get(20)).to.eql(record)
 
 			it 'throws if record doesnt have an id', ->
 				record = {label: 'Will'}
@@ -48,10 +64,39 @@ describe '.update', ->
 				
 				expect(col.count()).to.eq(2)
 
-				newCol = col.update(records)
-				expect(newCol.count()).to.eq(2)
-				expect(newCol.get(10)).to.eql({id: 10, label: 'Sam', age: 22})
-				expect(newCol.get(11)).to.eql({id: 11, label: 'Tess', age: 11})
+				col = col.update(records)
+
+				expect(col.count()).to.eq(2)
+				expect(col.get(10)).to.eql({id: 10, label: 'Sam', age: 22})
+				expect(col.get(11)).to.eql({id: 11, label: 'Tess', age: 11})
+
+			it 'takes immutables', ->
+				expect(col.count()).to.eq(2)
+				record1 = {id: 10, age: 22}
+				record2 = {id: 11, age: 11}
+				records = [record1, record2]
+				records = Imm.Array(records)
+
+				col = col.update(records)
+				expect(col.count()).to.eq(2)
+
+				expect(col.get(10)).to.eql({id: 10, label: 'Sam', age: 22})
+				expect(col.get(11)).to.eql({id: 11, label: 'Tess', age: 11})
+
+			it 'takes an Imm.List', ->
+				expect(col.count()).to.eq(2)
+				record1 = {id: 10, age: 22}
+				record2 = {id: 11, age: 11}
+				records = [record1, record2]
+				records = Imm.List(records)
+
+				col = col.update(records)
+
+				expect(col.count()).to.eq(2)
+
+				expect(col.get(10)).to.eql({id: 10, label: 'Sam', age: 22})
+				expect(col.get(11)).to.eql({id: 11, label: 'Tess', age: 11})
+
 
 			it 'adds non existing records', ->
 				record1 = {id: 10, age: 22}
@@ -59,6 +104,7 @@ describe '.update', ->
 				records = [record1, record2]
 
 				newCol = col.update(records)
+
 				expect(newCol.count()).to.eq(3)
 				expect(newCol.get(20)).to.eql(record2)
 

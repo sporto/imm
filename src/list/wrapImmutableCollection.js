@@ -39,21 +39,6 @@ function wrapImmutableCollection(Immutable: any,
 		throw new Error('.array is deprecated, use .asMutable instead');
 	}
 
-	/**
-	* Convert Imm list to Seamless Immutable array
-	* See https://github.com/rtfeldman/seamless-immutable#immutable-array
-	*
-	* ### Examples:
-	*
-	* 	var list = list.unwrap();
-	*
-	* @return {SeamlessImmutable.Array}
-	* @api public
-	*/
-	function unwrap() {
-		return immutableCollection;
-	}
-
 	var add          = require('./add.js');
 	var asPlainArray = require('./asPlainArray.js');
 	var allExist     = require('./allExist.js');
@@ -67,6 +52,7 @@ function wrapImmutableCollection(Immutable: any,
 	var remove       = require('./remove.js');
 	var reject       = require('./reject.js');
 	var replace      = require('./replace.js');
+	var unwrap       = require('./unwrap.js');
 	var update       = require('./update.js');
 
 	return {
@@ -85,7 +71,7 @@ function wrapImmutableCollection(Immutable: any,
 		map:         map.bind(null, Immutable, globalArgs, immutableCollection),
 		reject:      reject.bind(null, Immutable, globalArgs, immutableCollection),
 		remove:      remove.bind(null, Immutable, globalArgs, immutableCollection),
-		unwrap:      unwrap,
+		unwrap:      unwrap.bind(null, Immutable, globalArgs, immutableCollection),
 		update:      update.bind(null, Immutable, globalArgs, immutableCollection)
 	};
 }
