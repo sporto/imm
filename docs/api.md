@@ -2,6 +2,31 @@
 
 
 
+<!-- Start src/Array.js -->
+
+## Imm.Array(records)
+
+Returns an __Seamless Immutable__ Array.
+See https://github.com/rtfeldman/seamless-immutable#immutable-array
+
+### Examples:
+
+	var records = [{id: 1, label: 'Sam'}, {...}];
+	var list = Imm.Array(records);
+
+### Params:
+
+* **Array** *records* Array of records
+
+### Return:
+
+* **SeamlessImmutable.Array** Seamless Immutable Array
+
+<!-- End src/Array.js -->
+
+
+
+
 <!-- Start src/Imm.js -->
 
 <!-- End src/Imm.js -->
@@ -406,6 +431,26 @@ This throws if a record doesn't have an key.
 
 
 
+<!-- Start src/list/unwrap.js -->
+
+## unwrap()
+
+Convert Imm list to Seamless Immutable array
+See https://github.com/rtfeldman/seamless-immutable#immutable-array
+
+### Examples:
+
+	var list = list.unwrap();
+
+### Return:
+
+* **SeamlessImmutable.Object** 
+
+<!-- End src/list/unwrap.js -->
+
+
+
+
 <!-- Start src/list/update.js -->
 
 ## update(recordOrRecords, args, args.strict=false)
@@ -449,19 +494,6 @@ Records in the array are plain mutable JS objects.
 ### Return:
 
 * **Array** 
-
-## unwrap()
-
-Convert Imm list to Seamless Immutable array
-See https://github.com/rtfeldman/seamless-immutable#immutable-array
-
-### Examples:
-
-	var list = list.unwrap();
-
-### Return:
-
-* **SeamlessImmutable.Array** 
 
 <!-- End src/list/wrapImmutableCollection.js -->
 
