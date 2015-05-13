@@ -63,6 +63,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	/* @flow */
 
+	/*!
+	 * Module dependencies.
+	 */
 	'use strict';
 
 	var Immutable = __webpack_require__(1);
@@ -70,11 +73,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	if (Immutable == null) throw new Error('Immutable is null');
 
 	function Imm() {
-		throw new Error('Using imm directly is deprecated, use imm.list instead');
+	  throw new Error('Using imm directly is deprecated, use imm.list instead');
 	}
 
 	Imm.List = __webpack_require__(2)(Immutable);
-	Imm.Obj = __webpack_require__(3)(Immutable);
+	Imm.Array = __webpack_require__(3)(Immutable);
+	Imm.Obj = __webpack_require__(4)(Immutable);
 
 	module.exports = Imm;
 
@@ -95,7 +99,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var wrapPlainArray = __webpack_require__(4);
+	var wrapPlainArray = __webpack_require__(5);
 
 	function makeList(Immutable) {
 
@@ -113,6 +117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * 	var list = Imm.List(records, {key: '_id'});
 	 *
+	 * @function Imm.List
 	 * @param {Array} records Array of records
 	 * @param {Object} args Optional arguments
 	 * @param {String} args.key=id Optional name of id key e.g. _id
@@ -139,13 +144,54 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var isObject = __webpack_require__(5);
-	var isArray = __webpack_require__(6);
+	var isObject = __webpack_require__(6);
+	var isArray = __webpack_require__(7);
+
+	function makeArray(Immutable) {
+
+		/**
+	 * Returns an __Seamless Immutable__ Array.
+	 * See https://github.com/rtfeldman/seamless-immutable#immutable-array
+	 *
+	 * ### Examples:
+	 *
+	 * 	var records = [{id: 1, label: 'Sam'}, {...}];
+	 * 	var list = Imm.Array(records);
+	 *
+	 * @function Imm.Array
+	 * @param {Array} records Array of records
+	 * @return {SeamlessImmutable.Array} Seamless Immutable Array
+	 * @api public
+	 */
+		function Array(data) {
+			if (!isArray(data)) throw new Error('You must provide an array');
+
+			return Immutable(data);
+		}
+
+		return Array;
+	}
+
+	module.exports = makeArray;
+
+/***/ },
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* @flow */
+
+	/*!
+	 * Module dependencies.
+	 */
+	'use strict';
+
+	var isObject = __webpack_require__(6);
+	var isArray = __webpack_require__(7);
 
 	function makeObj(Immutable) {
 
 		/**
-	 * Returns an Seamless Immutable object.
+	 * Returns an __Seamless Immutable__ object.
 	 * See https://github.com/rtfeldman/seamless-immutable#immutable-object
 	 *
 	 * ### Examples:
@@ -159,6 +205,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * 	var immutableRecord = Imm.Obj(data);
 	 * 	var mutableRecord = immutableRecord.asMutable();
 	 *
+	 * @function Imm.Obj
 	 * @param {Object} data A JS object
 	 * @return {SeamlessImmutable.Object} Seamless Immutable object
 	 * @api public
@@ -175,7 +222,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = makeObj;
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -185,12 +232,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var wrapImmutableCollection = __webpack_require__(7);
-	var getCollectionIdForRecord = __webpack_require__(8);
+	var wrapImmutableCollection = __webpack_require__(8);
+	var getCollectionIdForRecord = __webpack_require__(9);
 	// var generateUID             = require('../utils/generateUID.js');
-	var mergeDefaults = __webpack_require__(9);
-	var assertIsObject = __webpack_require__(10);
-	var assertIsPlainArray = __webpack_require__(11);
+	var mergeDefaults = __webpack_require__(10);
+	var assertIsObject = __webpack_require__(11);
+	var assertIsPlainArray = __webpack_require__(12);
 
 	var DEFAULT_KEY = 'id';
 
@@ -233,7 +280,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = wrapPlainArray;
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -246,7 +293,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = isObject;
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -258,7 +305,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -268,8 +315,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var assertIsImmutable = __webpack_require__(12);
-	var assertIsImmutableInstance = __webpack_require__(13);
+	var assertIsImmutable = __webpack_require__(13);
+	var assertIsImmutableInstance = __webpack_require__(14);
 
 	/*!
 	 * Private
@@ -302,35 +349,21 @@ return /******/ (function(modules) { // webpackBootstrap
 			throw new Error('.array is deprecated, use .asMutable instead');
 		}
 
-		/**
-	 * Convert Imm list to Seamless Immutable array
-	 * See https://github.com/rtfeldman/seamless-immutable#immutable-array
-	 *
-	 * ### Examples:
-	 *
-	 * 	var list = list.unwrap();
-	 *
-	 * @return {SeamlessImmutable.Array}
-	 * @api public
-	 */
-		function unwrap() {
-			return immutableCollection;
-		}
-
-		var add = __webpack_require__(14);
-		var asPlainArray = __webpack_require__(15);
-		var allExist = __webpack_require__(16);
-		var anyExist = __webpack_require__(17);
-		var count = __webpack_require__(18);
-		var filter = __webpack_require__(19);
-		var find = __webpack_require__(20);
-		var first = __webpack_require__(21);
-		var get = __webpack_require__(22);
-		var map = __webpack_require__(23);
-		var remove = __webpack_require__(24);
-		var reject = __webpack_require__(25);
-		var replace = __webpack_require__(26);
-		var update = __webpack_require__(27);
+		var add = __webpack_require__(15);
+		var asPlainArray = __webpack_require__(16);
+		var allExist = __webpack_require__(17);
+		var anyExist = __webpack_require__(18);
+		var count = __webpack_require__(19);
+		var filter = __webpack_require__(20);
+		var find = __webpack_require__(21);
+		var first = __webpack_require__(22);
+		var get = __webpack_require__(23);
+		var map = __webpack_require__(24);
+		var remove = __webpack_require__(25);
+		var reject = __webpack_require__(26);
+		var replace = __webpack_require__(27);
+		var unwrap = __webpack_require__(28);
+		var update = __webpack_require__(29);
 
 		return {
 			isImmList: true,
@@ -348,7 +381,7 @@ return /******/ (function(modules) { // webpackBootstrap
 			map: map.bind(null, Immutable, globalArgs, immutableCollection),
 			reject: reject.bind(null, Immutable, globalArgs, immutableCollection),
 			remove: remove.bind(null, Immutable, globalArgs, immutableCollection),
-			unwrap: unwrap,
+			unwrap: unwrap.bind(null, Immutable, globalArgs, immutableCollection),
 			update: update.bind(null, Immutable, globalArgs, immutableCollection)
 		};
 	}
@@ -356,25 +389,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = wrapImmutableCollection;
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var generateUID = __webpack_require__(29);
+	var generateUID = __webpack_require__(31);
 
 	function getCollectionIdForRecord(record, globalArgs) {
 		var id = record[globalArgs.key];
-		if (id) {
-			return id;
-		} // generate id otherwise
-		return generateUID();
+		return id || generateUID();
 	}
 
 	module.exports = getCollectionIdForRecord;
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Fill in a given object with default properties.
@@ -395,12 +425,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = defaults;
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isObject = __webpack_require__(5);
+	var isObject = __webpack_require__(6);
 
 	function assertIsObject(object, msg) {
 		if (!msg) msg = 'Not an object';
@@ -410,13 +440,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = assertIsObject;
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isArray = __webpack_require__(6);
-	var isImmutableInstance = __webpack_require__(28);
+	var isArray = __webpack_require__(7);
+	var isImmutableInstance = __webpack_require__(30);
 
 	function assertIsPlainArray(Immutable, array) {
 		var one = !isArray(array);
@@ -427,12 +457,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = assertIsPlainArray;
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isImmutable = __webpack_require__(30);
+	var isImmutable = __webpack_require__(32);
 
 	function assertIsImmutable(Immutable, object) {
 		var is = isImmutable(Immutable, object);
@@ -442,12 +472,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = assertIsImmutable;
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isImmutableInstance = __webpack_require__(28);
+	var isImmutableInstance = __webpack_require__(30);
 
 	function assertIsImmutableInstance(Immutable, object) {
 		var is = isImmutableInstance(Immutable, object);
@@ -457,7 +487,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = assertIsImmutableInstance;
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -467,11 +497,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var replace = __webpack_require__(26);
-	var anyExist = __webpack_require__(17);
-	var idsFromRecords = __webpack_require__(31);
-	var wrapAsArray = __webpack_require__(32);
-	var mergeDefaults = __webpack_require__(9);
+	var replace = __webpack_require__(27);
+	var anyExist = __webpack_require__(18);
+	var idsFromRecords = __webpack_require__(33);
+	var wrapAsArray = __webpack_require__(34);
+	var mergeDefaults = __webpack_require__(10);
+	var toArrayIfImmList = __webpack_require__(35);
 
 	/**
 	* Adds one or more records.
@@ -494,27 +525,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	*/
 	function add(Immutable, globalArgs, immutableCollection, recordOrRecords, args) {
 
+		var records = toArrayIfImmList(recordOrRecords);
+		records = wrapAsArray(records);
+
 		var defaults = {
 			strict: false
 		};
+
 		args = mergeDefaults(args, defaults);
 
 		if (args.strict) {
 			// throw if any record exists
-			var records = wrapAsArray(recordOrRecords);
 			var ids = idsFromRecords(records, globalArgs.key);
 			var exists = anyExist(Immutable, globalArgs, immutableCollection, ids);
 			if (exists) throw new Error('Some records already exist');
 		}
 		args.requireKey = false;
 
-		return replace(Immutable, globalArgs, immutableCollection, recordOrRecords, args);
+		return replace(Immutable, globalArgs, immutableCollection, records, args);
 	}
 
 	module.exports = add;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -535,7 +569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = asPlainArray;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -545,7 +579,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var wrapAsArray = __webpack_require__(32);
+	var wrapAsArray = __webpack_require__(34);
 
 	/**
 	* Check if the given ID or all given IDs exist.
@@ -574,7 +608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = allExist;
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -584,7 +618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var wrapAsArray = __webpack_require__(32);
+	var wrapAsArray = __webpack_require__(34);
 
 	/**
 	* Check if the given ID or any given IDs exist
@@ -613,7 +647,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = anyExist;
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -638,7 +672,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = count;
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -648,8 +682,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var asPlainArray = __webpack_require__(15);
-	var wrapPlainArray = __webpack_require__(4);
+	var asPlainArray = __webpack_require__(16);
+	var wrapPlainArray = __webpack_require__(5);
 
 	/**
 	* Filters the list based on a filtering function.
@@ -675,7 +709,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = filter;
 
 /***/ },
-/* 20 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -685,7 +719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var asPlainArray = __webpack_require__(15);
+	var asPlainArray = __webpack_require__(16);
 
 	/**
 	* Finds one record.
@@ -717,7 +751,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = find;
 
 /***/ },
-/* 21 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -755,7 +789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = first;
 
 /***/ },
-/* 22 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -793,7 +827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = get;
 
 /***/ },
-/* 23 */
+/* 24 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -803,7 +837,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var asPlainArray = __webpack_require__(15);
+	var asPlainArray = __webpack_require__(16);
 
 	/**
 	* Maps the list through a given function
@@ -829,7 +863,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = map;
 
 /***/ },
-/* 24 */
+/* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -839,10 +873,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var idsAsStrings = __webpack_require__(33);
-	var allExist = __webpack_require__(16);
-	var wrapAsArray = __webpack_require__(32);
-	var wrapImmutableCollection = __webpack_require__(7);
+	var idsAsStrings = __webpack_require__(36);
+	var allExist = __webpack_require__(17);
+	var wrapAsArray = __webpack_require__(34);
+	var wrapImmutableCollection = __webpack_require__(8);
 
 	/**
 	* Removes one or many records based on the id.
@@ -877,7 +911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = remove;
 
 /***/ },
-/* 25 */
+/* 26 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -887,9 +921,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var asPlainArray = __webpack_require__(15);
-	var wrapPlainArray = __webpack_require__(4);
-	var negate = __webpack_require__(34);
+	var asPlainArray = __webpack_require__(16);
+	var wrapPlainArray = __webpack_require__(5);
+	var negate = __webpack_require__(37);
 
 	/**
 	* Rejects records based on a function.
@@ -915,7 +949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = reject;
 
 /***/ },
-/* 26 */
+/* 27 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -925,13 +959,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var idsAsStrings = __webpack_require__(33);
-	var idsFromRecords = __webpack_require__(31);
-	var getCollectionIdForRecord = __webpack_require__(8);
-	var mergeDefaults = __webpack_require__(9);
-	var wrapAsArray = __webpack_require__(32);
-	var anyExist = __webpack_require__(17);
-	var wrapImmutableCollection = __webpack_require__(7);
+	var idsAsStrings = __webpack_require__(36);
+	var idsFromRecords = __webpack_require__(33);
+	var getCollectionIdForRecord = __webpack_require__(9);
+	var mergeDefaults = __webpack_require__(10);
+	var wrapAsArray = __webpack_require__(34);
+	var isImmutableInstance = __webpack_require__(30);
+	var anyExist = __webpack_require__(18);
+	var wrapImmutableCollection = __webpack_require__(8);
 
 	/**
 	* Replaces one item or many.
@@ -972,6 +1007,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 		for (var a = 0; a < records.length; a++) {
 			var record = records[a];
+			var im = isImmutableInstance(Immutable, record);
+
+			if (im) {
+				record = record.asMutable({ deep: true });
+			}
+
 			var id = record[globalArgs.key];
 			if (args.requireKey && !id) throw new Error('Record must have .' + globalArgs.key);
 
@@ -992,7 +1033,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = replace;
 
 /***/ },
-/* 27 */
+/* 28 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* @flow */
+
+	/**
+	* Convert Imm list to Seamless Immutable array
+	* See https://github.com/rtfeldman/seamless-immutable#immutable-array
+	*
+	* ### Examples:
+	*
+	* 	var list = list.unwrap();
+	*
+	* @return {SeamlessImmutable.Object}
+	* @api public
+	*/
+	"use strict";
+
+	function unwrap(Immutable, globalArgs, immutableCollection) {
+
+		return immutableCollection;
+	}
+
+	module.exports = unwrap;
+
+/***/ },
+/* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -1002,11 +1069,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	'use strict';
 
-	var idsFromRecords = __webpack_require__(31);
-	var wrapAsArray = __webpack_require__(32);
-	var mergeDefaults = __webpack_require__(9);
-	var anyExist = __webpack_require__(17);
-	var wrapImmutableCollection = __webpack_require__(7);
+	var idsFromRecords = __webpack_require__(33);
+	var wrapAsArray = __webpack_require__(34);
+	var mergeDefaults = __webpack_require__(10);
+	var anyExist = __webpack_require__(18);
+	var wrapImmutableCollection = __webpack_require__(8);
+	var toArrayIfImmList = __webpack_require__(35);
 
 	/**
 	* Updates one record or many.
@@ -1037,8 +1105,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		var toMerge;
 		var existing;
 		var mergedRecord;
-		var givenRecords = wrapAsArray(recordOrRecords);
 		var newCol = immutableCollection;
+
+		var givenRecords = toArrayIfImmList(recordOrRecords);
+		givenRecords = wrapAsArray(givenRecords);
 
 		if (args.strict) {
 			// throw if any record exists
@@ -1073,21 +1143,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = update;
 
 /***/ },
-/* 28 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
 
-	"use strict";
+	'use strict';
 
 	function isImmutableInstance(Immutable, object) {
+		if (!Immutable) throw new Error('Invalid argument Immutable');
+		if (!object) throw new Error('Invalid argument object');
+
 		return Immutable.isImmutable(object);
 	}
 
 	module.exports = isImmutableInstance;
 
 /***/ },
-/* 29 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1105,21 +1178,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = generateUID;
 
 /***/ },
-/* 30 */
+/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
 
-	"use strict";
+	// Check if given object is the Immutable Library
+	'use strict';
 
 	function isImmutable(Immutable, object) {
+		if (!Immutable) throw new Error('Invalid argument Immutable');
+		if (!object) throw new Error('Invalid argument object');
+
 		return object.isImmutable != null;
 	}
 
 	module.exports = isImmutable;
 
 /***/ },
-/* 31 */
+/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
@@ -1136,12 +1213,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = idsFromRecords;
 
 /***/ },
-/* 32 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var isArray = __webpack_require__(6);
+	var isArray = __webpack_require__(7);
 
 	function wrapAsArray(recordOrRecords) {
 		return isArray(recordOrRecords) ? recordOrRecords : [recordOrRecords];
@@ -1150,7 +1227,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = wrapAsArray;
 
 /***/ },
-/* 33 */
+/* 35 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var isImmList = __webpack_require__(38);
+
+	function toArrayIfImmList(records) {
+		if (isImmList(records)) {
+			return records.asMutable();
+		} else {
+			return records;
+		}
+	};
+
+	module.exports = toArrayIfImmList;
+
+/***/ },
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1164,7 +1259,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = idsAsStrings;
 
 /***/ },
-/* 34 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1176,6 +1271,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 	module.exports = negate;
+
+/***/ },
+/* 38 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* @flow */
+
+	'use strict';
+
+	module.exports = function (object) {
+		if (!object) throw new Error('Invalid argument object');
+
+		return object.isImmList != null;
+	};
 
 /***/ }
 /******/ ])
