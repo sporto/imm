@@ -1,6 +1,8 @@
 IMM.js
 ========
 
+**DEPRECATED and unmantained, don't use**
+
 [ ![Codeship Status for sporto/imm](https://www.codeship.io/projects/c6ea6970-2eac-0132-d151-0605b547a2e8/status)](https://www.codeship.io/projects/39398)
 
 __Immutable__ data collections built on top of [seamless-immutable](https://github.com/rtfeldman/seamless-immutable)
